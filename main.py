@@ -301,6 +301,13 @@ async def validate_form(
         db.rollback()
         raise HTTPException(500, str(e))
 
+# =====================================================
+# ANALYTICS
+# =====================================================
+
+# =====================================================
+# ANALYTICS
+# =====================================================
 
 from fastapi import Query
 from typing import Optional
@@ -335,6 +342,7 @@ def get_analytics(
 
         username = str(r.username).strip()
         form_type = str(r.form_type)
+        circle = str(r.circle or "UNKNOWN").strip()
 
         if username not in analytics:
             analytics[username] = {
@@ -346,13 +354,23 @@ def get_analytics(
             analytics[username]["forms"][form_type] = {
                 "valid": 0,
                 "invalid": 0,
-                "total": 0
+                "total": 0,
+                "circleWise": {}
             }
 
+        form_data = analytics[username]["forms"][form_type]
+
+        # VALID / INVALID
         if str(r.row_status).lower() == "valid":
-            analytics[username]["forms"][form_type]["valid"] += 1
+            form_data["valid"] += 1
         else:
-            analytics[username]["forms"][form_type]["invalid"] += 1
+            form_data["invalid"] += 1
+
+        # ⭐ CIRCLE WISE COUNT
+        if circle not in form_data["circleWise"]:
+            form_data["circleWise"][circle] = 0
+
+        form_data["circleWise"][circle] += 1
 
     # Calculate totals
     for username in analytics:
