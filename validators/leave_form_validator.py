@@ -29,8 +29,10 @@ def is_blank(value):
 
 
 def safe_str(value):
+
     if pd.isna(value):
         return ""
+
     return str(value).strip()
 
 
@@ -56,22 +58,23 @@ def validate_leave_form(df: pd.DataFrame):
 
         row_errors = []
 
-        # safer column access
-        def val(col):
+        # Flexible column getter
+        def val(keyword):
 
-            for c in row.index:
-                if col in c:
-                    return safe_str(row[c])
+            for col in row.index:
+
+                if keyword in col:
+                    return safe_str(row[col])
 
             return ""
 
-        # 1 Name
+        # 1 Name (very relaxed)
         name = val("name")
 
         if is_blank(name):
             row_errors.append("name blank")
 
-        # 2 ID (very relaxed)
+        # 2 ID (only duplicate check)
         current_id = val("id")
 
         if not is_blank(current_id):
@@ -83,16 +86,18 @@ def validate_leave_form(df: pd.DataFrame):
                 seen_ids.add(current_id)
 
         # 3 Employee Name
-        if is_blank(val("employee")):
+        emp_name = val("employee")
+
+        if is_blank(emp_name):
             row_errors.append("employee name blank")
 
         # 4 Reason (very relaxed)
         reason = val("reason")
 
-        if len(reason) > 300:
+        if len(reason) > 500:
             row_errors.append("reason too long")
 
-        # 5 Days
+        # 5 Days (very flexible)
         days_val = val("days")
 
         if not is_blank(days_val):
@@ -104,7 +109,7 @@ def validate_leave_form(df: pd.DataFrame):
 
         # 6 Leave From
         leave_from = pd.to_datetime(
-            val("leave"),
+            val("leave form"),
             errors="coerce"
         )
 
@@ -119,7 +124,7 @@ def validate_leave_form(df: pd.DataFrame):
             if leave_to < leave_from:
                 row_errors.append("leave to < leave from")
 
-        # 8 Location (optional)
+        # 8 Location (optional check)
         location_val = val("location")
 
         if not is_blank(location_val):
@@ -130,23 +135,41 @@ def validate_leave_form(df: pd.DataFrame):
 
                 coords = location.get("coordinates")
 
-                if not isinstance(coords, list) or len(coords) != 2:
+                if not isinstance(coords, list):
                     row_errors.append("location invalid")
 
             except:
+                # relaxed: ignore bad JSON
                 pass
 
         # 9 Created User
-        if is_blank(val("created")):
+        created_user = val("createduser")
+
+        if is_blank(created_user):
             row_errors.append("created user blank")
 
         # 10 Modified User
-        if is_blank(val("modified")):
+        modified_user = val("modifieduser")
+
+        if is_blank(modified_user):
             row_errors.append("modified user blank")
 
         errors.append("; ".join(row_errors))
 
     df["validation_errors"] = errors
+
+
+    # -------- Username for analytics (circle code keep) -------- #
+
+    if "createduser" in df.columns:
+        df["__USERNAME__"] = df["createduser"]
+
+    elif "modifieduser" in df.columns:
+        df["__USERNAME__"] = df["modifieduser"]
+
+    else:
+        df["__USERNAME__"] = ""
+
 
     valid_df = df[df["validation_errors"] == ""].copy()
     junk_df = df[df["validation_errors"] != ""].copy()

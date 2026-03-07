@@ -4,9 +4,9 @@
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, Form, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, FileResponse
-
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
+from sqlalchemy import extract
 
 
 import pandas as pd
@@ -31,6 +31,12 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(CURRENT_DIR, "validators"))
 
 from site_survey_checklist_validator import validate_site_survey_checklist
+from meeting_validator import validate_meeting_form
+from ftth_acquisition_validator import validate_ftth_acquisition
+from od_operation_validator import validate_od_operation
+from leave_form_validator import validate_leave_form
+from eb_meter_validator import validate_eb_meter
+from od_survey_validator import validate_od_survey
 
 # =====================================================
 # APP INIT
@@ -101,28 +107,23 @@ def extract_username(row, form_type):
         "EB Meter Form": ["createduser"],
         "FTTH Acquisition Form": ["createduser"],
         "OD Survey Form": ["user name", "username", "createduser"]
-
     }
 
     possible_cols = USERNAME_COLUMN_MAP.get(form_type, [])
 
-    try:
-        for col in possible_cols:
+    for col in possible_cols:
 
-            if col in row:
+        if col in row:
 
-                value = row[col]
+            value = row[col]
 
-                if isinstance(value, str):
-                    value = value.strip()
+            if isinstance(value, str):
+                value = value.strip()
 
-                if value:
-                    return value
+            if value:
+                return value
 
-        return "UNKNOWN_USER"
-
-    except:
-        return "UNKNOWN_USER"
+    return "UNKNOWN_USER"
 
 # =====================================================
 # NORMALIZER
@@ -147,15 +148,15 @@ async def validate_form(
 
     selected_date = pd.to_datetime(date, errors="coerce").date()
 
-    # ---------------- File Validation ----------------
-
     if not file.filename:
         raise HTTPException(400, "No file uploaded")
 
     if not file.filename.lower().endswith((".csv", ".xlsx", ".xls")):
         raise HTTPException(400, "Invalid file format")
 
-    # ---------------- Read File ----------------
+    # =====================================================
+    # READ FILE
+    # =====================================================
 
     try:
 
@@ -179,10 +180,35 @@ async def validate_form(
     except Exception as e:
         raise HTTPException(400, f"File read error: {str(e)}")
 
-    # ---------------- Validation ----------------
+    # =====================================================
+    # VALIDATION SELECTOR
+    # =====================================================
 
     try:
-        valid_df, junk_df = validate_site_survey_checklist(df)
+
+        if form_type == "Meeting Form":
+            valid_df, junk_df = validate_meeting_form(df)
+
+        elif form_type == "Site Survey Checklist":
+            valid_df, junk_df = validate_site_survey_checklist(df)
+
+        elif form_type == "FTTH Acquisition Form":
+            valid_df, junk_df = validate_ftth_acquisition(df)
+        
+        elif form_type == "OD Operation Form":
+            valid_df, junk_df = validate_od_operation(df)
+
+        elif form_type == "Leave Form":
+            valid_df, junk_df = validate_leave_form(df)
+
+        elif form_type == "EB Meter Form":
+            valid_df, junk_df = validate_eb_meter(df)
+        
+        elif form_type == "OD Survey Form":
+            valid_df, junk_df = validate_od_survey(df)
+
+        else:
+            raise HTTPException(400, f"Unsupported form type: {form_type}")
 
     except Exception as e:
         raise HTTPException(400, f"Validation pipeline failed: {str(e)}")
@@ -192,7 +218,36 @@ async def validate_form(
 
     combined_df = pd.concat([valid_df, junk_df], ignore_index=True)
 
-    # ---------------- Save Output Files ----------------
+    # =====================================================
+    # DUPLICATE FORM CHECK
+    # =====================================================
+
+    previous_upload = db.query(models.UploadHistory).filter(
+        models.UploadHistory.form_type == form_type,
+        models.UploadHistory.selected_date == str(selected_date)
+    ).first()
+
+    message = "File uploaded successfully"
+
+    if previous_upload:
+
+        message = "This form has been uploaded before. Old data replaced."
+
+        db.query(models.FormEntry).filter(
+            models.FormEntry.form_type == form_type,
+            models.FormEntry.selected_date == selected_date
+        ).delete()
+
+        db.query(models.UploadHistory).filter(
+            models.UploadHistory.form_type == form_type,
+            models.UploadHistory.selected_date == str(selected_date)
+        ).delete()
+
+        db.commit()
+
+    # =====================================================
+    # SAVE OUTPUT FILES
+    # =====================================================
 
     file_id = str(uuid.uuid4())
 
@@ -202,7 +257,9 @@ async def validate_form(
     valid_df.to_csv(valid_file, index=False)
     junk_df.to_csv(junk_file, index=False)
 
-    # ---------------- DB Transaction ----------------
+    # =====================================================
+    # DATABASE INSERT
+    # =====================================================
 
     try:
 
@@ -234,6 +291,7 @@ async def validate_form(
 
         return {
             "status": "success",
+            "message": message,
             "total_rows": len(df),
             "valid_rows": len(valid_df),
             "junk_rows": len(junk_df)
@@ -243,7 +301,7 @@ async def validate_form(
         db.rollback()
         raise HTTPException(500, str(e))
 
-from sqlalchemy import extract
+
 from fastapi import Query
 from typing import Optional
 

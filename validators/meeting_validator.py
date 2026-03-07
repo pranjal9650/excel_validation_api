@@ -1,18 +1,16 @@
 import pandas as pd
 import json
 
-
 # =====================================================
-# SAFE CLEANING
+# SAFE CLEAN
 # =====================================================
 
 def safe_clean(df):
 
     df = df.fillna("")
 
-    # Convert only object columns to string safely
-    for col in df.select_dtypes(include=["object"]).columns:
-        df[col] = df[col].astype("string").astype(str).str.strip()
+    for col in df.columns:
+        df[col] = df[col].astype(str).str.strip()
 
     df = df.replace({
         "nan": "",
@@ -39,7 +37,7 @@ def is_blank(val):
 
 
 # =====================================================
-# COLUMN FINDER (SMART MATCH)
+# COLUMN FINDER
 # =====================================================
 
 def find_column(df, keywords):
@@ -60,7 +58,10 @@ def validate_meeting_form(df: pd.DataFrame):
 
     df = pd.DataFrame(df).copy()
 
-    # ⭐ Normalize + Clean
+    # -------------------------------------------------
+    # COLUMN NORMALIZATION
+    # -------------------------------------------------
+
     df.columns = (
         df.columns
         .astype(str)
@@ -76,24 +77,24 @@ def validate_meeting_form(df: pd.DataFrame):
 
     df = safe_clean(df)
 
-    # =====================================================
-    # Auto Detect Columns
-    # =====================================================
+    # -------------------------------------------------
+    # COLUMN DETECTION
+    # -------------------------------------------------
 
-    id_col = find_column(df, ["id"])
+    id_col = find_column(df, ["meeting form id", "meeting_form_id", "id (meeting"])
     name_col = find_column(df, ["name"])
-    user_col = find_column(df, ["user"])
-    site_col = find_column(df, ["site"])
-    meeting_col = find_column(df, ["meeting"])
+    user_col = find_column(df, ["user name", "username"])
+    site_col = find_column(df, ["site name"])
     location_col = find_column(df, ["location"])
     remark_col = find_column(df, ["remark"])
+    circle_col = find_column(df, ["circle"])
+
+    # -------------------------------------------------
+    # VALIDATION LOOP
+    # -------------------------------------------------
 
     errors = []
     seen_ids = set()
-
-    # =====================================================
-    # VALIDATION LOOP
-    # =====================================================
 
     for _, row in df.iterrows():
 
@@ -114,7 +115,12 @@ def validate_meeting_form(df: pd.DataFrame):
             if is_blank(row.get(site_col)):
                 row_errors.append("site blank")
 
-        # ---------------- ID DUPLICATE ----------------
+        # ---------------- CIRCLE ----------------
+        if circle_col:
+            if is_blank(row.get(circle_col)):
+                row_errors.append("circle blank")
+
+        # ---------------- DUPLICATE ID ----------------
         if id_col:
 
             id_val = row.get(id_col)
@@ -123,11 +129,10 @@ def validate_meeting_form(df: pd.DataFrame):
 
                 if id_val in seen_ids:
                     row_errors.append("duplicate id")
-
                 else:
                     seen_ids.add(id_val)
 
-        # ---------------- LOCATION JSON ----------------
+        # ---------------- LOCATION CHECK (SOFT) ----------------
         if location_col:
 
             location = row.get(location_col)
@@ -143,9 +148,10 @@ def validate_meeting_form(df: pd.DataFrame):
                         row_errors.append("location invalid")
 
                 except:
-                    row_errors.append("location invalid")
+                    # do not fail hard
+                    pass
 
-        # ---------------- REMARK ----------------
+        # ---------------- REMARK LENGTH ----------------
         if remark_col:
 
             remark = row.get(remark_col)
@@ -157,17 +163,23 @@ def validate_meeting_form(df: pd.DataFrame):
 
         errors.append("; ".join(row_errors))
 
-    # =====================================================
+    # -------------------------------------------------
     # RESULT SPLIT
-    # =====================================================
+    # -------------------------------------------------
 
     df["validation_errors"] = errors
 
-    # Analytics username preservation
+    # Preserve username for analytics
     if user_col:
         df["__USERNAME__"] = df[user_col]
     else:
         df["__USERNAME__"] = ""
+
+    # Preserve circle
+    if circle_col:
+        df["circle"] = df[circle_col]
+    else:
+        df["circle"] = "UNKNOWN_CIRCLE"
 
     valid_df = df[df["validation_errors"] == ""].copy()
     junk_df = df[df["validation_errors"] != ""].copy()

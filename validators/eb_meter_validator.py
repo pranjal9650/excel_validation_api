@@ -1,4 +1,6 @@
 import pandas as pd
+import re
+import json
 
 
 # =====================================================
@@ -48,21 +50,58 @@ def normalize_columns(df):
     return df
 
 
+# =====================================================
+# FLEXIBLE COLUMN MAPPING
+# =====================================================
+
 def map_columns(df):
 
     column_map = {
+
         "id": ["id", "record id", "recordid", "unique id"],
-        "start meter": ["start meter", "startmeter"],
-        "closing reading": ["closing reading", "closingreading"],
-        "total consumption": ["total consumption", "totalconsumption"],
-        "per unit in inr": ["per unit in inr", "perunitininr"],
-        "amount": ["amount", "total amount"],
-        "reading month": ["reading month", "readingmonth"],
-        "user name": ["user name", "username", "createduser"]
+
+        "start meter": [
+            "start meter",
+            "startmeter",
+            "start  meter"
+        ],
+
+        "closing reading": [
+            "closing reading",
+            "closingreading"
+        ],
+
+        "total consumption": [
+            "total consumption",
+            "totalconsumption"
+        ],
+
+        "per unit in inr": [
+            "per unit in inr",
+            "perunitininr"
+        ],
+
+        "amount": [
+            "amount",
+            "total amount"
+        ],
+
+        "reading month": [
+            "reading month",
+            "readingmonth"
+        ],
+
+        "user name": [
+            "user name",
+            "username",
+            "createduser"
+        ]
     }
 
     for std_col, variations in column_map.items():
+
         for col in variations:
+
             if col in df.columns:
                 df[std_col] = df[col]
                 break
@@ -77,6 +116,7 @@ def map_columns(df):
 def validate_eb_meter(df):
 
     if df is None or len(df) == 0:
+
         print("No data found")
         return df, df
 
@@ -85,41 +125,84 @@ def validate_eb_meter(df):
 
     errors = []
 
+    seen_ids = set()
+
     for _, row in df.iterrows():
 
         row_errors = []
 
-        # ⭐ ID check only (nothing else strict)
+        # ⭐ ID check (only blank + duplicate)
         id_val = str(row.get("id", "")).strip()
 
         if id_val == "":
             row_errors.append("id blank")
 
-        # ⭐ Reading sanity (NOT strict)
-        if safe_float(row.get("start meter")) is None:
+        else:
+
+            if id_val in seen_ids:
+                row_errors.append("duplicate id")
+
+            seen_ids.add(id_val)
+
+        # ⭐ Meter readings (very relaxed)
+
+        start_meter = safe_float(row.get("start meter"))
+        closing_meter = safe_float(row.get("closing reading"))
+
+        if start_meter is None:
             row_errors.append("start meter missing")
 
-        if safe_float(row.get("closing reading")) is None:
+        if closing_meter is None:
             row_errors.append("closing meter missing")
 
-        # ⭐ Dates only check if parseable (no logic validation)
-        if not pd.isna(row.get("reading month")):
-            if safe_date(row.get("reading month")) is None:
+        # ⭐ Reading month (only check parseable)
+
+        reading_month = row.get("reading month")
+
+        if reading_month != "":
+
+            parsed = safe_date(reading_month)
+
+            if parsed is None or pd.isna(parsed):
                 row_errors.append("invalid reading month")
+
+        # ⭐ Amount check (optional)
+
+        amount = safe_float(row.get("amount"))
+
+        if amount is None:
+            pass   # allow blank
 
         errors.append("; ".join(row_errors))
 
     df["validation_errors"] = errors
 
-    # Preserve username if exists
-    df["__USERNAME__"] = df.get("user name", "")
 
-    # ⭐ VERY IMPORTANT — Make almost everything valid
-    valid_df = df.copy()   # <--- ultra loose rule
+    # =====================================================
+    # USERNAME CIRCLE CODE (IMPORTANT)
+    # =====================================================
+
+    if "user name" in df.columns:
+        df["__USERNAME__"] = df["user name"]
+
+    elif "createduser" in df.columns:
+        df["__USERNAME__"] = df["createduser"]
+
+    else:
+        df["__USERNAME__"] = ""
+
+
+    # =====================================================
+    # ULTRA LOOSE VALIDATION
+    # =====================================================
+
+    valid_df = df.copy()   # almost everything valid
     junk_df = df[df["validation_errors"] != ""].copy()
+
 
     print("✅ Total rows :", len(df))
     print("✅ Valid rows :", len(valid_df))
     print("❌ Invalid rows :", len(junk_df))
+
 
     return valid_df, junk_df

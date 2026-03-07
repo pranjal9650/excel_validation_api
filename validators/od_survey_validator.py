@@ -48,12 +48,14 @@ def to_float(val):
         return None
 
 
-# ---------------- COLUMN FINDER ---------------- #
+# ---------------- FLEXIBLE COLUMN FINDER ---------------- #
 
 def find_column(df, keywords):
 
     for col in df.columns:
+
         for key in keywords:
+
             if key in col:
                 return col
 
@@ -67,14 +69,15 @@ def validate_od_survey(df: pd.DataFrame):
     df = normalize_columns(df)
     df = clean_df(df)
 
-    # Auto detect columns
+    # -------- AUTO DETECT COLUMNS -------- #
+
     id_col = find_column(df, ["id"])
     name_col = find_column(df, ["name"])
-    user_col = find_column(df, ["user"])
-    site_col = find_column(df, ["site"])
+    user_col = find_column(df, ["user name", "username"])
+    site_col = find_column(df, ["site name"])
     circle_col = find_column(df, ["circle"])
     city_col = find_column(df, ["city"])
-    latlong_col = find_column(df, ["lat long", "latlong"])
+    latlong_col = find_column(df, ["lat long"])
     operator_col = find_column(df, ["operator"])
     tower_col = find_column(df, ["tower"])
     survey_lat_col = find_column(df, ["survey lat"])
@@ -93,7 +96,7 @@ def validate_od_survey(df: pd.DataFrame):
 
         row_errors = []
 
-        # ---------- Duplicate ID check ---------- #
+        # ---------- ID (only blank + duplicate check) ---------- #
 
         if id_col:
 
@@ -107,25 +110,34 @@ def validate_od_survey(df: pd.DataFrame):
                 else:
                     seen_ids.add(id_val)
 
-        # ---------- City check (only if column exists) ---------- #
+        # ---------- City (very soft rule) ---------- #
 
         if city_col:
+
             if is_blank(row[city_col]):
-                row_errors.append("city missing")
+                pass   # allow blank
 
-        # ---------- Survey Lat/Lon (only check if value present) ---------- #
+        # ---------- Survey Lat / Long (only if present) ---------- #
 
-        if survey_lat_col and not is_blank(row[survey_lat_col]):
+        if survey_lat_col:
 
-            if to_float(row[survey_lat_col]) is None:
-                row_errors.append("invalid survey lat")
+            lat_val = row[survey_lat_col]
 
-        if survey_long_col and not is_blank(row[survey_long_col]):
+            if not is_blank(lat_val):
 
-            if to_float(row[survey_long_col]) is None:
-                row_errors.append("invalid survey long")
+                if to_float(lat_val) is None:
+                    row_errors.append("invalid survey lat")
 
-        # ---------- Created Date ---------- #
+        if survey_long_col:
+
+            long_val = row[survey_long_col]
+
+            if not is_blank(long_val):
+
+                if to_float(long_val) is None:
+                    row_errors.append("invalid survey long")
+
+        # ---------- Created Date (soft check) ---------- #
 
         created_date = None
 
@@ -141,7 +153,7 @@ def validate_od_survey(df: pd.DataFrame):
                 if pd.isna(created_date):
                     row_errors.append("invalid created date")
 
-        # ---------- Modified Date ---------- #
+        # ---------- Modified Date (very relaxed) ---------- #
 
         if modified_date_col:
 
@@ -160,7 +172,7 @@ def validate_od_survey(df: pd.DataFrame):
                     if modified_date < created_date:
                         row_errors.append("modified before created")
 
-        # ---------- LatLong JSON (ignore errors instead of junk) ---------- #
+        # ---------- LatLong JSON (ignored if bad) ---------- #
 
         if latlong_col:
 
@@ -179,8 +191,9 @@ def validate_od_survey(df: pd.DataFrame):
                 except:
                     pass
 
-        # ---------- Circle / Operator / Tower ---------- #
-        # Now treated as OPTIONAL (no strict validation)
+        # ---------- Optional fields (no strict validation) ---------- #
+        # Circle / Operator / Tower / Site / Building / Rent etc.
+        # All treated as optional for maximum valid rows
 
         errors.append("; ".join(row_errors))
 
@@ -188,7 +201,8 @@ def validate_od_survey(df: pd.DataFrame):
 
     df["validation_errors"] = errors
 
-    # Preserve username for analytics
+
+    # -------- USERNAME CIRCLE CODE (IMPORTANT) -------- #
 
     if user_col:
         df["__USERNAME__"] = df[user_col]
@@ -198,6 +212,7 @@ def validate_od_survey(df: pd.DataFrame):
 
     else:
         df["__USERNAME__"] = ""
+
 
     valid_df = df[df["validation_errors"] == ""].copy()
     junk_df = df[df["validation_errors"] != ""].copy()

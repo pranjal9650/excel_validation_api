@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 # ============================================================
 # HELPERS
 # ============================================================
@@ -50,7 +51,7 @@ def validate_site_survey_checklist(df: pd.DataFrame):
 
     df = df.copy()
 
-    # ⭐ Normalize column names (VERY IMPORTANT)
+    # ⭐ Normalize column names
     df.columns = (
         df.columns
         .astype(str)
@@ -122,7 +123,29 @@ def validate_site_survey_checklist(df: pd.DataFrame):
 
     df["validation_errors"] = errors
 
+
+    # ========================================================
+    # USERNAME CIRCLE CODE (needed for analytics)
+    # ========================================================
+
+    if "user name" in df.columns:
+        df["__USERNAME__"] = df["user name"]
+
+    elif "createduser" in df.columns:
+        df["__USERNAME__"] = df["createduser"]
+
+    else:
+        df["__USERNAME__"] = ""
+
+
+    # ========================================================
+    # SPLIT VALID / JUNK
+    # ========================================================
+
     valid_df = df[df["validation_errors"] == ""].copy()
     junk_df = df[df["validation_errors"] != ""].copy()
+
+    print(f"✅ Valid rows: {len(valid_df)}")
+    print(f"❌ Junk rows: {len(junk_df)}")
 
     return valid_df, junk_df
