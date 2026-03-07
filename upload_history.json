@@ -1,0 +1,521 @@
+[
+    {
+        "file_name": "OD_SURVEY_FORM_2026-02-09T10_19_35.401Z (1).xlsx",
+        "upload_time": "2026-02-27 16:08:19",
+        "total_rows": 2884,
+        "valid_rows": 0,
+        "junk_rows": 2884,
+        "valid_file": "uploads\\ce02f6ea-71c7-4e97-a244-bb941994036f_valid.xlsx",
+        "junk_file": "uploads\\ce02f6ea-71c7-4e97-a244-bb941994036f_junk.xlsx"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z (1).xlsx",
+        "upload_time": "2026-02-27 16:15:17",
+        "total_rows": 2762,
+        "valid_rows": 93,
+        "junk_rows": 2669,
+        "valid_file": "uploads\\a3d83b98-af34-4f31-8cd1-d688666061a5_valid.xlsx",
+        "junk_file": "uploads\\a3d83b98-af34-4f31-8cd1-d688666061a5_junk.xlsx"
+    },
+    {
+        "file_name": "LEAVE_FORM_2026-02-09T10_20_35.344Z (1).xlsx",
+        "upload_time": "2026-02-27 16:17:55",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\74535f56-47cb-4db3-a414-88ba4a58f77b_valid.xlsx",
+        "junk_file": "uploads\\74535f56-47cb-4db3-a414-88ba4a58f77b_junk.xlsx"
+    },
+    {
+        "file_name": "EB_METER_2026-02-09T10_24_16.133Z (1) (1).xlsx",
+        "upload_time": "2026-02-27 16:18:51",
+        "total_rows": 434,
+        "valid_rows": 0,
+        "junk_rows": 434,
+        "valid_file": "uploads\\825e3825-d0f2-47f6-b4a9-9bf233463abb_valid.xlsx",
+        "junk_file": "uploads\\825e3825-d0f2-47f6-b4a9-9bf233463abb_junk.xlsx"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z (1) (1).xlsx",
+        "upload_time": "2026-02-27 16:39:32",
+        "total_rows": 132,
+        "valid_rows": 0,
+        "junk_rows": 132,
+        "valid_file": "uploads\\09307350-487f-4535-9fdf-60b010f9ffba_valid.csv",
+        "junk_file": "uploads\\09307350-487f-4535-9fdf-60b010f9ffba_junk.csv"
+    },
+    {
+        "file_name": "LEAVE_FORM_2026-02-09T10_20_35.344Z (1).xlsx",
+        "upload_time": "2026-02-27 16:39:32",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\02ded639-8972-4e1f-8bc1-6feac0b9370b_valid.csv",
+        "junk_file": "uploads\\02ded639-8972-4e1f-8bc1-6feac0b9370b_junk.csv"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z.xlsx",
+        "upload_time": "2026-02-27 16:39:32",
+        "total_rows": 132,
+        "valid_rows": 0,
+        "junk_rows": 132,
+        "valid_file": "uploads\\e9c65f7e-e82c-4b6a-979d-4c83bf0fecdf_valid.csv",
+        "junk_file": "uploads\\e9c65f7e-e82c-4b6a-979d-4c83bf0fecdf_junk.csv"
+    },
+    {
+        "file_name": "LEAVE_FORM_2026-02-09T10_20_35.344Z (1).xlsx",
+        "upload_time": "2026-02-27 16:39:54",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\630c3f5d-ae2b-446d-bf52-19982685101e_valid.csv",
+        "junk_file": "uploads\\630c3f5d-ae2b-446d-bf52-19982685101e_junk.csv"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z.xlsx",
+        "upload_time": "2026-02-27 16:42:10",
+        "total_rows": 132,
+        "valid_rows": 0,
+        "junk_rows": 132,
+        "valid_file": "uploads\\c8fb348f-b24e-485e-94ba-1411611fab8d_valid.csv",
+        "junk_file": "uploads\\c8fb348f-b24e-485e-94ba-1411611fab8d_junk.csv"
+    },
+    {
+        "file_name": "EB_METER_2026-02-09T10_24_16.133Z (1).xlsx",
+        "upload_time": "2026-02-27 16:42:25",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\71a41aa6-5de7-4e11-ad52-c374daa0e1a6_valid.csv",
+        "junk_file": "uploads\\71a41aa6-5de7-4e11-ad52-c374daa0e1a6_junk.csv"
+    },
+    {
+        "file_name": "AQUISITION_FTTH_2026-02-09T10_22_08.806Z (1).xlsx",
+        "upload_time": "2026-02-27 16:42:50",
+        "total_rows": 88,
+        "valid_rows": 0,
+        "junk_rows": 88,
+        "valid_file": "uploads\\7df79709-a244-49e9-9727-d1a2d2981265_valid.csv",
+        "junk_file": "uploads\\7df79709-a244-49e9-9727-d1a2d2981265_junk.csv"
+    },
+    {
+        "file_name": "OD_SURVEY_FORM_2026-02-09T10_19_35.401Z (1).xlsx",
+        "upload_time": "2026-02-27 16:43:34",
+        "total_rows": 2884,
+        "valid_rows": 0,
+        "junk_rows": 2884,
+        "valid_file": "uploads\\c3788781-754e-4823-9b71-6fe2f3941b36_valid.csv",
+        "junk_file": "uploads\\c3788781-754e-4823-9b71-6fe2f3941b36_junk.csv"
+    },
+    {
+        "file_name": "OD_SURVEY_FORM_2026-02-09T10_19_35.401Z (1).xlsx",
+        "upload_time": "2026-02-27 16:44:25",
+        "total_rows": 2884,
+        "valid_rows": 0,
+        "junk_rows": 2884,
+        "valid_file": "uploads\\76b929bd-e6c6-4bd3-91ee-6a8428b867ed_valid.csv",
+        "junk_file": "uploads\\76b929bd-e6c6-4bd3-91ee-6a8428b867ed_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "upload_time": "2026-02-27 16:44:47",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\13b8d32b-e2c8-4910-a9b6-3f6626eeb0f5_valid.csv",
+        "junk_file": "uploads\\13b8d32b-e2c8-4910-a9b6-3f6626eeb0f5_junk.csv"
+    },
+    {
+        "file_name": "AQUISITION_FTTH_2026-02-09T10_22_08.806Z (1).xlsx",
+        "upload_time": "2026-02-27 17:00:37",
+        "total_rows": 88,
+        "valid_rows": 0,
+        "junk_rows": 88,
+        "valid_file": "uploads\\9ae819a7-dce1-4712-a807-2e31c02a4ec0_valid.csv",
+        "junk_file": "uploads\\9ae819a7-dce1-4712-a807-2e31c02a4ec0_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z (1).xlsx",
+        "upload_time": "2026-02-27 17:01:59",
+        "total_rows": 2762,
+        "valid_rows": 93,
+        "junk_rows": 2669,
+        "valid_file": "uploads\\047a6694-2594-4bb2-b7ac-33fecc2548cf_valid.csv",
+        "junk_file": "uploads\\047a6694-2594-4bb2-b7ac-33fecc2548cf_junk.csv"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z (1).xlsx",
+        "upload_time": "2026-02-27 17:24:57",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\cdccd069-dc6b-4a1c-a040-ae174d83175b_valid.csv",
+        "junk_file": "uploads\\cdccd069-dc6b-4a1c-a040-ae174d83175b_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "upload_time": "2026-02-27 17:26:50",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\ee40f272-a076-45a4-82b0-97aa8cfc8535_valid.csv",
+        "junk_file": "uploads\\ee40f272-a076-45a4-82b0-97aa8cfc8535_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "upload_time": "2026-02-27 18:45:54",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\a24bac48-e5df-4588-a29e-e0cab9c456ce_valid.csv",
+        "junk_file": "uploads\\a24bac48-e5df-4588-a29e-e0cab9c456ce_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z (1).xlsx",
+        "upload_time": "2026-02-28 10:52:34",
+        "total_rows": 2762,
+        "valid_rows": 93,
+        "junk_rows": 2669,
+        "valid_file": "uploads\\5d49733e-e499-4634-a564-80f98c72c810_valid.csv",
+        "junk_file": "uploads\\5d49733e-e499-4634-a564-80f98c72c810_junk.csv"
+    },
+    {
+        "file_name": "EB_METER_2026-02-09T10_24_16.133Z (1).xlsx",
+        "upload_time": "2026-02-28 10:59:03",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\d8c977a4-4463-4691-b79f-764f8c9ecfad_valid.csv",
+        "junk_file": "uploads\\d8c977a4-4463-4691-b79f-764f8c9ecfad_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z (1).xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2026-02-27",
+        "upload_time": "2026-02-28 11:58:42",
+        "total_rows": 2762,
+        "valid_rows": 93,
+        "junk_rows": 2669,
+        "valid_file": "uploads\\8af8c861-f0fa-4db7-a270-6a2bd81cbfea_valid.csv",
+        "junk_file": "uploads\\8af8c861-f0fa-4db7-a270-6a2bd81cbfea_junk.csv"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z (1).xlsx",
+        "form_type": "OD Operation",
+        "selected_date": "2025-05-07",
+        "upload_time": "2026-02-28 12:12:26",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\db34daa8-a842-4f3f-8244-ce029bc7a099_valid.csv",
+        "junk_file": "uploads\\db34daa8-a842-4f3f-8244-ce029bc7a099_junk.csv"
+    },
+    {
+        "file_name": "EB_METER_2026-02-09T10_24_16.133Z (1) (1).xlsx",
+        "form_type": "Site Survey Checklist",
+        "selected_date": "2025-05-23",
+        "upload_time": "2026-02-28 12:32:17",
+        "total_rows": 434,
+        "valid_rows": 0,
+        "junk_rows": 434,
+        "valid_file": "uploads\\8090306a-1b95-4b10-a72a-0a30524a4cdc_valid.csv",
+        "junk_file": "uploads\\8090306a-1b95-4b10-a72a-0a30524a4cdc_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2026-02-04",
+        "upload_time": "2026-02-28 13:25:36",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\ef4ce2a2-cb81-42e9-8079-1aae0e185099_valid.csv",
+        "junk_file": "uploads\\ef4ce2a2-cb81-42e9-8079-1aae0e185099_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2026-02-04",
+        "upload_time": "2026-02-28 13:25:38",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\49efd60b-1b9c-43df-8355-8cfea4125ba3_valid.csv",
+        "junk_file": "uploads\\49efd60b-1b9c-43df-8355-8cfea4125ba3_junk.csv"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z (1).xlsx",
+        "form_type": "Site Survey Checklist",
+        "selected_date": "2026-02-27",
+        "upload_time": "2026-02-28 15:07:06",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\e4d8fa8f-3c90-4763-b3f0-2233462e01c6_valid.csv",
+        "junk_file": "uploads\\e4d8fa8f-3c90-4763-b3f0-2233462e01c6_junk.csv"
+    },
+    {
+        "file_name": "LEAVE_FORM_2026-02-09T10_20_35.344Z (1).xlsx",
+        "form_type": "Leave Form",
+        "selected_date": "2026-02-21",
+        "upload_time": "2026-02-28 15:08:18",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\781b4471-6479-4175-910b-5278270cebaf_valid.csv",
+        "junk_file": "uploads\\781b4471-6479-4175-910b-5278270cebaf_junk.csv"
+    },
+    {
+        "file_name": "LEAVE_FORM_2026-02-09T10_20_35.344Z (1).xlsx",
+        "form_type": "Leave Form",
+        "selected_date": "2026-02-21",
+        "upload_time": "2026-02-28 15:08:58",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\8adf8f1e-484b-4ae5-8bf4-7fd404651201_valid.csv",
+        "junk_file": "uploads\\8adf8f1e-484b-4ae5-8bf4-7fd404651201_junk.csv"
+    },
+    {
+        "file_name": "AQUISITION_FTTH_2026-02-09T10_22_08.806Z (1).xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2026-02-08",
+        "upload_time": "2026-02-28 15:09:42",
+        "total_rows": 88,
+        "valid_rows": 0,
+        "junk_rows": 88,
+        "valid_file": "uploads\\de9890ba-00e7-4579-9620-8b17f0b731cb_valid.csv",
+        "junk_file": "uploads\\de9890ba-00e7-4579-9620-8b17f0b731cb_junk.csv"
+    },
+    {
+        "file_name": "EB_METER_2026-02-09T10_24_16.133Z (1) (1).xlsx",
+        "form_type": "EB Meter Form",
+        "selected_date": "2026-02-20",
+        "upload_time": "2026-02-28 17:05:26",
+        "total_rows": 434,
+        "valid_rows": 0,
+        "junk_rows": 434,
+        "valid_file": "uploads\\1daa9e5d-61f6-4fa1-b5f5-b8933e540ec8_valid.csv",
+        "junk_file": "uploads\\1daa9e5d-61f6-4fa1-b5f5-b8933e540ec8_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2026-02-23",
+        "upload_time": "2026-02-28 17:18:24",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\8b8baebf-f347-4db0-8258-4eab948a816b_valid.csv",
+        "junk_file": "uploads\\8b8baebf-f347-4db0-8258-4eab948a816b_junk.csv"
+    },
+    {
+        "file_name": "AQUISITION_FTTH_2026-02-09T10_22_08.806Z (1).xlsx",
+        "form_type": "FTTH Acquisition Form",
+        "selected_date": "2026-02-02",
+        "upload_time": "2026-02-28 17:19:27",
+        "total_rows": 88,
+        "valid_rows": 0,
+        "junk_rows": 88,
+        "valid_file": "uploads\\19cf3f65-8b00-46c2-8bc3-cee6958aabf6_valid.csv",
+        "junk_file": "uploads\\19cf3f65-8b00-46c2-8bc3-cee6958aabf6_junk.csv"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z.xlsx",
+        "form_type": "OD Survey Form",
+        "selected_date": "2025-02-02",
+        "upload_time": "2026-02-28 17:20:03",
+        "total_rows": 132,
+        "valid_rows": 0,
+        "junk_rows": 132,
+        "valid_file": "uploads\\1bc4a782-eab0-4d6b-bd1d-8adcc1d3c3d4_valid.csv",
+        "junk_file": "uploads\\1bc4a782-eab0-4d6b-bd1d-8adcc1d3c3d4_junk.csv"
+    },
+    {
+        "file_name": "SITE_SURVEY_CHECKLIST_2026-02-09T10_23_08.524Z.xlsx",
+        "form_type": "Site Survey Checklist",
+        "selected_date": "2026-02-10",
+        "upload_time": "2026-02-28 17:32:36",
+        "total_rows": 132,
+        "valid_rows": 0,
+        "junk_rows": 132,
+        "valid_file": "uploads\\8ac2ed29-bfa4-4a45-b8f5-86f5c464105c_valid.csv",
+        "junk_file": "uploads\\8ac2ed29-bfa4-4a45-b8f5-86f5c464105c_junk.csv"
+    },
+    {
+        "file_name": "AQUISITION_FTTH_2026-02-09T10_22_08.806Z (1).xlsx",
+        "form_type": "FTTH Acquisition Form",
+        "selected_date": "2026-02-19",
+        "upload_time": "2026-02-28 17:36:33",
+        "total_rows": 88,
+        "valid_rows": 0,
+        "junk_rows": 88,
+        "valid_file": "uploads\\aa8a2eaa-a29b-446e-83eb-ef2c533b4866_valid.csv",
+        "junk_file": "uploads\\aa8a2eaa-a29b-446e-83eb-ef2c533b4866_junk.csv"
+    },
+    {
+        "file_name": "od_operation_valid.xlsx",
+        "form_type": "OD Operation Form",
+        "selected_date": "2025-02-09",
+        "upload_time": "2026-02-28 17:37:00",
+        "total_rows": 0,
+        "valid_rows": 0,
+        "junk_rows": 0,
+        "valid_file": "uploads\\930f6300-dd0c-4691-8843-e613e2922772_valid.csv",
+        "junk_file": "uploads\\930f6300-dd0c-4691-8843-e613e2922772_junk.csv"
+    },
+    {
+        "file_name": "EB_METER_2026-02-09T10_24_16.133Z (1) (1).xlsx",
+        "form_type": "EB Meter Form",
+        "selected_date": "2026-02-19",
+        "upload_time": "2026-02-28 17:37:26",
+        "total_rows": 434,
+        "valid_rows": 0,
+        "junk_rows": 434,
+        "valid_file": "uploads\\78c737ee-6b24-4026-9002-cadf61d27c06_valid.csv",
+        "junk_file": "uploads\\78c737ee-6b24-4026-9002-cadf61d27c06_junk.csv"
+    },
+    {
+        "file_name": "LEAVE_FORM_2026-02-09T10_20_35.344Z (1).xlsx",
+        "form_type": "Leave Form",
+        "selected_date": "2026-02-13",
+        "upload_time": "2026-02-28 17:37:54",
+        "total_rows": 4,
+        "valid_rows": 3,
+        "junk_rows": 1,
+        "valid_file": "uploads\\91a5a09c-61e5-4e0d-8eb4-63e2a4e811c1_valid.csv",
+        "junk_file": "uploads\\91a5a09c-61e5-4e0d-8eb4-63e2a4e811c1_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 17:45:07",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\96caabd1-0d58-4cdf-ae80-cb5c3dee22c3_valid.csv",
+        "junk_file": "uploads\\96caabd1-0d58-4cdf-ae80-cb5c3dee22c3_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z (1).xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-25",
+        "upload_time": "2026-02-28 17:49:15",
+        "total_rows": 2762,
+        "valid_rows": 93,
+        "junk_rows": 2669,
+        "valid_file": "uploads\\c73fbd6b-944d-4801-bc4c-4d56abe42a9f_valid.csv",
+        "junk_file": "uploads\\c73fbd6b-944d-4801-bc4c-4d56abe42a9f_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 17:49:39",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\699b60bf-f711-4aa4-9ea4-49bf6591a407_valid.csv",
+        "junk_file": "uploads\\699b60bf-f711-4aa4-9ea4-49bf6591a407_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 17:54:19",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\2ba2f3a0-d8f7-41de-8a64-aedd3fc99113_valid.csv",
+        "junk_file": "uploads\\2ba2f3a0-d8f7-41de-8a64-aedd3fc99113_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 17:58:49",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\b43f5360-f9ed-4225-93ac-18e2c6dafdee_valid.csv",
+        "junk_file": "uploads\\b43f5360-f9ed-4225-93ac-18e2c6dafdee_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 18:04:39",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\5b582b55-f12f-43f2-8b47-635ab6bfd518_valid.csv",
+        "junk_file": "uploads\\5b582b55-f12f-43f2-8b47-635ab6bfd518_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 18:08:44",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\2d004ae2-201c-4c54-b69e-5de242aa67f6_valid.csv",
+        "junk_file": "uploads\\2d004ae2-201c-4c54-b69e-5de242aa67f6_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 18:13:10",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\3ca8e7e1-821f-45c2-9254-1fffab2056f8_valid.csv",
+        "junk_file": "uploads\\3ca8e7e1-821f-45c2-9254-1fffab2056f8_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-02-28 18:14:46",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\c3c9c724-707f-4230-ab82-e8c587d9e223_valid.csv",
+        "junk_file": "uploads\\c3c9c724-707f-4230-ab82-e8c587d9e223_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-03-02 11:11:29",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\ad519683-830b-4635-9833-5cc90891e58e_valid.csv",
+        "junk_file": "uploads\\ad519683-830b-4635-9833-5cc90891e58e_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-03-02 11:24:32",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\6d65ad9c-1819-4642-afa1-40b48a5360b2_valid.csv",
+        "junk_file": "uploads\\6d65ad9c-1819-4642-afa1-40b48a5360b2_junk.csv"
+    },
+    {
+        "file_name": "MEETING_FORM_2026-02-09T10_18_19.913Z.xlsx",
+        "form_type": "Meeting Form",
+        "selected_date": "2025-03-20",
+        "upload_time": "2026-03-02 12:04:53",
+        "total_rows": 2762,
+        "valid_rows": 1716,
+        "junk_rows": 1046,
+        "valid_file": "uploads\\22143d6a-19d2-40c8-9280-e1f9e960773c_valid.csv",
+        "junk_file": "uploads\\22143d6a-19d2-40c8-9280-e1f9e960773c_junk.csv"
+    }
+]

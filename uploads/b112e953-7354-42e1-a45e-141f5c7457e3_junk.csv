@@ -1,0 +1,290 @@
+name,id,user name,description of meeting,whome to meet,designation,circle,city,type of meeting,operator name,id (meeting_form_id),site name,location,remarks,outcome of meeting,next follow up date,createddate,modifieddate,createduser,modifieduser,remark,validation_errors,status
+0b70d72f-5b95-46d4-88bb-f7db17368842,1616e692-c1d1-4e1c-8194-cefd3e3a488e,suresh_st,site review,satish,circle head,Karnataka,Bangalore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.6130889,
+    12.9712623
+  ]
+}",review done,need to plan for so,02/09/2026 12:50:00,02/06/2026 12:51:24,02/06/2026 12:51:24,suresh_st,suresh_st,,site name blank,Invalid
+2707d90e-ee35-4a2b-924f-d5c6496dc68b,804224c7-c4f5-4fa0-a0e8-e9124610d6cc,suresh_st,rf feasibility,madhu,planning manager,Karnataka,banglore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.5195064,
+    12.7946114
+  ]
+}",rf feasibility given,need to send sp,02/06/2026 16:08:00,02/05/2026 16:09:08,02/05/2026 16:09:08,suresh_st,suresh_st,,site name blank,Invalid
+efe174ee-5d91-426b-94d8-8696846320cb,ae77a9bf-8d4f-4ca4-ab96-4d263f3fdb30,suresh_st,site visit sonesta silver oak,rajesh,appartment manager,Karnataka,banglore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.7206566,
+    12.9477082
+  ]
+}",site condition taken,need to discuss with VIL for 9 mtr,02/06/2026 09:43:00,02/04/2026 09:43:58,02/04/2026 09:43:58,suresh_st,suresh_st,,site name blank,Invalid
+2b6dab8e-e419-4d28-9544-3a7b5e57efe4,0a315b22-7b0c-4be9-8559-0a6b046779af,suresh_st,wfo,satish megraj,circle head,Karnataka,banglore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.5195076,
+    12.7945749
+  ]
+}",month planning,review dine,02/06/2026 16:10:00,02/03/2026 16:10:54,02/03/2026 16:10:54,suresh_st,suresh_st,,site name blank,Invalid
+04cee5d1-99c6-4800-a0f5-db71f17218ba,ccf3006f-ffd6-45e5-8f15-d6a562e930b0,suresh_st,review,bidhyadhar,hod,Karnataka,Bangalore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.6158306,
+    12.973048
+  ]
+}",review meeting,done,02/02/2026 12:49:00,01/31/2026 12:49:58,01/31/2026 12:49:58,suresh_st,suresh_st,,site name blank,Invalid
+067e56d1-07a3-420d-80a9-1e5aa73355f7,d6689274-517a-4c7a-8732-35a3c1482170,suresh_st,meeting with bsnl,dinesh,manager,Karnataka,banglore,ILL,BSNL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.5841057,
+    12.9238052
+  ]
+}",lifi,lifi technology,01/31/2026 09:44:00,01/30/2026 09:45:16,01/30/2026 09:45:16,suresh_st,suresh_st,,site name blank,Invalid
+455a8cd7-1b96-4726-95c5-29c9005cf3df,b8ebc0e5-a30d-411f-8f9d-fab302129d1d,suresh_st,dn -cn reconciliation,yogesh and aman,credit manager,Karnataka,Bangalore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.6412109,
+    12.9519271
+  ]
+}",cn and dn reconciliation done,need to send cn,01/30/2026 11:47:00,01/29/2026 11:47:57,01/29/2026 11:47:57,suresh_st,suresh_st,,site name blank,Invalid
+cfc9eb7a-e5e9-4e45-b61f-c6a1dee3454e,ec891775-a96a-4b39-aa43-2620b4374ce3,suresh_st,vendor allocation,satish megraj,circle head,Karnataka,banglore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.6137822,
+    12.9735713
+  ]
+}",allocation done,all new nominals mapping done,01/24/2026 14:35:29,01/21/2026 14:36:33,01/21/2026 14:36:33,suresh_st,suresh_st,,site name blank,Invalid
+9c27fef7-73fe-49ad-8718-7d47485d281a,0959e9d0-5395-45cc-b67a-4edd883db960,suresh_st,regarding SR and SO,mahulima,ip manager,Karnataka,banglore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.6411912,
+    12.9517944
+  ]
+}",so and nominals given,so given,01/23/2026 12:35:59,01/20/2026 12:36:35,01/20/2026 12:36:35,suresh_st,suresh_st,,site name blank,Invalid
+b191c24f-7f74-45d1-b61b-72211bb0f4d6,9ccc3251-8309-45c4-9e05-d00e281e65a8,raghvendra_st,White orchid VIL offline SR visit,Manager,Asset manager,Delhi,,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.424345,
+    28.61937
+  ]
+}",,Under discussion,01/18/2026 11:50:56,01/15/2026 11:51:46,01/15/2026 11:51:46,raghvendra_st,raghvendra_st,,site name blank,Invalid
+162e4c77-5969-44e0-a554-fada25ea191c,2b63492c-143e-4304-8d7c-838c0fb0f97e,raghvendra_st,offline nominal option search,,Owner,Delhi,,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.38374,
+    28.6096783
+  ]
+}",,DTA,02/04/2026 09:17:46,01/15/2026 09:18:13,01/15/2026 09:18:13,raghvendra_st,raghvendra_st,,site name blank,Invalid
+a18dbe64-e4cf-432f-b0f4-c722732cc2b6,cde91fb3-aa6f-4431-a29d-932626a0687a,raghvendra_st,"new site Site Number 3: Nominal: 28.60987	/77.38345
+
+Airtel Site: 28.6103/ 77.3829 ( Address: A-112,Sec-65,Noida)",anil,Security,delhi,,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.433102,
+    28.5955247
+  ]
+}",,"offline SR visit Site Number 3: Nominal: 28.60987	/77.38345
+
+Airtel Site: 28.6103/ 77.3829 ( Address: A-112,Sec-65,Noida)",01/15/2026 08:18:55,01/14/2026 08:20:48,01/14/2026 08:20:48,raghvendra_st,raghvendra_st,,site name blank,Invalid
+74cb27c2-0d55-4e81-8c2f-94b4aba2ffe0,23898339-ca8e-4f97-bc4e-f1ba3c00232b,raghvendra_st,New site search offline SR,,,Delhi,,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.3514517,
+    28.6429967
+  ]
+}",,Under searching multi owner low rise building,01/14/2026 07:03:52,01/14/2026 07:04:49,01/14/2026 07:04:49,raghvendra_st,raghvendra_st,,site name blank,Invalid
+1094c6fb-889c-4a9c-a170-93186e3552b4,88b87a57-fb84-4048-9cd0-e9f8e0b94a97,raghvendra_st,New option search offline sr,,,,,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.4221083,
+    28.6224167
+  ]
+}",,Under searching,01/15/2026 06:24:05,01/14/2026 06:24:28,01/14/2026 06:24:28,raghvendra_st,raghvendra_st,,site name blank,Invalid
+d250de19-b7a7-4481-8d1d-4c4962d9272b,38f88ee7-c387-4203-a0f4-cb5c3935d087,suresh_st,rf feasibility,madhu,rf planning Engineer,Karnataka,Bangalore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.6413597,
+    12.9518479
+  ]
+}",rf feasibility discussion,rf feasibility given,01/08/2026 12:11:43,01/06/2026 12:13:03,01/06/2026 12:13:03,suresh_st,suresh_st,,site name blank,Invalid
+5961a3bc-5eba-4729-9df8-0ee548bcb68a,9c3a4164-1b04-4716-b022-e288a9f37825,suresh_st,discussion regarding nominals,harpcomm infra,partner,Karnataka,Bangalore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.552507,
+    13.0021206
+  ]
+}",discussion regarding nominals to taken by harpcom,ensured to provide,01/05/2026 12:49:33,01/02/2026 15:16:25,01/02/2026 15:16:25,suresh_st,suresh_st,,site name blank,Invalid
+4ba166f7-0a23-4890-8c5f-05449fb5c298,8aabb153-b7b8-493c-ad54-b96d2432ba24,raghvendra_st,Prakash hospital,Admin Head,Administration,Delhi,,IBS,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.3509812,
+    28.5832211
+  ]
+}",Under discussion,Under discussion,01/02/2026 05:06:06,01/02/2026 05:07:40,01/02/2026 05:07:40,raghvendra_st,raghvendra_st,,site name blank,Invalid
+292a5644-89d7-40af-ab42-7acbe7bbe3cc,63595cff-f12b-40bc-9407-76e73f94bd0d,suresh_st,Jan month plan,satish megraj,circle head,Karnataka,Bangalore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.5195087,
+    12.7945452
+  ]
+}",plan created,review meeting for month planand finalized the funnel,01/07/2026 15:27:11,01/01/2026 15:27:56,01/01/2026 15:27:56,suresh_st,suresh_st,,site name blank,Invalid
+417c16e3-abd6-492e-b8fd-4a2b701c4ccd,a0ee839c-83b5-47f8-8734-bfb4cfbf4bb8,rajesh_sts,Handover,Sandeep Rana,BDM,UPEAST,Lucknow,Mobility,VIL,27,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    81.0101833,
+    26.8678917
+  ]
+}",okay,Okay,12/23/2025 06:45:24,12/22/2025 06:46:02,12/22/2025 06:46:02,rajesh_sts,rajesh_sts,,site name blank,Invalid
+49929a30-94cb-4811-8ce9-b34792797197,9c3a35fc-445e-4e64-9b53-f17f7fa7f8ab,suresh_st,weekly review meeting,satish megraj,circle head,Karnataka,Bangalore,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.6131027,
+    12.9712696
+  ]
+}",done,planned for achieve monthly targets,12/22/2025 12:10:47,12/19/2025 12:12:08,12/19/2025 12:12:08,suresh_st,suresh_st,,site name blank,Invalid
+cc8f5671-d743-405b-8677-1085fca0128b,794146ae-6dce-4aaf-a516-e49ea0c166d9,sandeep_st,Meeting for New SR,Mr.Vijay Kumar,AGM Projects,UP-East,Lucknow,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    81.0088936,
+    26.8671617
+  ]
+}",,Meeting done he told Relocation sites are still on hold,12/23/2025 10:09:00,12/18/2025 10:10:07,12/18/2025 10:10:07,sandeep_st,sandeep_st,,site name blank,Invalid
+3919ce17-a697-491f-b04b-93a280fff3ea,a453d149-b7d2-4de5-bbee-c12e14adabf1,raghvendra_st,Notary stamp,Notary stamp,,Delhi,Noida,Other,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    77.4440517,
+    28.5798261
+  ]
+}",Notary done,Notary done,12/17/2025 12:09:18,12/17/2025 12:10:07,12/17/2025 12:10:07,raghvendra_st,raghvendra_st,,site name blank,Invalid
+4f8aa650-2f86-449b-961a-b487ef4762f6,d1189424-e491-4291-a300-fa5279a8e1b2,suresh_st,RF feasibility,madhu,rf manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6171552,12.9726973]}",submitted for RF feasibility,cleared 2 sites,12/17/2025 12:42:21,12/16/2025 12:42:51,12/16/2025 12:42:51,suresh_st,suresh_st,,site name blank,Invalid
+96592ba3-4b48-42d8-8409-65de95d85821,51fb0f6d-6511-4e5c-b882-67d04069d233,suresh_st,enhancement of wifi,venkat,assistant vice president,Karnataka,Karnataka,ILL,ISP,,,"{""type"":""Point"",""coordinates"":[77.9714736,13.0948024]}",disscused regarding 100 mbps wifi,need to provide,12/17/2025 12:05:14,12/15/2025 12:05:26,12/15/2025 12:05:26,suresh_st,suresh_st,,site name blank,Invalid
+2b3e524f-27ba-41f8-8542-ff1939f46eb0,f352f8ba-82e3-4a79-94c8-20d8686ace32,satish_st,channel partner signoff,Pradeep,proprietor,Karnataka,narsapura,Other,ISP,,,"{""type"":""Point"",""coordinates"":[77.9828103,13.0990408]}",discussion regarding channel partner,signed aggreement follow up For leads,12/17/2025 12:00:23,12/15/2025 12:00:52,12/15/2025 12:00:52,satish_st,satish_st,,site name blank,Invalid
+5e41fe38-c461-4d72-9588-2146370a1444,99e907eb-9838-43d5-a23f-ab13c1884fac,satish_st,wifi enhancement and servey,venkat,indospace Assistant Vice president,Karnataka,Hoskote narsapura,ILL,VIL,,,"{""type"":""Point"",""coordinates"":[77.9714998,13.0947088]}",explained and servey completed,need to provide 100 mbps internet,12/17/2025 11:57:21,12/15/2025 11:57:52,12/15/2025 11:57:52,satish_st,satish_st,,site name blank,Invalid
+d06f3e8c-aa8c-4e7a-b222-ac91580e5f6c,4c4a809a-c685-4c6b-98a9-9c5547b3fe9e,sibayan_st,Channel Visit Capslock Solution,Puspendu,Channel Partner,Kolkata,Kolkata,Other,ISP,Sibayan Kolkata,,"{""type"":""Point"",""coordinates"":[88.3774135,22.5151113]}",Channel Partner Visit,Lead Generations,12/20/2025 13:22:00,12/13/2025 13:23:05,12/13/2025 13:23:05,sibayan_st,sibayan_st,,site name blank,Invalid
+d5aafe3d-6272-4337-b15c-c66504594015,76a6dee4-c204-479d-b2ce-c9088fa476c1,suresh_st,meeting with partner Harpcom,Balaji,proprietor,Karnataka,Bangalore,Mobility,Airtel,,,"{""type"":""Point"",""coordinates"":[77.613111,12.9712828]}",discussion regarding airtel and jio nominals and introduction to the management,assured to provide link to get sites from Airtel ibs +od,12/17/2025 09:00:42,12/13/2025 09:02:29,12/13/2025 09:02:29,suresh_st,suresh_st,,site name blank,Invalid
+d7857971-29b2-443d-9e93-de4244b44946,3a9577e5-b16e-47db-81f4-d5a0503c1148,suresh_st,rf feasibility,madhu,rf manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6412784,12.9519585]}",feasibility given,so need to be submitted,12/15/2025 11:37:44,12/12/2025 11:38:20,12/12/2025 11:38:20,suresh_st,suresh_st,,site name blank,Invalid
+9d9328fa-ef72-4c56-a647-6ac01f92ccdc,6210feca-9440-4dad-9248-e9052b6b1e5a,suresh_st,enterprises meeting,Deepak Nadar,HOD enterprises,pan india,Bangalore,Other,VIL,,,"{""type"":""Point"",""coordinates"":[77.6130999,12.9712865]}",training done,alligned to get channel partner,12/13/2025 13:24:49,12/11/2025 13:25:24,12/11/2025 13:25:24,suresh_st,suresh_st,,site name blank,Invalid
+bb086597-b30d-4064-b1f4-66f8977b930e,b46fb7c2-80c4-4463-ae88-85a2d21c8dcd,suresh_st,rf clearance,anil Mishra,planning manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6413299,12.9519376]}",rf clearance given,2 sites on hold it will be done,12/09/2025 10:00:51,12/08/2025 15:36:50,12/08/2025 15:36:50,suresh_st,suresh_st,,site name blank,Invalid
+24eb9000-8716-495e-beb1-e869fbee2a00,09d05290-8a55-4567-90b0-779d0e8c8d30,suresh_st,rf feasibility discussion,anil Mishra,planning manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6413062,12.9519337]}",discussion regarding the rf,it will be cleared tomorrow,12/08/2025 14:05:50,12/05/2025 14:06:10,12/05/2025 14:06:10,suresh_st,suresh_st,,site name blank,Invalid
+76ba3292-683b-4354-bcee-3cbc1892d294,4fe199fe-f4d2-4b17-9c8b-dfe8f08b9c0f,suresh_st,rf feasibility,anil Mishra,rf planning manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6130874,12.9712552]}",need to evaluate told to come tomorrow,informed it will be cleared by tomorrow,12/05/2025 12:32:03,12/04/2025 12:33:48,12/04/2025 12:33:48,suresh_st,suresh_st,,site name blank,Invalid
+57d29f0e-6179-4a20-83dd-5ce7a70dd764,2575b4c2-aa29-417b-bced-7eb4f5f82901,raghvendra_st,Acquisition,Akhtar,Owner,Delhi,Delhi,Mobility,VIL,0508,,"{""type"":""Point"",""coordinates"":[77.2877467,28.75024]}",Under discussion,Under discussion,12/03/2025 07:22:43,12/02/2025 07:24:56,12/02/2025 07:24:56,raghvendra_st,raghvendra_st,,site name blank,Invalid
+f69a3118-30ff-45ec-a68d-a3b387d0049b,2a2005ea-516b-4261-b9a7-990703298197,suresh_st,month target review meeting,satish megraj,circle head,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6131214,12.9713163]}",target fixed,plan for December created,12/03/2025 13:30:36,12/01/2025 13:31:44,12/01/2025 13:31:44,suresh_st,suresh_st,,site name blank,Invalid
+72fb29a8-ee78-46fe-a62f-4dd78b61bfac,1c391620-1acf-4688-9f6e-aee53cb08986,raghvendra_st,LOI followup 0508,Akhtar,Owner,Delhi,Delhi,Mobility,VIL,0508,,"{""type"":""Point"",""coordinates"":[77.2892625,28.7501135]}",Owner will revert after faimly discussion,tomorrow,12/02/2025 07:19:05,12/01/2025 07:19:49,12/01/2025 07:19:49,raghvendra_st,raghvendra_st,,site name blank,Invalid
+d9e6033e-e5ac-472c-9132-f276c2e51732,767e228c-eee0-4050-bd5a-5287f5de2a26,suresh_st,discussion on nominals,mahulima,ip manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6413465,12.9519106]}",nominal discussion,10 SR Received,12/03/2025 13:20:26,11/27/2025 13:21:04,11/27/2025 13:21:04,suresh_st,suresh_st,,site name blank,Invalid
+57a7f3dc-509b-4fda-96eb-b4032d901011,1ba1a3e6-4b9b-4b11-b7c6-46e9268f026a,suresh_st,nominal discussion,anil Mishra,rf planning manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6412022,12.9519489]}",disscused regarding nominals,assured to provide new SR,11/24/2025 12:25:50,11/21/2025 12:26:25,11/21/2025 12:26:25,suresh_st,suresh_st,,site name blank,Invalid
+61b521af-632c-48d7-9b55-0eaa423c282b,4e273709-ec62-49f9-866d-3bf008075ed6,raghvendra_st,Noida sec 113 Thana for FIR,,,Delhi,Noida,Other,VIL,sec 74,,"{""type"":""Point"",""coordinates"":[77.4022217,28.60495]}",Not taken complain due to no proper detail,,11/21/2025 07:21:54,11/21/2025 07:22:46,11/21/2025 07:22:46,raghvendra_st,raghvendra_st,,site name blank,Invalid
+dab379fa-750c-48ee-b60c-f88a04130389,325e9a7f-76b6-487f-b329-5e156382b96e,suresh_st,work progress,mahesh sir,CEO,pan india,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6131135,12.9713619]}",discussion regarding work progress,explained how to resolve problems in the field,11/21/2025 11:46:39,11/20/2025 11:47:14,11/20/2025 11:47:14,suresh_st,suresh_st,,site name blank,Invalid
+86694f78-ac63-4ebc-90d3-babc9fbf7715,758af2af-af31-42b1-b084-3645e74bf854,suresh_st,recco for ipl event in indospace,Karthikeyan,manager,Karnataka,Bangalore,Other,ISP,,,"{""type"":""Point"",""coordinates"":[77.5195583,12.7946565]}",disscused regarding Event,explained about the event,11/20/2025 14:18:56,11/18/2025 14:19:23,11/18/2025 14:19:23,suresh_st,suresh_st,,site name blank,Invalid
+a33823ae-2eaf-4b35-b8fb-316ced3628e7,25c781a3-818b-416e-bd96-f278cebda6f8,sandeep_st,Meeting for IPTV Bucketing alongwith Broadband,Mr.Ratnesh,SCM Team,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0082462,26.8634872]}",,"Meeting done he told IPTV scope comes under Bharti Telemedia whereas Boradband is under Bharti Airtel, we need to get an agreement with Bharti Telemedia",11/14/2025 07:26:47,11/13/2025 07:27:24,11/13/2025 07:27:24,sandeep_st,sandeep_st,,site name blank,Invalid
+463193a3-ca65-4e47-9ed4-8e9fedd66a69,6ca79090-d361-4c63-b5c0-ec798886435e,HCQCHM_MEETING_FORM,KKD court,Lordship 003,Judge,Delhi,Delhi,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.3025083,28.65666]}",Under negotiation,under negotiation,12/01/2025 07:19:51,11/13/2025 07:21:03,11/13/2025 07:21:03,raghvendra_st,raghvendra_st,,site name blank,Invalid
+1fd6079d-990d-446f-8902-121acf90001a,9fb2e121-21b9-4da5-bb34-29f8fd4dbd11,sandeep_st,Meeting for Site Validation and AGL confirmation,Mrs.Urvashi Agrawal,Planning Team,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0089175,26.86777]}",,"Meeting done she told AGL Below 25 Meters, shifted nominals taken against not feasible site",11/12/2025 10:32:22,11/11/2025 10:33:14,11/11/2025 10:33:14,sandeep_st,sandeep_st,,site name blank,Invalid
+d594b8cd-6389-46e3-bab3-c21d683dd3a3,15a1164b-2142-45d3-abd8-753420aca2f1,sandeep_st,Meeting for re creation of Airtel Work ID and OLM ID,Mr.Deepak Verma,HDO Head,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0084677,26.8636973]}",,Meeting done he told he will discuss with SCM Team and update us,11/13/2025 09:16:53,11/11/2025 09:17:33,11/11/2025 09:17:33,sandeep_st,sandeep_st,,site name blank,Invalid
+ec13e1ac-d4e3-4bac-8d15-27a4464a7e06,1b15b6f5-020d-41e7-b3e6-dd46e79b29e0,sandeep_st,Meeting for Update on allocated SR and New SR allocations,Mr.Vijay Kumar,AGM Projects,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0103688,26.8404168]}",,Meeting done he told to share SP of cleared site and he told he will do Reco in this week and allocate more SRs,11/13/2025 16:23:53,11/10/2025 16:24:49,11/10/2025 16:24:49,sandeep_st,sandeep_st,,site name blank,Invalid
+83e21073-37d1-4ade-8465-8dfaccfdd59c,3f3bea9c-d8ca-4c66-9c55-dc45ede93a7e,suresh_st,invoice DN reco,aman dubey,finance manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6411807,12.9517711]}",discussed regarding DN,need to provide RFS acceptance mail,11/12/2025 15:36:31,11/10/2025 15:37:08,11/10/2025 15:37:08,suresh_st,suresh_st,,site name blank,Invalid
+c7df2383-e531-4bd2-a7e0-d6beead343f1,d8b11397-cd24-4386-87c4-d18ed1901c1e,suresh_st,discussion regarding nominals,anil Mishra,rf planning manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6411819,12.9520705]}",discussed with current funnul,new nominals will be allocated,11/17/2025 09:53:47,11/07/2025 16:50:39,11/07/2025 16:50:39,suresh_st,suresh_st,,site name blank,Invalid
+acdad4f0-6574-427b-9c29-60d22e58b3d0,fbba76ec-ec7f-492b-905c-15e8585e37a9,suresh_st,discussion regarding SO,anil Mishra,rf planning manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.5736702,12.9545684]}",relased by Friday,given assurance,11/07/2025 13:36:22,11/05/2025 13:37:19,11/05/2025 13:37:19,suresh_st,suresh_st,,site name blank,Invalid
+2bf7b092-bbcc-477f-a1ac-c3170956e4fe,438e53d7-398d-482f-bb4e-783af3776aea,raghvendra_st,New offline Nominal,,,Delhi,Delhi,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.1872083,28.5672983]}","6th R,Hyatt Regency,Ministry of External Affairs, Passport Office,Central पेंशन Accounting office,Wild Life Crime control Bureau,EPFO office,MTNL office,PTC INDIA ,Ministry of finance,Competition commission of india",DTA,11/03/2025 09:34:01,11/03/2025 09:34:52,11/03/2025 09:34:52,raghvendra_st,raghvendra_st,,site name blank,Invalid
+d39d9926-6aaa-4625-92f3-48e1072aeb21,8af2066b-47f8-46d8-87f9-a91b54310a7a,raghvendra_st,New Nominal offline,,,Delhi,Delhi,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.2212089,28.622298]}","2nd R,NDMC Office, BSNL Office,पालिका सदन, पालिका Nikunj, अनंत Nayak MP लोक सभा,पालिका Nikunj Housing complex,पुत्तर Mahesh Kumar MP लोक sabha,Ajay Chaudhary IPS,Krishna प्रसाद Tenneti MP & IAS,GOVT school,Telecom engineering center,",DTA,11/03/2025 08:53:27,11/03/2025 08:54:27,11/03/2025 08:54:27,raghvendra_st,raghvendra_st,,site name blank,Invalid
+5e9140c6-f46f-44d1-836a-84d0f5cfc9bc,4db42c75-a4d1-43ba-b2ee-335c679b4fcd,suresh_st,November review,Satish megaraj,circle head,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.5162121,12.9033465]}",November funnel planned,November target set,11/03/2025 11:48:29,11/01/2025 11:49:46,11/01/2025 11:49:46,suresh_st,suresh_st,,site name blank,Invalid
+6c192ffb-1ebf-4bd6-9474-4b6a89ca862d,c7e824ca-3f9e-4782-bbad-412a03169ca5,sunilb_st,Weekly review,Ajinkya Narvekar,rf planning Engineer,mumbai,mumbai,Mobility,VIL,nA,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    72.8830243,
+    19.104857
+  ]
+}",,review done we have targeted 3 sites in this meeting,01/12/2026 08:44:12,01/05/2026 08:44:42,01/05/2026 08:44:42,sunilb_st,sunilb_st,,site name blank,Invalid
+2dcdf720-775e-442c-bbc9-5193a9d3a798,00936c3c-5211-4943-bf55-57332578beaa,suresh_st,dpr review,Sathish sir,circle head,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.5163494,12.9036707]}",alligned for November,dpr done,10/27/2025 12:53:15,10/25/2025 13:37:08,10/25/2025 13:37:08,suresh_st,suresh_st,,site name blank,Invalid
+97ee75bb-a056-4c3d-861b-3de4f8e7e09c,7a8ba0d2-6424-45c7-bda5-a84a54dcfc12,suresh_st,meeting with bsnl,bsnl  head,GM,Karnataka,Bangalore,IBS,BSNL,NMIMS,,"{""type"":""Point"",""coordinates"":[77.5700329,12.8957778]}",assured,assured to give buisness,10/23/2025 13:40:53,10/18/2025 13:41:30,10/18/2025 13:41:30,suresh_st,suresh_st,,site name blank,Invalid
+685c0523-887d-42f1-9490-626a1c96ff57,c175c37a-3851-43b0-81d8-8e5c5000473b,sandeep_st,Meeting for Diwali Greetings and UPW Airtel SR discussion,Mr.Ashish Mishra,Planning Team,UP-West,Lucknow,Mobility,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0450678,26.8956439]}",,Meeting done and discussed about pssoible SRs for UPW he told he will confirm post Diwali,10/24/2025 07:03:08,10/18/2025 07:03:56,10/18/2025 07:03:56,sandeep_st,sandeep_st,,site name blank,Invalid
+90f69828-3ac9-491c-9879-b65b013d2fef,9b9c1f2c-5feb-4ab3-8d51-6b00fa60bf4f,suresh_st,gift distribution,anil akhil yogesh,ip managers vil,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.519541,12.7946156]}",gift distribution done,gift distribution done,10/17/2025 15:28:14,10/17/2025 15:29:20,10/17/2025 15:29:20,suresh_st,suresh_st,,site name blank,Invalid
+ee45e69f-c023-4f94-bc78-da5c82941be6,efc308b1-f3b5-4b82-afe6-389acdd6b928,sandeep_st,Meeting for Diwali Greetings,Mr.Sumit Bajpai,O&M Head,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0075244,26.8677585]}",,"Meeting done, informed him about RMS installed at our sites resulting in low outages",10/23/2025 13:51:43,10/17/2025 13:52:14,10/17/2025 13:52:14,sandeep_st,sandeep_st,,site name blank,Invalid
+60b94a46-5a0e-4860-a19e-2719f78cd3f1,5a84ded4-8715-45e4-ae33-0c719cc0f631,sandeep_st,Meeting for Diwali Greetings,Mr.Amit Nokwal,AGM-Wireline,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.00875854492188,26.863431930541992]}",,Meeting done discussed about upcoming FTTH Buildings,10/23/2025 13:24:19,10/17/2025 13:24:57,10/17/2025 13:24:57,sandeep_st,sandeep_st,,site name blank,Invalid
+d0b174ed-35ee-41c1-87d0-99a282aadd4f,ba372b76-e352-44d2-8ad8-97912bc692b6,satish_st,gift distribution,akhil anil,ip manager,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6356193,12.9612315]}",,gift distribution done in vil,10/17/2025 12:00:54,10/17/2025 12:02:59,10/17/2025 12:02:59,satish_st,satish_st,,site name blank,Invalid
+b9157eb4-b604-48ce-b558-267bab83308f,76e81f18-eca0-4949-b1bf-b00d5b6c76e5,sandeep_st,Meeting for Kanpur Site Sharing,Mr.Shailendra Katiyar,Planning Team,UP-East,Lucknow,Mobility,BSNL,,,"{""type"":""Point"",""coordinates"":[80.9593344,26.8831085]}",,Meeting done he told meet post Diwali,10/23/2025 11:56:14,10/17/2025 11:56:47,10/17/2025 11:56:47,sandeep_st,sandeep_st,,site name blank,Invalid
+ab690242-6286-4e3b-bf40-5b6dcad4563b,ed98f723-ba69-403d-b528-4ddc86ab4c60,sandeep_st,Meeting for Diwali Greetings and OD site sharing,Mr.Abhinav Kumar,DGM MS,UP-East,Lucknow,Mobility,BSNL,,,"{""type"":""Point"",""coordinates"":[80.9593174,26.8831786]}",,"Meeting done discussed about our OD site sharing, he told currently they do not hardware",10/28/2025 11:37:23,10/17/2025 11:38:17,10/17/2025 11:38:17,sandeep_st,sandeep_st,,site name blank,Invalid
+fb01f38f-267b-4e6a-b7e1-ae0d80c84226,c5240dbe-4930-4799-9c34-e78cbe93f087,sandeep_st,Meeting for Diwali Greetings,Mr.Omji Ray,Planning Team,UP-East,Lucknow,Mobility,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0407684,26.8828043]}",,"Meeting done discussed about Kanpur sites, he told he has sent reminder mail to Center Planning today again",10/23/2025 16:06:01,10/16/2025 16:07:14,10/16/2025 16:07:14,sandeep_st,sandeep_st,,site name blank,Invalid
+7f910633-4f2a-4025-8efe-aea29f1b22f8,e7e69973-6481-48df-99e3-44c95c3a5537,sandeep_st,Meeting for Diwali Gifting,Mr.Vijay Kumar,AGM-Projects,UP-EAST,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0082746,26.8620336]}",,"Meeting done Diwali Gift given, discussed about relocation sites, he told he will check for some SRs",10/23/2025 14:43:57,10/16/2025 14:45:14,10/16/2025 14:45:14,sandeep_st,sandeep_st,,site name blank,Invalid
+ba13884b-7810-4fde-b376-987ca508dfe8,f4b79018-fc2a-4160-ab1a-24285c4dd7a9,sandeep_st,Meeting for Diwali Gifting,Mr.Siddharta Wasan,UP-East Maket Planning Head,UP-EAST,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0084078,26.8636261]}",,Meeting done and gift given,10/23/2025 13:48:38,10/16/2025 13:51:04,10/16/2025 13:51:04,sandeep_st,sandeep_st,,site name blank,Invalid
+24ef2be1-fe84-4c23-9656-e7c0968020f3,dba93ff3-8345-453f-a711-5462669c946f,sandeep_st,IMC 2025,Shaurrya Team,Colleagues,UP-East,Delhi,Other,Airtel,,,"{""type"":""Point"",""coordinates"":[77.150508,28.7552759]}",,Successfully attended IMC met teammates and operators,10/13/2025 14:03:49,10/11/2025 14:04:28,10/11/2025 14:04:28,sandeep_st,sandeep_st,,site name blank,Invalid
+e6a6be46-bf63-47cf-bc8c-91e60866e945,5c4a9860-e975-4588-9059-426ede760cc9,raghvendra_st,Yashobhoomi,pankaj,Deployment,Delhi,Delhi,Other,VIL,,,"{""type"":""Point"",""coordinates"":[77.1748083,28.6124167]}",For vendor issue resolution,Meeting plan on monday for clarification,10/11/2025 10:53:52,10/11/2025 10:54:33,10/11/2025 10:54:33,raghvendra_st,raghvendra_st,,site name blank,Invalid
+fc259ce9-c16b-4ba7-a684-730793837f67,f2539006-adc9-48f0-8357-85b95a48e176,suresh_st,warehouse,santhosh,new warehouse owner,Karnataka,Bangalore,Other,VIL,,,"{""type"":""Point"",""coordinates"":[77.5195088,12.7946115]}",documents collected,documents collected,10/13/2025 16:15:15,10/09/2025 16:15:55,10/09/2025 16:15:55,suresh_st,suresh_st,,site name blank,Invalid
+bd4089f9-acb4-4c87-8c32-7d4ed004b917,b4d51e58-a6d1-45d1-8764-381c2de4d89c,suresh_st,lease line solution,LR international school,proprietor,Karnataka,Bengaluru,ILL,ISP,,,"{""type"":""Point"",""coordinates"":[77.6793727,12.9776634]}",good interaction,survey planned,10/13/2025 08:44:30,10/07/2025 08:45:40,10/07/2025 08:45:40,suresh_st,suresh_st,,site name blank,Invalid
+e2f2deb9-7eab-4fb1-a49e-c85c92b126ed,9d61a219-8d30-4664-bbf5-ad56b615971b,suresh_st,internal meeting,Satish megaraj,circle head,Karnataka,Bengaluru,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.6191869,12.9749903]}",done,planned for week,10/10/2025 11:34:45,10/06/2025 11:35:20,10/06/2025 11:35:20,suresh_st,suresh_st,,site name blank,Invalid
+57a00a2e-e82c-478b-a004-4d7fba2f0f43,530f5555-0191-454d-a931-4f0fc38c55fa,suresh_st,acquisition,Arjun Reddy,building owner,Karnataka,Bangalore,Mobility,VIL,hpsc-135,,"{""type"":""Point"",""coordinates"":[77.6660938,13.0211607]}",confirmation pending,explained,10/06/2025 10:59:36,10/04/2025 11:00:06,10/04/2025 11:00:06,suresh_st,suresh_st,,site name blank,Invalid
+49d879e1-8a9a-4790-8958-4ab7480a550f,54a2dd7b-4121-41dd-98ca-edda0449e1fc,suresh_st,warehouse discussion,Balaji,harpcom,Karnataka,Bangalore,Other,VIL,,,"{""type"":""Point"",""coordinates"":[77.4846942,13.0240759]}",discussed,need to finalize,09/30/2025 08:34:46,09/30/2025 15:14:15,09/30/2025 15:14:15,suresh_st,suresh_st,,site name blank,Invalid
+daea43a4-1d3d-40cc-9e48-8419cc7ca999,5bb1a5e7-1c0f-47e3-9a65-5704dd6430cd,suresh_st,review meeting,Sathish sir,circle head,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.5195967,12.7946323]}",plan for October discussed,plan done,09/29/2025 15:08:18,09/29/2025 15:08:46,09/29/2025 15:08:46,suresh_st,suresh_st,,site name blank,Invalid
+b8af45fd-5bf8-457a-8419-16d664156b6f,b2d83d49-1f84-4fe2-a638-76e737f809c1,raghvendra_st,Office,Saurabh,C H,Delhi,Gurugram,Other,VIL,,,"{""type"":""Point"",""coordinates"":[77.2039415,28.5434742]}",Circle Review,Circle Review,09/29/2025 07:42:38,09/29/2025 07:43:12,09/29/2025 07:43:12,raghvendra_st,raghvendra_st,,site name blank,Invalid
+50cbcf79-7d8a-4ee1-9325-0f9ace5ec1de,37c4780c-aaf0-43e4-bb2a-45047344beaa,sandeep_st,Mumbai Office Meeting,"Mr.Prashant Yadav, Bidyadhar Nayak","Finance Head, Project Head",UP-East,Mumbai,Other,VIL,,,"{""type"":""Point"",""coordinates"":[72.8293443,19.1359343]}",,"Meeting done discussed on upcoming Airtel Nominals, VI MSA sign off",09/30/2025 07:42:21,09/27/2025 07:43:19,09/27/2025 07:43:19,sandeep_st,sandeep_st,,site name blank,Invalid
+7dd63240-1c99-474f-89ad-93f53eccb0ee,00705704-313c-4cd3-87a8-5bf5eb5d51de,sandeep_st,Meeting for GBT RTT MSA Sign off,Mr.Niranjan Vaishampayan,SCM Head,Pan India,Mumbai,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[72.8249618,19.0072963]}",,Meeting done he told he will get our MSA Finalised,09/30/2025 09:32:41,09/26/2025 09:34:01,09/26/2025 09:34:01,sandeep_st,sandeep_st,,site name blank,Invalid
+d72fc3b2-4f61-46a7-99e4-8196e7d67f7c,d069cf4e-5068-4638-a0ed-151e10a1dcd0,suresh_st,Discussion with owner,lingaraju,KARBAN2775 option owner,Karnataka,Bangalore,Mobility,VIL,KARBAN2775,,"{""type"":""Point"",""coordinates"":[77.5359322,12.8953452]}",not finalized,explained regarding work,09/25/2025 06:48:18,09/23/2025 12:17:18,09/23/2025 12:17:18,suresh_st,suresh_st,,site name blank,Invalid
+a294a325-74be-4560-9fd4-22d9dcf12f16,b976492d-665e-4ad0-b580-8570bce1b609,suresh_st,vendor meeting,Balaji,proprietor,Karnataka,Bangalore,Mobility,VIL,Null,,"{""type"":""Point"",""coordinates"":[77.5503173,13.0019325]}",discussed regarding assigned sites,will clear some sites this week,09/26/2025 08:29:35,09/22/2025 11:15:16,09/22/2025 11:15:16,suresh_st,suresh_st,,site name blank,Invalid
+4d89a194-a0dc-4a1b-b92b-71f51ebff4ad,626a66a5-15a2-4522-a42b-04f231a0fe14,raghvendra_st,IBS site Shanti Mukund Hospital,Pankaj Ji,IT Manager,Delhi,Delhi,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.3017912,28.6456814]}",Proactive IBS visit Shanti Mukund,IBS LOI praposal send,09/22/2025 11:05:36,09/22/2025 11:06:39,09/22/2025 11:06:39,raghvendra_st,raghvendra_st,,site name blank,Invalid
+cd13daa1-db0b-4587-8c6a-95b991443bba,3a9453c6-baeb-44f7-a645-1c0e9625bef3,sandeep_st,Meeting for IBS and FTTH at Tulip 7th Avenue,Mr.Ishwar Chand Srivastava,Project Manager,UP-EAST,Lucknow,IBS,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0112114,26.8068746]}",,Meeting done he told he will align our meeting with Senior Management in next week,09/23/2025 10:27:07,09/19/2025 10:27:29,09/19/2025 10:27:29,sandeep_st,sandeep_st,,site name blank,Invalid
+b499a8ac-cfab-4ce7-b4e4-b14ab8dafcdf,477adc3a-fb0e-40ed-abdc-8ed299cc9f3f,sandeep_st,Meeting for New FTTH Building Feasibility Checks,Mr.Siddhartha Wasan,Market Planning Head,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0083611,26.8637672]}",,Meeting done he told he will check and provide us Feasibility over mail,09/20/2025 11:13:31,09/18/2025 11:46:37,09/18/2025 11:46:37,sandeep_st,sandeep_st,,site name blank,Invalid
+85b1fea6-2b9a-429f-a384-76ba4413fc65,35146408-dac7-4188-86c8-7ee34be004b2,suresh_st,internal meeting,Sathish,dgm Shaurrya,Karnataka,Bangalore,Mobility,ISP,,,"{""type"":""Point"",""coordinates"":[77.6083417,12.9746857]}",introduction,good introduction,09/18/2025 09:31:35,09/16/2025 09:32:02,09/16/2025 09:32:02,suresh_st,suresh_st,,site name blank,Invalid
+1cf465e3-1355-483a-863b-881998ff1327,140885e6-486a-4c42-a5e7-cac7cb40e09e,raghvendra_st,VIL 22 NEW MACRO NOMINAL VISIT,,NHAI,Delhi,Ghaziabad,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.3884183,28.6344167]}",300 mtr radius non acquirable Govt land,Non acquirable,09/16/2025 05:19:58,09/16/2025 05:20:28,09/16/2025 05:20:28,raghvendra_st,raghvendra_st,,site name blank,Invalid
+453c3e98-aad3-4a06-bed5-b8c4ebc6e4e5,311bfcfb-bf15-433f-9096-dfe010465d15,suresh_st,meeting with gublala bldg owner,srinivas owner,owner,Karnataka,Bangalore,Other,VIL,ST-KAR-MACRO-015,,"{""type"":""Point"",""coordinates"":[77.54505499964841,12.885625119799005]}",owner backing out by signing aggreement,not convinced,09/16/2025 09:40:50,09/15/2025 09:42:32,09/15/2025 09:42:32,suresh_st,suresh_st,,site name blank,Invalid
+30179aa0-8814-48cc-a77c-89d88a6eb70b,d29717ef-5c3a-4f9c-b7bc-402a9d63b2ee,sandeep_st,Meeting for Airtel Site Acquisition and our VI HPSC site sharing,Mr.Syed Alam,MD,UP-East,Kanpur,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[80.3479568,26.4742474]}",,Meeting done he told to share site details,09/16/2025 12:08:52,09/13/2025 12:09:41,09/13/2025 12:09:41,sandeep_st,sandeep_st,,site name blank,Invalid
+c0155b30-ff18-4eff-9de2-a695d5120358,ef5469db-2d4f-4431-af44-0170435c5220,suresh_st,To provide dedicated service,Balaji,proprietor,Karnataka,Bangalore,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[77.5163082,12.9036814]}",discussed regarding future business,agreed to give the support,09/22/2025 11:43:34,09/12/2025 11:44:04,09/12/2025 11:44:04,suresh_st,suresh_st,,site name blank,Invalid
+57bb9afc-818e-4274-b0c2-4a9eac93daa3,72a46fba-8ae8-4482-a7a8-9f3bc1da421c,suresh_st,nominal discussion,akhil,agm,Karnataka,Bangalore,Mobility,VIL,oo,,"{""type"":""Point"",""coordinates"":[77.6405825,12.9521442]}",interaction with ip manager,new nominals will be given,09/19/2025 10:17:14,09/11/2025 10:17:55,09/11/2025 10:17:55,suresh_st,suresh_st,,site name blank,Invalid
+8520b39f-0201-48ba-bf44-121d64c4c664,7c22ab3b-6e00-4de5-8c4e-e86bcdad0fdc,sunilb_st,Weekly review,Sanjay sir and Pramo,Project manager,Mumbai,Andheri,Mobility,VIL,,,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    72.8820088,
+    19.1054311
+  ]
+}",,review done with Sanjay sir and Pramod sir and aji kya tamboli,02/16/2026 08:25:00,02/09/2026 08:26:27,02/09/2026 08:26:27,sunilb_st,sunilb_st,,site name blank,Invalid
+67ea2c91-a1ed-4994-9009-5ccd5d826096,a4c061c0-7112-4409-8a1c-7473efc4ed6f,suresh_st,vendor meeting,manohar,owner mms enterprises,karanataka,Bangalore,Mobility,VIL,KARBAN2775,,"{""type"":""Point"",""coordinates"":[77.5163531,12.9036902]}",regarding aggreement,planned for owner meeting tomorrow,09/10/2025 12:39:52,09/09/2025 12:40:29,09/09/2025 12:40:29,suresh_st,suresh_st,,site name blank,Invalid
+6b5a9d60-f261-4d29-8377-a343eab3bd88,e67030b6-0f07-4950-bc71-b88ca85ce8a9,sandeep_st,Meeting for 5G launching in Lucknow,Biswajit Nayak,CTO,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.00886535644531,26.866924285888672]}",Lunch with VIL Team,5G launching done in Lucknow all IP partner's were invited for Lunch,09/11/2025 09:55:44,09/09/2025 10:37:31,09/09/2025 10:37:31,sandeep_st,sandeep_st,,site name blank,Invalid
+c4895e83-f97b-4ddb-a046-a9ad995cf69d,580c083d-99d4-4204-9a2e-b7186c929b5b,raghvendra_st,New IBS lead,Banana tree reception,manager,Delhi,Ghaziabad,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.3344479,28.6617715]}",Owner not in Delhi he will come after 2 days,,09/12/2025 11:18:40,09/08/2025 11:19:38,09/08/2025 11:19:38,raghvendra_st,raghvendra_st,,site name blank,Invalid
+6c6abbbf-0752-4c20-b9b2-e419ea746e75,24a92eec-b904-427a-b4c4-7570c4456906,sandeep_st,Meeting with IT Head for FTTH Building Permission,Mr.Duregesh Singh,IT Head,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.00508117675781,26.788137435913086]}",,"Not Available for meeting today, was not responding to call sp directly visited",09/09/2025 10:56:15,09/06/2025 10:57:10,09/06/2025 10:57:10,sandeep_st,sandeep_st,,site name blank,Invalid
+5915739b-dfba-40a5-bbf9-2d808b603e54,4866f987-a3c9-49d7-bf4b-45e16b39beb1,sandeep_st,Team and Partner Meeting with Bidyadhar Nayak,Bidyadhar Nayak,Executive to CEO,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.010174,26.8680085]}",,Discussed about proactive approach on field for upcoming SRs,09/09/2025 08:17:02,09/05/2025 08:17:56,09/05/2025 08:17:56,sandeep_st,sandeep_st,,site name blank,Invalid
+8e373e1d-5041-4083-8079-8ade87bc3cd8,d0df8292-7ab3-4af0-80a0-8b5706617721,sandeep_st,Meeting for New Roll Out and New SRs,Mr.Yogendra Kumar,Project Head,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0090184,26.8674947]}",,"Meeting done, he told that approval received for 400 T3 sites",09/10/2025 13:51:13,09/04/2025 13:52:48,09/04/2025 13:52:48,sandeep_st,sandeep_st,,site name blank,Invalid
+1bbccca2-f9d6-4441-ac9d-0e4f78879598,9b379886-70e9-4505-9989-509fc376dc65,sandeep_st,Meeting with Bidyadhar Nayak with Airtel Planning Team,Mr.Abhishek Srivastava,Planning Head,UP-East,Lucknow,Mobility,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0076391,26.8641455]}",,Meeting done he told to share profile and MSA Copy he will workout and allocate IE sites,09/08/2025 11:21:07,09/04/2025 11:21:30,09/04/2025 11:21:30,sandeep_st,sandeep_st,,site name blank,Invalid
+b15bdeb0-789f-4836-a2e9-45c4ea805122,c34e16e4-3e20-4c84-ab60-3103fa96d83d,sandeep_st,Meeting for new SR of Relocation and HPSC Sites,Mr.Vijay Kumar,AGM Projects,UP-East,Lucknow,FTTH,VIL,,,"{""type"":""Point"",""coordinates"":[81.0092741,26.8680527]}",VIL Office,"Mr.Vijay told to confirm DG provisioning at sites then he can give SRs for Relocation sites, HPSC T3 roll out to start from September End",09/01/2025 08:27:03,08/30/2025 09:59:14,08/30/2025 09:59:14,sandeep_st,sandeep_st,,site name blank,Invalid
+d3a85e3e-2e7c-4d69-9c7d-8df350480303,79beb117-4d9d-4a1e-990b-3f542c703455,sandeep_st,Shaurrya Office,,,UP-East,Lucknow,Other,VIL,,,"{""type"":""Point"",""coordinates"":[81.0101818,26.8678445]}",,,09/01/2025 07:48:04,08/30/2025 07:48:45,08/30/2025 07:48:45,sandeep_st,sandeep_st,,site name blank,Invalid
+28af8175-2934-4f06-b3f8-5f7249a94ff5,e30084c9-0409-48d4-ab30-8a5122ff9266,sandeep_st,Shaurrya Office Lucknow,,,UP-East,Lucknow,Other,VIL,,,"{""type"":""Point"",""coordinates"":[81.0100785,26.8676646]}",,,08/30/2025 10:42:09,08/29/2025 10:43:08,08/29/2025 10:43:08,sandeep_st,sandeep_st,,site name blank,Invalid
+2b14a769-1136-416f-85d6-560957aadb70,07f47762-3863-4a4d-ae56-b5962922c9ed,sandeep_st,"Meeting regarding sharing of existing sites, new tender",Mr.Abhinav Kumar,DGM MS,UP-East,Lucknow,Mobility,BSNL,,,"{""type"":""Point"",""coordinates"":[80.9590887,26.8832204]}",,Meeting done he told to share profile he will evaluate,09/02/2025 10:32:11,08/27/2025 11:27:22,08/27/2025 11:27:22,sandeep_st,sandeep_st,,site name blank,Invalid
+ec878529-978e-49de-ac5d-1d56aaf24582,3ecf61cd-b12b-43a6-a039-84d643716a21,sandeep_st,Meeting for New Buildings in FTTH,Mr.Siddhartha Wasan,Market Planning Head-UP East,UP East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.0083269,26.8636927]}",,"Meeting done he told to give RFS of Shri Balaji Aprtment and.close peemission for Omega, Celebrity Garden",09/01/2025 09:44:14,08/27/2025 09:45:40,08/27/2025 09:45:40,sandeep_st,sandeep_st,,site name blank,Invalid
+68826361-075b-4f7e-b49e-fc7b506a240a,3a712b63-5e97-4596-9185-7fc84b71213e,sandeep_st,Meeting for SGPGI Hospital Tender Update,Mr.Shailendra Katiyar,SDE MS IP,UP-East,Lucknow,IBS,BSNL,,,"{""type"":""Point"",""coordinates"":[80.95671081542969,26.87467384338379]}",,"Survey has been completed, he is yet to receive report..Once report is received and tender is initiated he will update",08/26/2025 11:44:42,08/22/2025 11:46:13,08/22/2025 11:46:13,sandeep_st,sandeep_st,,site name blank,Invalid
+aa191567-2c73-47cf-b270-df160acf08aa,69e8be12-dd51-425a-9016-62f30a859d5f,sandeep_st,Meeting for FTTH,Mr.Keshav,President,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[80.99327087402344,26.76295280456543]}",,Society AGM to be held in month end,08/30/2025 10:42:47,08/21/2025 10:43:51,08/21/2025 10:43:51,sandeep_st,sandeep_st,,site name blank,Invalid
+6e841f4e-cdea-4f36-8d2f-636e6b890327,e9e79174-27ef-4bd8-acec-31e381298331,sandeep_st,Meeting for Work Start,Mr.Abhay,Property Manager,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.088157,26.8964813]}",SO Received,Work Start Permission received,08/14/2025 11:31:40,08/11/2025 11:33:11,08/11/2025 11:33:11,sandeep_st,sandeep_st,,site name blank,Invalid
+879ce828-8e9a-4faa-9f6b-2af1f9a80638,93e20333-126a-4975-b21a-262873c3638e,sandeep_st,Meeting for under process invoice status,Vaibhav Srivastava,Finance,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0090497,26.8674105]}",IP Fees and Rental Invoice,He told that he has processed the invoice it is pending with Mr.Vijay Kumar,08/06/2025 10:07:53,08/05/2025 11:50:49,08/05/2025 11:50:49,sandeep_st,sandeep_st,,site name blank,Invalid
+c245d0a9-3f2c-4ad4-b550-00deceb55c5d,60796c1b-a474-4e2d-bc0d-c2d27316222d,sandeep_st,Meeting for RJIO live sites with agreement to expire,Mr.Shubham Tiwari,Maintenance Head,UP-East,Lucknow,Mobility,RJIO,,,"{""type"":""Point"",""coordinates"":[81.0101609,26.8677899]}",,"Discussed about sites with agreement to expire, he told he will check and share us details",08/19/2025 09:24:52,08/05/2025 09:32:25,08/05/2025 09:32:25,sandeep_st,sandeep_st,,site name blank,Invalid
+4b3f96ea-35cb-40c3-bcca-5226bb0260fb,020daa5c-93d7-402b-8d51-acb6491dffbf,sandeep_st,BSNL meeting for site sharing,Mr.Abhinav Kumar Verma,DGM MS,UP-East,Lucknow,Mobility,BSNL,,,"{""type"":""Point"",""coordinates"":[80.9587891,26.883353]}",Anchor and Sharing Sites Discussion,Told to share site portfolio he told to meet again on Monday for Anchor site discussion,07/28/2025 11:28:04,07/25/2025 15:01:51,07/25/2025 15:01:51,sandeep_st,sandeep_st,,site name blank,Invalid
+18c29474-e5ad-4815-a190-d4e45a4118d1,dd8cd85b-3e09-4f5d-9e87-34afb7a261fd,sandeep_st,Meeting for SGPGI Tender,Mr.Jamal Ahmad,DE MS(IP&Infra),UP-East,Lucknow,IBS,BSNL,,,"{""type"":""Point"",""coordinates"":[80.9591482,26.8832363]}",Meeting aligned by Mr.Shailendra Katiyar,"Meeting done for upcoming tender for IBS, he told he will intimate us once tender is floated",07/25/2025 10:37:29,07/24/2025 12:32:58,07/24/2025 12:32:58,sandeep_st,sandeep_st,,site name blank,Invalid
+3233d149-3a19-42f7-9aee-80d6b40b7f12,e765ddfc-bc70-42c8-9af9-de643cc3fccf,sandeep_st,Meeting for ISP License Evaluation,Mr.Anupam Mishra,Director,UP-East,Lucknow,Other,ISP,,,"{""type"":""Point"",""coordinates"":[81.0109578,26.8680309]}",Maxit Infocom Pvt Ltd,Meeting to be aligned today only with Pankaj Gaurav,07/25/2025 09:40:54,07/24/2025 09:44:40,07/24/2025 09:44:40,sandeep_st,sandeep_st,,site name blank,Invalid
+48f27b3d-7a98-48b0-be2e-4fdf8e8ea4cf,10c141ec-cb66-4905-bf1d-1e4e60618cd1,raghvendra_st,IBS,Dr Anil Goyal,Vidhayak Krishna Nagar Delhi,Delhi,Delhi,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.28957,28.65886]}",IBS Cold call Lead,Ready for IBS,07/24/2025 13:53:26,07/23/2025 13:54:19,07/23/2025 13:54:19,raghvendra_st,raghvendra_st,,site name blank,Invalid
+f245865b-2f09-44d1-988e-50a6584feefd,feb1a69c-6fb1-4ae8-8c91-88e71e1faf5f,sandeep_st,Meeting to explore FTTH and ISP Related business,Mr.Mohan Jadhav,Operation Head,UP-East,Lucknow,FTTH,ISP,,,"{""type"":""Point"",""coordinates"":[81.0101453,26.867853]}",Meeting in Shaurrya Office Lucknow,Positive meeting for getting on boarded with us as partner,07/24/2025 12:09:52,07/23/2025 12:16:19,07/23/2025 12:16:19,sandeep_st,sandeep_st,,site name blank,Invalid
+56340b49-3b7f-45f5-b11b-ad612dc4be23,400f6398-f986-4fa2-bcce-a4bb8584e55c,sandeep_st,Meeting for IBS at Purvanchal Capital Tower,Mr.Afroz,Project Manager,UP-East,Lucknow,IBS,Airtel,,,"{""type"":""Point"",""coordinates"":[80.9988069,26.8651156]}",Meeting for IBS,"Meeting done currently Deliotte office is running, rest occupancy are WIP",07/29/2025 09:59:02,07/22/2025 12:11:33,07/22/2025 12:11:33,sandeep_st,sandeep_st,,site name blank,Invalid
+862af7f6-ed7e-4be0-92c1-ed6779990e24,6b017fa2-d527-45df-9c67-d46b27a96a7e,sandeep_st,Meeting with Local ISP,Mr.Anupam Mishra,Director (Maxit Infocom Pvt Ltd),UP-East,Lucknow,FTTH,ISP,,,"{""type"":""Point"",""coordinates"":[81.0102045,26.8678578]}",Meeting for knowing current customer base and owned assets,Meeting postive ready to move further for discussion,07/22/2025 09:56:26,07/21/2025 09:58:36,07/21/2025 09:58:36,sandeep_st,sandeep_st,,site name blank,Invalid
+9e12a3ed-b635-4324-b61f-cf3914889330,805a110e-5fed-4cdd-afa3-9ee89aff88db,sandeep_st,Meeting for Airtel FTTH,Mr.Abhay,Manager,UP-East,Lucknow,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[81.3094594,26.9892899]}",Meeting for Airtel OD and FTTH,Agreed to go with us and told to meet next Monday,07/21/2025 07:54:42,07/17/2025 07:59:22,07/17/2025 07:59:22,sandeep_st,sandeep_st,,site name blank,Invalid
+c52ea31f-4ede-4e26-88d0-bda4e820ad86,e648938b-439a-49c8-bedb-952c8ad11e78,sandeep_st,Meeting for status of invoices,Mr.Harish Pandey,AGM-Projects,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0088289,26.8669255]}",Meeting for status of under process invoice,Already invoice processed from Circle and SAP posting done by SSC,07/16/2025 13:15:17,07/15/2025 14:56:44,07/15/2025 14:56:44,sandeep_st,sandeep_st,,site name blank,Invalid
+801f55eb-daa9-47c6-9c02-8527c3171b1b,6fdc854f-d5c3-4d7f-9196-5b566e44fe7d,sandeep_st,Meeting for Relocation SR,Mr.Gaurav Bhushan,AGM-Projects,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0087387,26.8673931]}",,"Meeting done he told, he will discuss with Mr.Vijay Kumar and confirm us next week",07/15/2025 12:22:42,07/11/2025 12:33:03,07/11/2025 12:33:03,sandeep_st,sandeep_st,,site name blank,Invalid
+040d4b1a-bec9-4842-92f2-3a44f399b4a0,a1404c6a-eac8-4600-8bd1-4fc559f958bb,raghvendra_st,Kailash Hospital IBS visit,Shubhash chandra,GM,Delhi,Delhi,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.5057664,28.4705814]}",Visit done under discussion,under discussion,07/10/2025 13:38:59,07/09/2025 13:39:56,07/09/2025 13:39:56,raghvendra_st,raghvendra_st,,site name blank,Invalid
+2b20dd4d-5be7-4ea8-9f45-e5717d43d90d,fee82dd9-2191-449d-9758-dc8284efe582,raghvendra_st,IBS cold call,Subhas Chandra,GM,Delhi,Delhi,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.5056224,28.47041]}",to be send Proposal,Ready for VIL IBS,07/08/2025 13:07:30,07/07/2025 13:08:29,07/07/2025 13:08:29,raghvendra_st,raghvendra_st,,site name blank,Invalid
+2b7dcba2-5c45-4811-a4f6-6cad57151cae,6e4acdef-de8d-4030-84c2-383014434671,sandeep_st,Meeting regarding allocation of relocation nominals,Mr Gaurav Bhushan,Projects-UP East,UP East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0101549,26.8678758]}",,Working on relocation nominals will confirm us next week as audit is going on,05/19/2025 14:33:04,07/01/2025 10:48:22,07/01/2025 10:48:22,sandeep_st,sandeep_st,,site name blank,Invalid
+722ea959-37fe-4354-aeda-ca99048d3a75,4960e930-009d-4c8c-abc3-b4876764acc3,sandeep_st,Meeting for UP GST Registrations,Mr. Vijay Jaiswal,Director,UP-East,Lucknow,Other,VIL,,,"{""type"":""Point"",""coordinates"":[80.9990305,26.8655089]}",Meeting to apply for GST Number,Officer told to share documents he will get it applied locally,07/02/2025 10:44:25,07/01/2025 10:46:35,07/01/2025 10:46:35,sandeep_st,sandeep_st,,site name blank,Invalid
+8974a1a2-6384-4015-b2b8-c934dda26d0b,4cf8adb0-913d-40a1-8e38-37c62c5c8f6c,sandeep_st,BSNL Meeting,Mr.Shailendra Katiyar,SDE MS IP,UP-East,Lucknow,Mobility,BSNL,,,"{""type"":""Point"",""coordinates"":[80.9590171,26.8833224]}",Meeting for BSNL Sharing,He told to share our portfolio he will validate,06/16/2025 10:14:15,07/01/2025 05:36:14,07/01/2025 05:36:14,sandeep_st,sandeep_st,,site name blank,Invalid
+eca25392-8f2a-4938-a7b3-45b149d26056,e64433ec-e934-4edd-8f60-ea498c5526c4,sandeep_st,Meeting with Magpie Group for Material Transportation to Delhi,Mr.Dipesh Singh,Director,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[81.0101935,26.8678905]}",Meeting done to arrange E-Bay Bill to transport Material From Lucknow To Delhi,He will revert in 2 Days,06/25/2025 11:51:33,07/01/2025 05:35:33,07/01/2025 05:35:33,sandeep_st,sandeep_st,,site name blank,Invalid
+eabd7f55-c906-423d-82b3-db4f95d208dd,091772cd-3dbb-4699-af9a-c781e6479296,sandeep_st,Meeting with Officer for GST of Uttar Pradesh,Mr.Pankaj Kumar Srivastava,Assistant Commissioner,UP-East,Lucknow,Other,VIL,,,"{""type"":""Point"",""coordinates"":[80.9505964,26.8501941]}",Meeting done for approval of GST application,Re-Application needs to be done,06/30/2025 05:41:30,07/01/2025 05:35:13,07/01/2025 05:35:13,sandeep_st,sandeep_st,,site name blank,Invalid
+0a18e06a-5956-48f6-98d3-ae481603b728,171d73bb-5963-409a-9ee8-8b1bd68c2bd5,sandeep_st,Meeting with ISP,Mr.Manish Sarin,Director,UP-East,Lucknow,FTTH,ISP,,,"{""type"":""Point"",""coordinates"":[81.0056765,26.8660651]}","Meeting for FTTH, ILL and Our Tower","Meeting very much fruitful, he will meet tomorrow again in our office",06/28/2025 07:16:09,07/01/2025 05:34:52,07/01/2025 05:34:52,sandeep_st,sandeep_st,,site name blank,Invalid
+de43ceaa-13f1-495b-8dd5-de3c1157a04a,974b9b3c-2d3a-437e-80c1-55127a6ec35b,sandeep_st,Meeting WH Owner For Audit and GST Application,Mrs Kusum Pandey,Owner,UP-East,Lucknow,Mobility,VIL,,,"{""type"":""Point"",""coordinates"":[80.90763305381455,26.801025034009157]}",Material Audit & GST Application,"Owner agreed to sign documents for GST Application on the address, Material Audit Done",07/01/2025 06:53:28,07/01/2025 05:34:36,07/01/2025 05:34:36,sandeep_st,sandeep_st,,site name blank,Invalid
+9af58785-075d-4499-8f3c-2ecbc045599e,f9e7cc3e-0331-46ba-b081-6e64a8bad4da,raghvendra_st,FTTH visit cold call,Maintenance office secretory,,Delhi,ghaziabad,FTTH,Airtel,,,"{""type"":""Point"",""coordinates"":[77.4901133,28.6756817]}",Plan next meeting on sunday,Sunday meeting,06/28/2025 10:06:49,06/27/2025 10:08:05,06/27/2025 10:08:05,raghvendra_st,raghvendra_st,,site name blank,Invalid
+a8fe5c97-db7d-4b5e-8dd9-713acaf5e28f,a8510d96-993d-46e3-a958-3b3284c9e15c,mahasin_st,ISP Cloudsky Superfast Broadband,Mr Sahaban Mondal,Propiter,West Bengal,Kolkata,FTTH,ISP,ISP,,"{""type"":""Point"",""coordinates"":[88.4311502,22.5728874]}",Positive,He is agreed to do the business jointly.,06/30/2025 09:52:33,06/26/2025 09:57:13,06/26/2025 09:57:13,mahasin_st,mahasin_st,,site name blank,Invalid
+80ac25b7-114d-4ab9-9481-fd6ea39bce31,4d10918b-51ca-46af-9805-58842e897629,raghvendra_st,Cold calling for IBS city centre 32,IT and Admin,Admin head,delhi,Noida,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.3535558,28.5741885]}",IBS installed,proposal share,06/26/2025 09:36:22,06/25/2025 09:42:49,06/25/2025 09:42:49,raghvendra_st,raghvendra_st,,site name blank,Invalid
+e92b9e7a-2ce8-49b4-98f7-f906d31cb05b,d906a187-8e4d-459e-a3b2-cb0c58ca4e9e,raghvendra_st,IBS cold calling,IT Head,ITHead,Delhi,Delhi,IBS,Airtel,,,"{""type"":""Point"",""coordinates"":[77.3012223,28.6456289]}",Next meeting in sec 27 noida,Next meeting in sec 27 noida branch office,06/25/2025 10:16:00,06/24/2025 10:17:31,06/24/2025 10:17:31,raghvendra_st,raghvendra_st,,site name blank,Invalid
+229c1fa5-d5b2-42c0-9b07-0b12c31e3321,da5221d7-371f-4f62-8d9e-2033de8f72cc,raghvendra_st,IBS cold calling,IT Head,IT head,Delhi,Ghaziabad,IBS,Airtel,Shanti Mukund hospital,,"{""type"":""Point"",""coordinates"":[77.3011536,28.6450998]}",Meeting done 35k for 2opco,IT head ok rest decision from Management,06/25/2025 10:12:58,06/24/2025 10:14:30,06/24/2025 10:14:30,raghvendra_st,raghvendra_st,,site name blank,Invalid
+39e38817-29e8-4dff-bf48-bc796b650581,91d47972-65c5-4072-b0aa-f87b14c94896,raghvendra_st,IBS PROPOSAL SANTOSH HOSPITAL,Saurabh Singh,IT Manager,Delhi,Ghaziabad,IBS,VIL,,,"{""type"":""Point"",""coordinates"":[77.4322158,28.6698639]}",PROPOSAL SEND TO IT MANAGER REVERT AWAITED,Revert Awaited,05/20/2025 10:04:24,05/19/2025 10:16:43,05/19/2025 10:16:43,raghvendra_st,raghvendra_st,,site name blank,Invalid
+3b6d650f-3ce2-48ca-995f-43bbd52d2869,3de2ac55-31e0-4366-a926-8cb2c6cf773b,raghvendra_st,OFIS SQUIRE NOIDA FOR IBS PROPOSAL,Sachin,Admin Manager,Delhi,Noida,IBS,VIL,OFIS SQUIRE SEC 3,,"{""type"":""Point"",""coordinates"":[77.3157141,28.5810347]}",Cold calling for IBS,Under approval,05/16/2025 10:39:05,05/16/2025 10:41:49,05/16/2025 10:41:49,raghvendra_st,raghvendra_st,,site name blank,Invalid
+be6a44d2-7d81-4b4b-94f7-a2bf754ee7b2,c23b56f5-6da9-4ad9-bdcc-8760a904b260,Rajnish Nimbark,,Arpit Patel,BDM,GUJARAT,Ahmedabad,Other,,,,"{""type"":""Point"",""coordinates"":[72.567237,23.0887489]}",,,,05/09/2025 11:09:02,05/09/2025 11:09:02,rajnish_st,rajnish_st,,site name blank,Invalid
+47233926-6a28-4314-9db5-7e6f4680b1f6,1bbe8449-c363-4520-a513-2b4a271c6730,Ranjan kumar,,Vishal Advocate,Advocate,Noida sec 15,Noida sec 15,Mobility,For Notery Stamp,For Notery Stamp,,"{""type"":""Point"",""coordinates"":[77.3120871,28.583487]}",For Notery Stamp,,,04/24/2025 07:53:32,04/24/2025 07:53:32,ranjan_st,ranjan_st,,site name blank,Invalid
+7c7a188e-e031-4b7c-9cd8-f69f055d969e,c64d36a5-92b8-4d7d-8aeb-a27bd7580b73,suresh_st,,Upendra,planning manager,Karnataka,banglore,Mobility,loading details shared,,,"{""type"":""Point"",""coordinates"":[77.64069999999998,12.95198999999999]}",,,,04/21/2025 13:54:01,04/21/2025 13:54:01,suresh_st,suresh_st,,site name blank,Invalid
+b126d3ba-7668-4840-ad77-4ec015863951,0efa3801-6c7f-4b7c-87f1-1cca78fc20bb,Rajnishkumar,,maulik,manager,Gujarat,Ahmedabad,Mobility,,,,"{""type"":""Point"",""coordinates"":[72.5672188,23.0886222]}",,,,03/27/2025 14:59:35,03/27/2025 14:59:35,rajnish_st,rajnish_st,,site name blank,Invalid
+56b8f4dd-2e73-4a8f-83e5-26201e03e370,f01f9bab-7552-4d2d-b150-5616604ff019,Raghwendra Kumar,,Owner,Owner,Delhi NCR,Noida,Mobility,54208 sec 78 Noida,54208 sec 78 Noida,,"{""type"":""Point"",""coordinates"":[77.3770317,28.5636467]}",Acquisition,,03/20/2025 06:57:54,03/19/2025 06:58:04,03/19/2025 06:58:04,raghvendra_st,raghvendra_st,,site name blank,Invalid
+210dfd95-aac8-468d-858a-a370c0ded33d,ea7c7b60-d87e-4d09-8c63-025c48792eb8,Raghwendra Kumar,,ATS manager,Asset manager,Delhi NCR,Gurugram,Mobility,Raghu Najafgarh,Raghu Najafgarh,,"{""type"":""Point"",""coordinates"":[77.0038483,28.50837]}",Asset Manager will revert after Society discussions,,03/20/2025 04:53:18,03/15/2025 04:53:35,03/15/2025 04:53:35,raghvendra_st,raghvendra_st,,site name blank,Invalid
+3d76c7e9-3dcc-43f5-87cb-c2756deac58f,8b2718ca-4475-4f25-b760-6059a43f6400,Raghwendra Kumar,,Site owner walk in,Owner,Delhi NCR,Gurugram,Mobility,,BSNL 20 Sec 66 Gurugram,,"{""type"":""Point"",""coordinates"":[77.0483633,28.3940183]}",First meeting,,03/11/2025 04:47:15,03/08/2025 04:48:01,03/08/2025 04:48:01,raghvendra_st,raghvendra_st,,site name blank,Invalid
+3efa1569-5261-45e7-afce-a0676c497a5b,22d5c6b5-3016-4123-a25c-10cd3d2c7c10,sanjeev s panwar,,Mr. pradeep Sharma,owner,NCR,Noida,Other,,,,"{""type"":""Point"",""coordinates"":[77.3666511,28.589021]}",Vendor Office Meeting done for FTTH site,,,03/07/2025 11:23:44,03/07/2025 11:23:44,sanjeev_st,sanjeev_st,,site name blank,Invalid
+c1745f60-24b2-4803-a612-faf5ff4aba41,e4f5c545-141a-4a42-9c18-09ec8c41b7ec,RAJNISH NIMBARK,,Arpit Patel,manager,Gujarat,Ahmedabad,Mobility,,,,"{""type"":""Point"",""coordinates"":[72.5019588,23.0019669]}",for so follow up and msa follow up,,,03/07/2025 05:38:40,03/07/2025 05:38:40,rajnish_st,rajnish_st,,site name blank,Invalid
+c62e309e-346d-4f27-a39a-d39b7e9b8f54,82b944bd-e607-47d7-8056-8cc5e49467d4,Nimbark Rajnish,,Naveen sir,commercial head,Gujarat,Ahmedabad,Other,,,,"{""type"":""Point"",""coordinates"":[72.5671241,23.0886936]}",,,,02/18/2025 15:34:02,02/18/2025 15:34:02,rajnish_st,rajnish_st,,site name blank,Invalid

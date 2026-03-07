@@ -1,0 +1,2 @@
+name,id,employee name,description,created from,last modified from,reason to leave,days for leave,leave form,leave to,leave type,location,createddate,modifieddate,createduser,modifieduser,remark,validation_errors,status
+6bcda59b-97cd-40ff-8f84-1b1fd7e81477,c4ca60e7-da67-4971-ba32-147cf64bf95e,Suneel Kumar,,Mobile,Mobile,Fever,1,06/11/2025 03:34:58,06/11/2025 03:34:52,ML,"{""type"":""Point"",""coordinates"":[77.3008153,28.3439973]}",06/16/2025 03:37:41,06/16/2025 03:37:41,suneel_st,suneel_st,OK,leave to < leave form,Invalid

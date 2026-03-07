@@ -1,0 +1,472 @@
+Name,Id,User Name,Description of Meeting,Whome to meet,Designation,Circle,City,Type of Meeting,Operator Name,ID (meeting_form_id),Site Name,Location,Remarks,Outcome of meeting,Next Follow up date,CreatedDate,ModifiedDate,CreatedUser,ModifiedUser,Remark
+029145db-8458-4097-b990-79d1087ee739,fdc33e34-6fbe-4f91-9ae0-6342cefda3d8,abhiman_st,meeting with land owner,land owner,owner,kolkata,kolkata,Mobility,VIL,M1235,dumdum nagerbazar,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4099316,
+    22.6440273
+  ]
+}",discussion with building owner,positive,02/10/2026 10:31:00,02/05/2026 10:32:33,02/05/2026 10:32:33,abhiman_st,abhiman_st,ok
+fe709e47-8ecd-4b8d-baaf-28608f9a2fa1,76b58cf5-29b0-42e8-ac65-7913fdc012c8,abhiman_st,meeting with customer,customer,Head IT,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.3935273,
+    22.502832
+  ]
+}",meeting with detailed discussion of business,positive,02/17/2026 14:16:00,02/04/2026 14:17:19,02/04/2026 14:17:19,abhiman_st,abhiman_st,ok
+d64434ee-836e-4eab-b40b-e3aa6c5b1567,6f6ed7d9-f4f6-4f4b-83e1-25ae28ab361b,abhiman_st,meeting with customer,Customer,director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4353106,
+    22.5708962
+  ]
+}",meeting with customer for future business,positive,02/07/2026 07:19:00,02/04/2026 07:20:48,02/04/2026 07:20:48,abhiman_st,abhiman_st,ok
+a62cfc24-552b-4b50-9e45-0a2e12d1d399,d7b59aa9-f4d2-45ec-a4f2-13e26a94a9db,abhiman_st,meeting with channel partner,the channel partner,proprietor,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.419739,
+    22.5877159
+  ]
+}",kolkata,positive,02/05/2026 11:30:00,02/03/2026 11:30:51,02/03/2026 11:30:51,abhiman_st,abhiman_st,ok
+891c82e0-c278-461e-b1a7-33e0c9f24bc0,a72dde63-83db-450b-80db-495108687295,abhiman_st,meeting with customer,Customer,IT HEAD,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.418925,
+    22.5733276
+  ]
+}",meeting with customer,positive,02/06/2026 10:50:00,02/03/2026 10:51:35,02/03/2026 10:51:35,abhiman_st,abhiman_st,ok
+7a7cc60e-4440-46a2-aa7b-2b9c60ac9f63,26e77dad-5484-4b90-a3c4-74c27eff5b3f,abhiman_st,Meeting with channel partner,Owner,Director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4311149,
+    22.5734121
+  ]
+}",meeting with owner regarding business,positive,02/05/2026 09:17:00,02/03/2026 09:18:25,02/03/2026 09:18:25,abhiman_st,abhiman_st,ok
+6d1e08ab-ea0f-4dfd-9f7d-4787289ba192,c0fbe11d-45c1-4959-9eec-99886bb46353,abhiman_st,meeting with customer,customer,HEAD IT,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4365118,
+    22.5700126
+  ]
+}",meeting with customer under discussion in regards to ILL business,positive,02/05/2026 06:40:00,02/03/2026 06:41:25,02/03/2026 06:41:25,abhiman_st,abhiman_st,ok
+c721bf66-1339-4b63-8535-95c09e08182f,7f3b513f-d4a7-46dc-a339-bf9141286308,abhiman_st,meeting with Enterprise customer,Customer,director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.3681322,
+    22.5718282
+  ]
+}",Meeting positive,positive,02/04/2026 13:25:00,01/31/2026 13:26:35,01/31/2026 13:26:35,abhiman_st,abhiman_st,ok
+df93f724-7b4a-40ae-bbaa-bc75a22189c8,d5377a92-5bfa-4335-9ba2-31f36db07d40,abhiman_st,meeting with channel partner,Director,Director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4498764,
+    22.5733699
+  ]
+}",meeting for channel partner,positive,02/03/2026 10:23:00,01/31/2026 10:24:17,01/31/2026 10:24:17,abhiman_st,abhiman_st,ok
+957c1e23-7423-477d-be7d-15dc8dd9fd94,ad7b5708-52fd-4f2b-9d14-b61b13b6bb38,abhiman_st,meeting with customer,Head,Operations Head,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4354578,
+    22.5709024
+  ]
+}",Closure of business,positive,02/03/2026 08:35:00,01/31/2026 08:36:40,01/31/2026 08:36:40,abhiman_st,abhiman_st,ok
+9bd5a5cf-c223-4895-8fea-948ca0fe0169,110ba456-8665-416f-9cf9-239aa794cac4,abhiman_st,Meeting with Channel Partner,Director,Director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310682,
+    22.5733679
+  ]
+}",Meeting with Channel Partner regarding business,positive,02/03/2026 12:00:00,01/28/2026 12:01:12,01/28/2026 12:01:12,abhiman_st,abhiman_st,ok
+bfce5a3f-0245-41da-81ed-f8aed2266627,3fdeb91a-dd54-4148-bbaa-83c3d989fb6d,abhiman_st,meeting with channel partner,Proprietor,Proprietor,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.42199919999973,
+    22.585819000000193
+  ]
+}",meeting with channel partner regarding business,positive,01/30/2026 10:19:00,01/28/2026 10:24:41,01/28/2026 10:24:41,abhiman_st,abhiman_st,ok
+c362bdad-f642-4ae2-8dda-9830fa5976e4,f3749d00-57c0-45f4-8de3-f50ab071d85f,abhiman_st,meeting with councillor,councillor,councillor,kolkata,kolkata,Mobility,VIL,M1235,dumdum natun bazar,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.408598,
+    22.6415283
+  ]
+}",positive,under discussion,01/30/2026 12:10:00,01/27/2026 12:11:16,01/27/2026 12:11:16,abhiman_st,abhiman_st,ok
+23d0a7a1-4947-4b4d-a1ce-d8b405b50cbe,9d2b2022-dea0-4410-9868-200ec3040db2,abhiman_st,meeting with chairman,chairman,chairman,kolkata,kolkata,Mobility,VIL,M1236,dumdum,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4180796,
+    22.635245
+  ]
+}",meeting positive,positive,01/30/2026 09:23:00,01/27/2026 09:24:05,01/27/2026 09:24:05,abhiman_st,abhiman_st,ok
+9cf49ee8-f619-41a2-91e5-91fffe5fd0bc,3c617e93-a60c-42ae-93bd-97c0d4c32e7d,abhiman_st,meeting with Enterprise customer,technical,Head Technical,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4309487,
+    22.5868852
+  ]
+}",meeting with customer to discuss CCTV AND ILL,positive,01/31/2026 10:40:00,01/24/2026 10:40:54,01/24/2026 10:40:54,abhiman_st,abhiman_st,ok
+12e22eb5-cd02-4ed6-8692-3b14c26215aa,725f19f6-2487-4b7f-a6c5-a1f77cd60c2b,abhiman_st,meeting with new channel partner,channel partner,proprietor,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4089812,
+    22.587988
+  ]
+}",meeting with new channel partner,positive,01/29/2026 09:56:00,01/24/2026 09:57:14,01/24/2026 09:57:14,abhiman_st,abhiman_st,ok
+18b35353-a1b1-4e7b-b420-61551848e7c0,4d47bcde-fbec-4dbb-bac1-7db5f79a9eaa,sunilb_st,weekly review,swapnil prabhu,Manager,mumbai,mumbai,Mobility,VIL,all,all,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    72.8816396,
+    19.1053959
+  ]
+}",discussion done on small cell sites,discussion done form small cell,12/30/2025 05:27:49,12/23/2025 05:28:40,12/23/2025 05:28:40,sunilb_st,sunilb_st,ok
+35546bed-ebea-4804-abb4-798896f093c0,75db1071-af3f-44b2-a001-2eefd0fb7bb9,abhiman_st,meeting with customer,head it,Manager it,kolkata,kolkata,ILL,ISP,Kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4139993,
+    22.5765644
+  ]
+}",meeting with manager regarding enterprise,positive,01/31/2026 05:52:00,01/24/2026 05:53:25,01/24/2026 05:53:25,abhiman_st,abhiman_st,ok
+d848e60a-17db-4774-acde-3ff261070a20,bd235fe1-4290-4f62-b46c-517114f1f994,abhiman_st,meeting with customer regarding IBS business,MEETING WITH CUSTOMER,FM,kolkata,kolkata,IBS,VIL,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.408581,
+    22.5873632
+  ]
+}",meeting with customer regarding IBS,positive,01/31/2026 10:17:00,01/23/2026 10:19:07,01/23/2026 10:19:07,abhiman_st,abhiman_st,ok
+c3029750-3fad-44bf-8b2e-9f6ba4908612,e5f9c4c8-7752-459c-ad2c-9bb87da59d38,abhiman_st,meeting with customer,IT,IT,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.436608,
+    22.57263
+  ]
+}",meeting in respect to business,positive,01/28/2026 10:04:00,01/22/2026 10:05:24,01/22/2026 10:05:24,abhiman_st,abhiman_st,ok
+aac68956-f644-4990-955f-04019255c064,82fcd3a9-f89c-46ea-bafc-2dfd8e79fbe2,abhiman_st,Meeting with customer,Customer,Director,kolkata,kolkata,Other,ISP,Kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4121723,
+    22.5934008
+  ]
+}",Meeting with customer regarding enterprise business,positive,01/21/2026 11:54:00,01/19/2026 11:55:22,01/19/2026 11:55:22,abhiman_st,abhiman_st,ok
+9842f096-0184-4cf9-9107-85122bae0ed6,eb3faf28-eea4-4b63-aa86-992a25cd5085,abhiman_st,meeting with customer,customer,IT head,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.426624,
+    22.5799182
+  ]
+}",meeting with enterprise customer,positive,01/21/2026 09:18:00,01/19/2026 09:19:22,01/19/2026 09:19:22,abhiman_st,abhiman_st,ok
+c591271b-41e7-4e06-8ee2-041a3557e627,57ab92d9-df52-4f5f-aa8f-a1a7397d45b1,abhiman_st,meeting with channel partner,Channel Partner,director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310122,
+    22.5733919
+  ]
+}",meeting with CP for business,positive,01/20/2026 12:02:42,01/16/2026 12:03:34,01/16/2026 12:03:34,abhiman_st,abhiman_st,ok
+480b0089-b573-4698-a591-1fcf52e31443,2a140d9e-d494-493c-a7c3-3219cfd63cf0,abhiman_st,meeting with fm,Facility Manager,FM,kolkata,kolkata,IBS,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4371736,
+    22.5780034
+  ]
+}",survey with team at World Trade center,positive,01/22/2026 08:22:04,01/15/2026 08:22:58,01/15/2026 08:22:58,abhiman_st,abhiman_st,ok
+c5858997-cf10-49a2-a52d-7fe50187b27c,8660006d-fdc0-45e8-a6f5-af10a945222d,abhiman_st,meeting with customer enterprise,ERP,ERP HEAD,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4362177,
+    22.5804634
+  ]
+}",meeting with customer regarding business,positive,01/17/2026 10:59:44,01/14/2026 11:00:19,01/14/2026 11:00:19,abhiman_st,abhiman_st,ok
+ee169ee0-27d0-425b-878c-25e362ec53a5,84a3996e-9648-4a17-8b4e-10805b58d7fd,abhiman_st,meeting with enterprise customer,IT PERSON,IT HEAD,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4189406,
+    22.5733204
+  ]
+}",meeting for business,positive,01/16/2026 10:08:21,01/14/2026 10:08:59,01/14/2026 10:08:59,abhiman_st,abhiman_st,ok
+08e9c154-7516-4e5c-8a2a-67eda5c30974,c7d0722c-9b82-4560-83c5-35527e112c9b,sunilb_st,Mobility discussion,Pramod choudhary,Project Manager,Mumbai,Mumbai,Mobility,VIL,10138,Padmaja,"{""type"":""Point"",""coordinates"":[72.8820088,19.106282]}",site discussion,final.we can built this site on 17th June 2025,06/18/2025 08:16:29,06/24/2025 09:29:30,06/24/2025 09:29:30,sunilb_st,sunilb_st,ok
+3e3cccf9-6665-463b-b5c8-79045b1a7f75,05e28aef-09a9-4b60-b495-1a425bf83eb5,sunilb_st,Tower fabrication,Salim bhai,owner of sk enterprises,mumbai,Mumbai,Mobility,VIL,11968,Ravi koli open plot,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    73.0522212,
+    19.1402516
+  ]
+}",Fabrication work status check visit,gbt work wip,12/28/2025 07:09:19,12/27/2025 07:10:17,12/27/2025 07:10:17,sunilb_st,sunilb_st,ok
+dc4a5e63-3706-4450-a0a2-a4293c4f332f,5a8d65a4-cf0b-4870-aac4-868026279c18,abhiman_st,Meeting with ISP,IT,EAST HEAD,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4359589,
+    22.5694158
+  ]
+}",meeting in regards to BANDWIDTH,positive,01/15/2026 10:27:40,01/13/2026 10:28:35,01/13/2026 10:28:35,abhiman_st,abhiman_st,ok
+ca1445ff-e205-4762-bec6-d37fdc5c77d6,f562dedc-2af0-4cd1-822f-3539b109e108,abhiman_st,meeting with customer enterprise,IT,Head IT,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4363428,
+    22.5802171
+  ]
+}",meeting for PO for ILL order,positive,01/15/2026 06:28:55,01/13/2026 06:29:40,01/13/2026 06:29:40,abhiman_st,abhiman_st,ok
+6c32f788-0b51-491e-a008-69fdf99188ba,4d5e63c8-4e18-4605-a2fd-260202c7d4a0,sunilb_st,Tree cutting issue tmc complain raised by nebours,ravi koli sir and tmc authority,Site owner,Mumbai,mumbai,Mobility,VIL,na,ravi koli open plot,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    72.9866568,
+    19.188668
+  ]
+}",Issue resolved tree cutting done,issue resolved tree cutting done,01/01/2026 08:25:41,12/31/2025 08:26:16,12/31/2025 08:26:16,sunilb_st,sunilb_st,ok
+404ea6e3-f418-414c-926f-d013398cd404,8870d5bd-641d-4b36-aeb8-3c39f367ce7e,abhiman_st,meeting with channel partner,CP,Director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310707,
+    22.5733195
+  ]
+}",meeting with CP for leads,positive,01/14/2026 09:00:42,01/12/2026 09:01:18,01/12/2026 09:01:18,abhiman_st,abhiman_st,ok
+8386563f-7b28-4342-9ff7-55cd90eb1919,08b38018-cd93-4bc7-ba62-2fcd5491f1e9,abhiman_st,meeting with IBS customer,FM,FM,kolkata,kolkata,IBS,RJIO,kolkata,MCITY,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4312272,
+    22.5771133
+  ]
+}",issue with IBS,positive,01/14/2026 10:46:59,01/09/2026 10:47:40,01/09/2026 10:47:40,abhiman_st,abhiman_st,ok
+2e113bd6-628c-4801-8575-48b563f63459,940564ba-d846-4f19-9f21-e78dfc8ae62c,abhiman_st,meeting with customer,Owner,Director,kolkata,kolkata,ILL,ISP,Kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4355757,
+    22.5709119
+  ]
+}",meeting successful,positive,01/10/2026 08:39:41,01/09/2026 08:40:25,01/09/2026 08:40:25,abhiman_st,abhiman_st,ok
+ded7ab49-501d-465a-9d39-26ae4f86890e,482952fe-b77c-42cf-ae33-d245c2175a99,abhiman_st,meeting with customer,customer,IT head,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4291691,
+    22.5813817
+  ]
+}",meeting with customer,positive,01/10/2026 08:21:13,01/08/2026 08:22:17,01/08/2026 08:22:17,abhiman_st,abhiman_st,ok
+f6e7bf53-1b7b-4f1b-bea7-b27886e8b521,65c4898b-9e0d-4c4e-a2a4-2cef2d24c3f2,abhiman_st,Meeting with builder,soumen Garian,IT & ERP HEAD,kolkata,kolkata,IBS,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.3490974,
+    22.5014962
+  ]
+}",meeting with Merlin project developer,positive,01/10/2026 05:31:53,01/07/2026 05:32:34,01/07/2026 05:32:34,abhiman_st,abhiman_st,ok
+71523302-4450-4f1f-9c99-bf4373e7b14c,b09cb3f4-3cf2-4223-870f-67c7355c2a7a,abhiman_st,meeting with channel partner,Owner,director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310652,
+    22.5734509
+  ]
+}",Meeting with channel partner,positive,01/08/2026 11:19:14,01/06/2026 11:19:58,01/06/2026 11:19:58,abhiman_st,abhiman_st,ok
+30d04da4-2e99-4fab-9bae-f1bd8af5b3da,c5b5deec-da73-4754-a288-b4f0749cf5de,abhiman_st,Meeting with enterprise customer,KCCL,East Head,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4360085,
+    22.5694084
+  ]
+}",Meeting with KCCL for bandwidth requirement,positive,01/08/2026 06:56:34,01/06/2026 06:57:21,01/06/2026 06:57:21,abhiman_st,abhiman_st,ok
+21e3a946-51ba-4794-afda-4d505390768a,69ecbf1c-efd2-418b-9e56-c064999df35e,abhiman_st,meeting with channel partner,owner,director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310668,
+    22.5733411
+  ]
+}",Meeting with channel partner regarding business,positive,01/09/2026 12:41:56,01/05/2026 12:42:41,01/05/2026 12:42:41,abhiman_st,abhiman_st,ok
+e138f597-1289-48ab-9761-c447ad06adaa,bee3f733-fbd5-49f0-8fa4-db9d66446bd6,abhiman_st,meeting with customer,Mr.Debojyoti Karmakar,IT HEAD,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4558101,
+    22.5823022
+  ]
+}",meeting with enterprise customer,positive PO given,01/07/2026 06:15:31,01/05/2026 06:16:42,01/05/2026 06:16:42,abhiman_st,abhiman_st,ok
+01f26602-d80b-4e3f-8499-92c3526e17c9,760125b8-efe4-43e2-9487-10361b2d1b3f,abhiman_st,meeting with channel partner,channel partner,Director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310579,
+    22.5733478
+  ]
+}",Meeting with channel partner,positive,01/06/2026 12:41:37,01/02/2026 12:42:11,01/02/2026 12:42:11,abhiman_st,abhiman_st,ok
+d6c2c40b-942f-4eff-a8e1-d655d6809748,943e1b7b-5b19-4a45-9408-888a7fb97482,abhiman_st,meeting with club official,Secretary,Secretary,kolkata,kolkata,Mobility,VIL,ST- KOL-LMAC-34,Kalibari Road,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4474338,
+    22.6860416
+  ]
+}","RFAI DONE ,meeting secretary",positive,01/06/2026 10:28:19,01/02/2026 10:29:18,01/02/2026 10:29:18,abhiman_st,abhiman_st,ok
+c0db39c2-e0e0-4154-9d8a-487808a34794,03002279-e764-4b25-858c-824e82df9cb2,abhiman_st,Meeting with building owner,building owner,owner,kolkata,kolkata,Mobility,VIL,M1236,DumDum,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4173985,
+    22.6355194
+  ]
+}",Discussion with building owner,positive,01/06/2026 08:01:16,01/02/2026 08:02:00,01/02/2026 08:02:00,abhiman_st,abhiman_st,ok
+4d006c38-1d85-4467-a010-baadd540f392,0eede2c0-d9a2-454b-af60-d1658abddfc4,abhiman_st,meeting with channel partner,channel partner,Owner,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.3931261,
+    22.5152926
+  ]
+}",meeting with channel partner for new business,positive,01/03/2026 11:34:53,01/01/2026 11:35:40,01/01/2026 11:35:40,abhiman_st,abhiman_st,ok
+cdb76cdd-5acc-44d4-9e6c-42be03248588,5b51b140-42be-48e4-879c-2df3edf75ec9,abhiman_st,meeting with channel partner,owner,Director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.377405,
+    22.5151129
+  ]
+}",meeting with channel partner,Positive,01/06/2026 07:51:51,01/01/2026 07:53:04,01/01/2026 07:53:04,abhiman_st,abhiman_st,ok
+1fd7f63a-500b-48a8-ad1d-da4228229219,7a83e4f4-6696-47aa-b514-c48cbd2ce513,sunilb_st,Weekly discussion,Pramod Choudhary,Agm,mumbai,mumbai,Mobility,VIL,multiple,Multiple,"{""type"":""Point"",""coordinates"":[72.8797936,19.1045015]}",Review done,meeting done with VI team for weekly review,12/22/2025 10:27:53,12/15/2025 10:29:23,12/15/2025 10:29:23,sunilb_st,sunilb_st,ok
+14819b4d-3371-440b-bcfc-dbcd6c3bcb2b,194be2f3-5537-4418-b2f1-513ac52dfa4c,abhiman_st,Meeting with chairman,chairman,chairman,kolkata,kolkata,Mobility,VIL,ST-KOL-LMAC-034,kalibari road,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4475317,
+    22.6859303
+  ]
+}",positive,positive,01/02/2026 11:44:00,12/31/2025 11:44:44,12/31/2025 11:44:44,abhiman_st,abhiman_st,ok
+a454b26b-e862-4ed0-9d6b-ae87246aa463,c0736f56-c038-419f-a8be-ba58fad2e9ac,abhiman_st,meeting with new channel partner,owner,proprietor,kolkata,kolkata,FTTH,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4191797,
+    22.5904798
+  ]
+}",meeting with new business,positive,01/03/2026 05:40:23,12/31/2025 05:41:12,12/31/2025 05:41:12,abhiman_st,abhiman_st,ok
+f30f48c0-d249-4a5b-96db-d2e9e10a4f1e,d8c8a935-a8a6-4bf4-b69e-05e7c7f225b2,abhiman_st,Meeting with CP,channel Partner,director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310546,
+    22.5732335
+  ]
+}",meeting with channel partner,positive,01/03/2026 11:46:10,12/30/2025 11:46:50,12/30/2025 11:46:50,abhiman_st,abhiman_st,ok
+d4a89f71-6c8b-47c7-84bf-193225fd7ca1,60246430-ea35-4c52-9090-07a00a67905a,abhiman_st,meeting with municipality chairman,Chairman,Chairman,kolkata,kolkata,Mobility,VIL,ST- KOL-LMAC-034,kalibari road,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4490993,
+    22.6925655
+  ]
+}",Meeting with the chairman to resolve the pending issue since September,positive,01/01/2026 06:45:15,12/30/2025 06:47:40,12/30/2025 06:47:40,abhiman_st,abhiman_st,ok
+2c8003cc-9d22-4a50-acdd-8cef715672ad,bdeb8d38-3985-43c0-9171-e25a1874d5cc,abhiman_st,Meeting with channel partner,Channel Partner,Director,kolkata,kolkata,FTTH,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310795,
+    22.5733442
+  ]
+}",meeting for PO,positive,12/31/2025 10:22:19,12/29/2025 10:23:02,12/29/2025 10:23:02,abhiman_st,abhiman_st,ok
+e0c407b1-6d94-4b9a-b7bb-142b64933c8e,46616622-1c40-4681-9465-ee2bdd6e8400,abhiman_st,meeting with delta towers developer,Developer,Director,kolkata,kolkata,Other,ISP,Kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4360857,
+    22.5704194
+  ]
+}",meeting with developer for IBS AND NNI,positive,01/01/2026 09:17:46,12/29/2025 09:18:28,12/29/2025 09:18:28,abhiman_st,abhiman_st,ok
+a19ca556-645b-40af-b29c-a2c0cdbe69fa,3eaac83c-aa28-4da7-98d7-d98b1119debb,abhiman_st,meeting with owner,Owner,owner,kolkata,kolkata,Mobility,VIL,M1258,Rajpur Sonarpur,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4146731,
+    22.4700976
+  ]
+}",deployment of the site,positive,12/28/2025 10:01:04,12/27/2025 10:01:56,12/27/2025 10:01:56,abhiman_st,abhiman_st,ok
+a7c7acca-0d69-44c6-9091-b0c9d4424a48,acc285db-a95c-42d4-a5c1-8ab7df5928ec,abhiman_st,meeting with developer,Mr.Sen,IT HEAD,kolkata,kolkata,FTTH,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4010494,
+    22.5210845
+  ]
+}",meeting with IT HEAD,positive,12/30/2025 10:47:45,12/26/2025 10:48:35,12/26/2025 10:48:35,abhiman_st,abhiman_st,ok
+b99c0ec1-78f7-4ecb-9bc3-4ac68909090e,460f7018-13fe-44b1-b178-e958de15d240,abhiman_st,Meeting with Jain Group (.builders ),Mr.Lahiri,IT HEAD,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.3583557,
+    22.5250222
+  ]
+}",Meeting in respect to ILL and Digital Infra for their projects,positive,12/30/2025 09:39:34,12/26/2025 09:40:22,12/26/2025 09:40:22,abhiman_st,abhiman_st,ok
+e448e84e-3f77-41a1-a29c-6359d4254dba,62447d8a-72d9-4862-b68a-4de52b350b9f,abhiman_st,Meeting with channel partner,Mr.Roy,Director,kolkata,kolktaa,FTTH,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.3774241,
+    22.5151062
+  ]
+}",Meeting with channel partner,Positive,12/27/2025 11:55:23,12/24/2025 11:56:12,12/24/2025 11:56:12,abhiman_st,abhiman_st,ok
+ec2e4cec-c13a-4d6b-9e2b-71e99aee0ce5,a1696d00-f8e8-4fb5-9cb8-e2b15230c9a9,abhiman_st,Meeting with customer enterprise,Mr.Ayan Saha,It head,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4024698,
+    22.516994
+  ]
+}",meeting with IT HEAD to understand the requirements,positive,12/31/2025 11:05:15,12/24/2025 11:06:11,12/24/2025 11:06:11,abhiman_st,abhiman_st,ok
+3e563ed7-3b21-4507-9283-0613f0aeee32,91450857-f6fc-4a8e-98c8-e7511f89a514,abhiman_st,Meeting with customer,The ops head,Operations Head,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4360623,
+    22.5694205
+  ]
+}",meeting to discuss about bandwith,positive,12/26/2025 07:42:21,12/24/2025 07:43:20,12/24/2025 07:43:20,abhiman_st,abhiman_st,ok
+c7e606af-645d-4da3-9e55-47a31c0c813e,e6406661-034c-41cf-a5d0-a2a9b0d8facf,abhiman_st,meeting with partner,Company owner,Director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310361,
+    22.573289
+  ]
+}",meeting with partner for new acquisition,positive,12/27/2025 11:23:55,12/23/2025 11:25:13,12/23/2025 11:25:13,abhiman_st,abhiman_st,ok
+fd3fbda3-e0fe-424b-8114-c3f4a6cbde7b,f7566f88-703a-4944-aeb6-633b72c39391,abhiman_st,meeting with channel partner,owner,director,kolkata,kolkata,ILL,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310266,
+    22.5731417
+  ]
+}",meeting in respect to business,positive,12/26/2025 11:01:47,12/23/2025 11:02:38,12/23/2025 11:02:38,abhiman_st,abhiman_st,ok
+03667507-4302-45a7-8270-8187d3926a8d,d3ce8139-a8e9-433c-b352-5d8ef353b836,abhiman_st,meeting with manager of the building,Facility Manager,Facility Manager,kolkata,Kolkata,IBS,RJIO,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.431042,
+    22.5769941
+  ]
+}",meeting with the FM,positive,12/26/2025 10:37:13,12/22/2025 10:38:01,12/22/2025 10:38:01,abhiman_st,abhiman_st,ok
+54fc87f0-1886-4f29-a58f-98e781837e38,3becd79b-a875-43c3-9003-c89d47c06827,abhiman_st,meeting with enterprise customer,director,director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.350494,
+    22.5729441
+  ]
+}",meeting the enterprise customer for  a ILL order,positive,12/24/2025 08:54:45,12/22/2025 08:58:00,12/22/2025 08:58:00,abhiman_st,abhiman_st,ok
+b8d945ca-b396-49d0-ae79-89e7a7a7fb84,284782f4-99ad-494e-8adb-bbaf6676b364,abhiman_st,meeting with enterprise customer,the IT,IT HEAD,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4363107,
+    22.5803817
+  ]
+}",meeting with customer,positive,12/22/2025 08:10:20,12/19/2025 08:11:21,12/19/2025 08:11:21,abhiman_st,abhiman_st,ok
+f35c29db-d21d-4dc4-811e-7da10a325e0f,219f94a7-f706-417c-951c-712906c48281,abhiman_st,meeting with enterprise channel partner,Owner,Director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4310975,
+    22.5733897
+  ]
+}",meeting with channel partner,positive,12/22/2025 06:43:54,12/19/2025 06:44:40,12/19/2025 06:44:40,abhiman_st,abhiman_st,ok
+18b6b629-91e5-4418-92c1-ea8ee753a4be,15e81b22-1bc0-4996-b66f-eb262056a94a,abhiman_st,Meeting with Channel Partner,Director,Director,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{
+  ""type"": ""Point"",
+  ""coordinates"": [
+    88.4499149,
+    22.5734168
+  ]
+}",meeting with system integrator,positive,12/23/2025 07:50:28,12/17/2025 07:51:22,12/17/2025 07:51:22,abhiman_st,abhiman_st,ok
+d4c43b51-e887-45ff-8b57-beecabb2c030,53975338-9a66-4f91-a8d8-fab2a62281dd,abhiman_st,Enterprise customer,IT,IT HEAD,kolkata,kolkata,Other,ISP,kolkata,kolkata,"{""type"":""Point"",""coordinates"":[88.4197963,22.5901033]}",meeting with the enterprise customer,positive,12/18/2025 10:57:32,12/16/2025 10:58:26,12/16/2025 10:58:26,abhiman_st,abhiman_st,ok
+e7a8e0de-d0d2-4e4b-90b0-f3081d2bbcbf,ff83a20d-3328-450b-b9f2-62920fc3959e,abhiman_st,meeting with channel partner,channel partner,designation,kolkata,kolkata,FTTH,ISP,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4310616,22.5734522]}",meeting with channel partner,positive,12/18/2025 08:34:49,12/16/2025 08:35:55,12/16/2025 08:35:55,abhiman_st,abhiman_st,ok
+195eb58f-9b1d-4974-9f1d-052f4257e2d7,e8ab4c86-5bee-4660-a1ef-1d2082488cb6,abhiman_st,meeting with the club secretary,secretary,secretary,kolkata,kolkata,Mobility,VIL,HP1015,green sporting club,"{""type"":""Point"",""coordinates"":[88.429588,22.6242393]}",ok,positive,12/17/2025 11:31:31,12/15/2025 11:33:34,12/15/2025 11:33:34,abhiman_st,abhiman_st,ok
+0b7dbd97-2e8a-4336-8fa5-9fb13fd1e68e,ddc0efdc-c3ae-49e2-82d1-9e59f62f0974,abhiman_st,Meeting with enterprise customer,The  owner,Director,kolkata,kolkata,FTTH,ISP,kolkata,kolkata,"{""type"":""Point"",""coordinates"":[88.4094111,22.5582918]}",meeting with director,positive,12/17/2025 05:48:13,12/15/2025 05:48:57,12/15/2025 05:48:57,abhiman_st,abhiman_st,ok
+ae80742f-bda2-45c5-b3a5-50ac2c7dbfb0,f653d187-8451-47ae-9c32-b747d9f4b023,abhiman_st,Meeting with building secretary,Secretary,advocate,kolkata,kolkata,Mobility,VIL,M1090,Madhyamgram,"{""type"":""Point"",""coordinates"":[88.456424,22.6908186]}",Called to call,Positive,12/15/2025 09:33:35,12/13/2025 09:34:23,12/13/2025 09:34:23,abhiman_st,abhiman_st,ok
+1ce14822-5e03-49eb-a4a0-be7568267bef,01d047ee-1f33-4bf0-bf49-6f6f4c20b628,abhiman_st,Meeting with owner,building owner,building owner,kolkata,kolkata,Mobility,VIL,kali Bari lane,Kali Bari Lane,"{""type"":""Point"",""coordinates"":[88.4179283,22.6460601]}",meeting with building owner,positive,12/15/2025 07:31:51,12/13/2025 07:32:39,12/13/2025 07:32:39,abhiman_st,abhiman_st,ok
+c28bf856-0525-4d54-b1dc-e6ed011cbc0b,304abf63-4aa7-4c8d-ad88-a5ae645e6702,abhiman_st,enterprise customer visit,IT,IT HEAD,kolkata,kolkata,FTTH,ISP,@kolkata,kolkata,"{""type"":""Point"",""coordinates"":[88.4362845,22.5804285]}",meeting with the enterprise customer,positive,12/16/2025 08:10:31,12/12/2025 08:11:31,12/12/2025 08:11:31,abhiman_st,abhiman_st,ok
+7a49942c-0dbf-4bb1-b2a2-8f73ed6f1850,0a8e7786-0095-4e27-9b34-4013dc84483f,abhiman_st,Channel Partner Meeting,Company Owner,Director,kolkata,kolkata,FTTH,ISP,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.431204,22.5734191]}",meeting with channel partner,positive,12/12/2025 11:03:06,12/10/2025 11:03:56,12/10/2025 11:03:56,abhiman_st,abhiman_st,ok
+4d5bc136-3391-4ce6-ad92-fd65413ea114,5ee7a919-f6ad-47b4-be10-a78f9ce87c6b,abhiman_st,VIL meeting regarding nominal,Mr.Chayan Guha,Project Head,@kolkata,kolkata,Mobility,VIL,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4322238,22.5772871]}",meeting in respect to nominal,positive,12/13/2025 06:32:56,12/10/2025 06:33:38,12/10/2025 06:33:38,abhiman_st,abhiman_st,ok
+37d014f1-a0cb-410f-8608-a9b47195e21f,9ee71314-ae07-4c4e-a66b-ee5e99f73ce2,abhiman_st,customer meeting,Ashutosh Shukla,IT HEAD,kolkata,kolkata,Other,ISP,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4357026,22.5796663]}",Meeting with the customer,positive,12/12/2025 05:39:07,12/10/2025 05:41:03,12/10/2025 05:41:03,abhiman_st,abhiman_st,ok
+bcf37382-0171-46be-b217-30952d4dfeba,f96bb731-22cb-4954-862b-359f5784ead8,abhiman_st,channel Partner,Company owner,director,kolkata,kolkata,FTTH,ISP,kolkata,kolkata,"{""type"":""Point"",""coordinates"":[88.4311625,22.573416]}",Meeting for business prospects,positive,12/11/2025 09:12:25,12/09/2025 09:13:21,12/09/2025 09:13:21,abhiman_st,abhiman_st,ok
+03f57a64-73f0-4382-9522-6fc31ac50009,2217cce7-0093-4c9d-bf9d-9994b74a8642,abhiman_st,Business Meeting,Technical Head,CTO,kolkata,kolkata,Mobility,VIL,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4322151,22.5773106]}",Meeting with CTO regarding Nominals,positive,12/11/2025 10:22:55,12/04/2025 10:23:40,12/04/2025 10:23:40,abhiman_st,abhiman_st,ok
+843be089-1e67-4a0b-8804-950a73e07437,579ac16a-8ea9-433f-b350-19807b49effd,abhiman_st,Chairman of the site,chairman,Chairman,Kolkata,kolkata,Mobility,VIL,@kolkata,kali Bari lane,"{""type"":""Point"",""coordinates"":[88.4171009,22.6350324]}",site resolution,positive,12/06/2025 08:30:31,12/04/2025 08:31:15,12/04/2025 08:31:15,abhiman_st,abhiman_st,ok
+0392d077-3d97-4110-baac-7e8d5283cb4a,3b89979c-92be-407e-b986-644880cd2fb4,abhiman_st,owner meeting,Mr.Monotosh Dutta,owner,kolkata,kolkata,Mobility,ISP,@kolkata,kolkata,"{""type"":""Point"",""coordinates"":[88.4179955,22.6464951]}",meeting with owner,positive,12/03/2025 13:28:16,12/02/2025 13:29:16,12/02/2025 13:29:16,abhiman_st,abhiman_st,ok
+b0990fe2-d8ed-4f6d-889c-edbe1eb46b53,0de08969-8895-45bb-baa6-3fd449307242,abhiman_st,channel partner meeting,Mr.Vishal Tulshiyan,Director,@kolkata,@kolkata,FTTH,ISP,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4649041,22.6215842]}",meeting with channel partner,positive,12/04/2025 08:55:08,12/01/2025 08:56:08,12/01/2025 08:56:08,abhiman_st,abhiman_st,ok
+951c6236-2fa0-4801-9811-84a38564666f,dcfc57c9-efca-40de-90b9-d661c6b93156,abhiman_st,meeting with channel partner,Channel Partner,Director,@kolkata,@kolkata,Other,ISP,channel Partner meeting,@kolkata,"{""type"":""Point"",""coordinates"":[88.4310831,22.5734535]}",Meeting with channel partner,positive,11/28/2025 11:59:56,11/25/2025 12:00:48,11/25/2025 12:00:48,abhiman_st,abhiman_st,ok
+d347a39f-b5b1-425f-acac-62c3582fc2a3,6a874bf3-c03e-473a-bfd9-f51d5cdf173d,abhiman_st,meeting with building FM,FM -  Millenium City,Facility Manager,@kolkata,@kolkata,IBS,RJIO,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4306806,22.5763286]}",meeting with FM and materials unloading,positive,11/22/2025 10:10:28,11/20/2025 10:11:15,11/20/2025 10:11:15,abhiman_st,abhiman_st,ok
+a80cb276-26ed-4093-b42c-236e72bceedc,2fce849c-1a60-4585-8d8c-44b6a867c37a,abhiman_st,channel partner meeting,Mr.Avijit Sinha,Director,kolkata,kolkata,Other,ISP,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4310662,22.5733574]}",meeting the channel partner in respect to business and generate leads,positive,11/20/2025 11:40:48,11/19/2025 11:41:37,11/19/2025 11:41:37,abhiman_st,abhiman_st,ok
+2db5ae94-300f-44ad-b53c-b06f403e02cd,0e14e587-00ed-4d79-846c-4936c16a9832,abhiman_st,channel.partnet.meeting,Mr.Joydeep,Proprietor,@kolkata,@kolkata,Other,ISP,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4311103,22.572969]}",meeting with channel partner,positive,11/21/2025 07:30:20,11/19/2025 07:31:22,11/19/2025 07:31:22,abhiman_st,abhiman_st,ok
+a7607dc4-1d77-49f0-8baf-35253302e1f4,7b6593c1-0ba4-4267-9e6b-380f55b7e3f4,abhiman_st,channel partner meeting,Mr.Sinha,Director,@kolkata,@kolkata,Other,VIL,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.4310756,22.5735484]}",enterprise data discussion and collection,positive,11/20/2025 10:25:33,11/17/2025 10:26:39,11/17/2025 10:26:39,abhiman_st,abhiman_st,ok
+9dd11aa7-e4f6-431e-89a2-87403295dc13,83eb9967-d9c1-48b1-92b0-355d8a4b6b18,abhiman_st,building owner of kalibari road,building owner,owner,kolkata,kolkata,Mobility,VIL,@kolkata,@kalibari lane,"{""type"":""Point"",""coordinates"":[88.4179771,22.6465312]}",resolution of the site,positive,11/18/2025 11:05:00,11/14/2025 11:06:21,11/14/2025 11:06:21,abhiman_st,abhiman_st,ok
+01fa1a64-afbb-4c91-a7d1-4213515a5a69,2a9d6c4b-504f-4583-837a-10fee0cea520,abhiman_st,channel partner meeting,Mr.Bakshi,Director,@kolkata,@kolkata,Other,ISP,@channel partner,@kolkata,"{""type"":""Point"",""coordinates"":[88.4311541,22.5734644]}",meeting with the liasoning team,positive,11/19/2025 12:46:37,11/13/2025 12:48:47,11/13/2025 12:48:47,abhiman_st,abhiman_st,ok
+462d78ff-cb12-4f32-800b-78f6e7810c60,99cfd32f-09af-4602-9288-e5ff67e1ea8b,abhiman_st,meeting with enterprise channel partner,Mr.Sinha,Director,kolkata,kolkata,Other,ISP,@kolkata,@kolkata,"{""type"":""Point"",""coordinates"":[88.431038,22.5734075]}",meeting with the channel partner,positive,11/15/2025 08:46:03,11/13/2025 08:47:32,11/13/2025 08:47:32,abhiman_st,abhiman_st,ok
+f4a46a02-1b82-426a-aecb-ae61f4d1d877,67c8a04c-ce77-4f2b-a8bc-d84d6b991071,abhiman_st,meeting with channel partner,Mr.Sinha,Director,kolkata,kolkata,Other,ISP,@channel partner,@channel partner,"{""type"":""Point"",""coordinates"":[88.4311166,22.5734307]}",Talking about business,positive,11/14/2025 11:19:12,11/12/2025 11:20:55,11/12/2025 11:20:55,abhiman_st,abhiman_st,ok
+dae46455-1895-46f9-a192-a97e420b72dc,3298fa92-c226-41c7-8694-b4ac8ddd74cc,abhiman_st,Meeting with Mr.Ritesh,Mr.Ritesh,Planning Head,kolkata,kolkata,Mobility,Airtel,@airtel,@airtel,"{""type"":""Point"",""coordinates"":[88.4314342,22.5693114]}",came to meet Mr.Ritesh,positive,11/18/2025 10:12:35,11/12/2025 10:13:50,11/12/2025 10:13:50,abhiman_st,abhiman_st,ok
+3371909c-22f6-4ea3-af6b-f0f09f5c560a,187c72ee-b6d1-4e59-9196-553915ad7c07,abhiman_st,VIL office,Mr.Chayan Guha,AGM,kolkata,kolkata,Mobility,VIL,@VIL,@VIL,"{""type"":""Point"",""coordinates"":[88.4321279,22.5773499]}",positive,positive,11/14/2025 09:07:38,11/12/2025 09:09:22,11/12/2025 09:09:22,abhiman_st,abhiman_st,ok
+54ba37c3-c401-4165-a905-27800b409390,fb95fadf-f972-4e49-ac6c-d90e301a1a76,sunilb_st,Site built with vendor team,Site owner,site owner,mumbai,Mumbai,Mobility,VIL,MUM_SC_6852,swapnapurti,"{""type"":""Point"",""coordinates"":[73.0767683,19.0787181]}",site built clearance and builtl,site built wip,10/28/2025 07:53:29,10/30/2025 02:10:33,10/30/2025 02:10:33,sunilb_st,sunilb_st,ok
+553aa562-4d3b-4b76-b113-1a9549a0b2de,05ee92cc-455e-42f7-aac4-cdbbd80ccc3e,sunilb_st,Built plan site visit,Owner mr irfan sir,owner of building,Mumbai,mumbai,Mobility,Airtel,12854,Aman plaza,"{""type"":""Point"",""coordinates"":[73.0230176,19.1018575]}",work start permission rcd,work star rcd,06/21/2025 04:59:08,06/24/2025 09:28:47,06/24/2025 09:28:47,sunilb_st,sunilb_st,ok
