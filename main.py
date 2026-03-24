@@ -15,6 +15,8 @@ import uuid
 from datetime import datetime
 from io import BytesIO
 import sys
+import glob
+import requests
 
 # =====================================================
 # DATABASE
@@ -53,6 +55,8 @@ app.add_middleware(
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+SITE_API_URL = "https://cm.shrotitele.com/user_management/api/tpms-tracker/?api_key=MySecretKey@2025"
 
 # =====================================================
 # DB SESSION
@@ -301,9 +305,143 @@ async def validate_form(
         db.rollback()
         raise HTTPException(500, str(e))
 
-# =====================================================
-# ANALYTICS
-# =====================================================
+
+# ================================
+# 🔗 PUT YOUR API LINKS HERE
+# ================================
+SITE_API_URL = "https://cm.shrotitele.com/user_management/api/tpms-tracker/?api_key=MySecretKey@2025"
+ALARM_API_URL = "https://cm.shrotitele.com/user_management/alarm-data/"
+
+
+# ================================
+# FETCH ALL SITES
+# ================================
+def fetch_all_sites():
+    try:
+        res = requests.get(SITE_API_URL)
+        data = res.json().get("data", [])
+        return data
+    except Exception as e:
+        print("Site API Error:", e)
+        return []
+
+
+# ================================
+# FETCH ALARM DATA (DYNAMIC)
+# ================================
+def fetch_alarm_data(start_date=None, end_date=None, imei=None):
+
+    params = {}
+
+    if start_date and end_date:
+        params["start_date"] = start_date
+        params["end_date"] = end_date
+
+    if imei:
+        params["imei"] = imei
+
+    try:
+        res = requests.get(ALARM_API_URL, params=params)
+        return res.json().get("data", [])
+    except Exception as e:
+        print("Alarm API Error:", e)
+        return []
+
+
+# ================================
+# BUILD SITE MONITORING
+# ================================
+def build_site_monitoring(start_date=None, end_date=None, site_id=None):
+
+    sites = fetch_all_sites()
+    alarms = fetch_alarm_data(start_date, end_date)
+
+    # 🔥 Create IMEI → alarm mapping
+    alarm_map = {}
+
+    for alarm in alarms:
+        imei = str(alarm.get("imei")).strip()
+
+        if imei not in alarm_map:
+            alarm_map[imei] = []
+
+        alarm_map[imei].append(alarm)
+
+    up_sites = []
+    down_sites = []
+
+    for site in sites:
+
+        imei = str(site.get("gsm_imei_no")).strip()
+        site_name = site.get("site_name")
+        global_id = site.get("globel_id")
+
+        site_alarms = alarm_map.get(imei, [])
+
+        # 🔥 Decide status
+        if site_alarms:
+            latest_alarm = sorted(
+                site_alarms,
+                key=lambda x: x.get("start_time", ""),
+                reverse=True
+            )[0]
+
+            down_sites.append({
+                "site_name": site_name,
+                "global_id": global_id,
+                "imei": imei,
+                "status": "DOWN",
+                "alarm": latest_alarm.get("alarm_name"),
+                "since": latest_alarm.get("start_time"),
+                "end_time": latest_alarm.get("end_time")
+            })
+
+        else:
+            up_sites.append({
+                "site_name": site_name,
+                "global_id": global_id,
+                "imei": imei,
+                "status": "UP",
+                "since": "Running"
+            })
+
+    return sites, up_sites, down_sites
+
+
+# ================================
+# MAIN API (FILTER SUPPORT)
+# ================================
+@app.get("/SITE-MONITORING")
+def site_monitoring(start_date: str = None, end_date: str = None):
+
+    total, up, down = build_site_monitoring(start_date, end_date)
+
+    return {
+        "total_sites": len(total),
+        "up_sites": len(up),
+        "down_sites": len(down)
+    }
+
+
+# ================================
+# GET DOWN SITES
+# ================================
+@app.get("/SITE-DOWN")
+def site_down(start_date: str = None, end_date: str = None):
+
+    _, _, down = build_site_monitoring(start_date, end_date)
+    return down
+
+
+# ================================
+# GET UP SITES
+# ================================
+@app.get("/SITE-UP")
+def site_up(start_date: str = None, end_date: str = None):
+
+    _, up, _ = build_site_monitoring(start_date, end_date)
+    return up
+
 
 # =====================================================
 # ANALYTICS

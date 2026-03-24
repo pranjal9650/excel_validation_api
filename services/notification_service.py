@@ -1,6 +1,7 @@
 import pandas as pd
 from sqlalchemy import func
 from collections import defaultdict
+from datetime import date
 
 from services.email_service import send_email
 from database import SessionLocal
@@ -11,11 +12,15 @@ def send_daily_report():
 
     distance_file = "data/Distance Report -1st feb 25 to 30 Nov'25.xlsx"
     employee_file = "data/EMPLOYEE details'26.xlsx"
+    attendance_file = "data/Report-1773314624370.xlsx"
+    alarm_file = "data/Alarm_Report_20260318_125744.csv"
 
     print("Reading excel files...")
 
     distance_df = pd.read_excel(distance_file)
     employee_df = pd.read_excel(employee_file)
+    attendance_df = pd.read_excel(attendance_file)
+    alarm_df = pd.read_csv(alarm_file)
 
     # ---------------- NORMALIZE USERNAMES ---------------- #
 
@@ -33,6 +38,13 @@ def send_daily_report():
         .str.lower()
     )
 
+    attendance_df["Username"] = (
+        attendance_df["Username"]
+        .astype(str)
+        .str.strip()
+        .str.lower()
+    )
+
     print("Merging employee and distance data...")
 
     merged_df = distance_df.merge(
@@ -42,18 +54,33 @@ def send_daily_report():
         how="left"
     )
 
-    # ---------------- GET TODAY DISTANCE COLUMN ---------------- #
+    # ---------------- MERGE ATTENDANCE ---------------- #
 
-    today_column = distance_df.columns[-1]
+    merged_df = merged_df.merge(
+        attendance_df,
+        on="Username",
+        how="left",
+        suffixes=("", "_att")
+    )
 
-    print("Using distance column:", today_column)
+    # ---------------- GET TODAY COLUMNS ---------------- #
+
+    distance_column = distance_df.columns[-1]
+    attendance_column = attendance_df.columns[-1]
+
+    print("Using distance column:", distance_column)
+    print("Using attendance column:", attendance_column)
 
     db = SessionLocal()
 
-    manager_data = defaultdict(list)
-    management_data = defaultdict(list)   # circle wise
+    latest_date = db.query(func.max(FormEntry.selected_date)).scalar()
+    print("Using form date:", latest_date)
 
-    # ---------------- PROCESS EACH USER ---------------- #
+    manager_data = defaultdict(list)
+    circle_data = defaultdict(list)
+    management_data = defaultdict(list)
+
+    # ---------------- PROCESS USERS ---------------- #
 
     for _, row in merged_df.iterrows():
 
@@ -62,63 +89,100 @@ def send_daily_report():
         manager = row.get("Reporting Manager", "Unknown")
         circle = row.get("City", "Unknown")
 
-        distance = row.get(today_column, 0)
+        # -------- DISTANCE CLEANING -------- #
 
-        # ---------------- GET FORMS FROM DB ---------------- #
+        distance = row.get(distance_column, 0)
 
-        forms_query = db.query(
+        if pd.isna(distance) or str(distance).strip() in ["--", "nan", ""]:
+            distance = 0
+        else:
+            try:
+                distance = float(distance)
+            except:
+                distance = 0
+
+        # -------- ATTENDANCE -------- #
+
+        attendance = row.get(attendance_column, "N/A")
+
+        # -------- TODAY FORMS QUERY -------- #
+
+        forms_query = (
+        db.query(
             FormEntry.form_type,
             func.count(FormEntry.id)
-        ).filter(
+        )
+        .filter(
             FormEntry.username == username,
-            FormEntry.row_status == "valid"
-        ).group_by(FormEntry.form_type).all()
+            FormEntry.row_status == "valid",
+            FormEntry.selected_date == latest_date
+        )
+        .group_by(FormEntry.form_type)
+        .all()
+    )
 
         if not forms_query:
             form_display = "No Forms"
         else:
             form_list = []
+
             for form_name, count in forms_query:
                 form_list.append(f"{form_name} ({count})")
 
             form_display = "<br>".join(form_list)
 
-        # ---------------- MANAGER DATA ---------------- #
-
-        manager_data[manager].append({
+        user_record = {
             "user": user_name,
-            "distance": distance,
+            "attendance": attendance,
+            "distance": int(distance),
             "form_names": form_display
-        })
+        }
 
-        # ---------------- MANAGEMENT DATA (CIRCLE WISE) ---------------- #
-
-        management_data[circle].append({
-            "user": user_name,
-            "distance": distance,
-            "form_names": form_display
-        })
+        manager_data[manager].append(user_record)
+        circle_data[circle].append(user_record)
+        management_data[circle].append(user_record)
 
     db.close()
 
     # =====================================================
-    # SEND MANAGER REPORTS
+    # SITE DOWN PROCESSING
+    # =====================================================
+
+    print("Processing site alarm report...")
+
+    site_down_data = defaultdict(list)
+
+    alarm_df = alarm_df.drop_duplicates(subset=["Global ID"])
+
+    for _, row in alarm_df.iterrows():
+
+        circle = str(row.get("State/Circle", "Unknown")).strip()
+        site_id = str(row.get("Global ID", "Unknown")).strip()
+        site_name = str(row.get("Site Name", "Unknown")).strip()
+
+        site_down_data[circle].append({
+            "site_id": site_id,
+            "site_name": site_name
+        })
+
+    # =====================================================
+    # REPORTING MANAGER REPORTS
     # =====================================================
 
     for manager, users in manager_data.items():
 
         body = f"""
-        <h2 style="color:#2c3e50;">Daily Field Activity Report</h2>
-
+        <h2>Daily Field Activity Report</h2>
         <p><b>Manager:</b> {manager}</p>
 
         <table border="1" cellpadding="8" cellspacing="0"
         style="border-collapse:collapse;font-family:Arial;width:100%;">
 
-        <tr style="background-color:#f2f2f2;">
+        <tr style="background:#f2f2f2;">
         <th>User</th>
-        <th>Distance Travelled</th>
-        <th>Forms Submitted</th>
+        <th>Attendance</th>
+        <th>Distance</th>
+        <th>Forms</th>
         </tr>
         """
 
@@ -126,7 +190,8 @@ def send_daily_report():
             body += f"""
             <tr>
             <td>{u['user']}</td>
-            <td style="text-align:center">{u['distance']} KM</td>
+            <td>{u['attendance']}</td>
+            <td>{u['distance']} KM</td>
             <td>{u['form_names']}</td>
             </tr>
             """
@@ -134,7 +199,7 @@ def send_daily_report():
         body += "</table>"
 
         recipients = [
-            "pranjalg.work@gmail.com"
+            "pranjalg.work@gmail.com",
         ]
 
         send_email(
@@ -143,48 +208,143 @@ def send_daily_report():
             body
         )
 
-    print("Manager emails sent.")
+    print("Manager reports sent.")
 
     # =====================================================
-    # MANAGEMENT REPORT (CIRCLE WISE)
+    # CIRCLE HEAD REPORTS
     # =====================================================
 
-    print("Preparing management report...")
+    for circle, users in circle_data.items():
 
-    body = """
-    <h2 style="color:#2c3e50;">All Circles Daily Field Activity Report</h2>
-    """
-
-    # SORT CIRCLES FOR CLEAN ORDER
-    for circle in sorted(management_data.keys()):
-
-        body += f"""
-        <h3 style="color:#34495e;margin-top:30px;">{circle}</h3>
+        body = f"""
+        <h2>Circle Report</h2>
+        <p><b>Circle:</b> {circle}</p>
 
         <table border="1" cellpadding="8" cellspacing="0"
         style="border-collapse:collapse;font-family:Arial;width:100%;">
 
-        <tr style="background-color:#f2f2f2;">
+        <tr style="background:#f2f2f2;">
         <th>User</th>
-        <th>Distance Travelled</th>
-        <th>Forms Submitted</th>
+        <th>Attendance</th>
+        <th>Distance</th>
+        <th>Forms</th>
         </tr>
         """
 
-        for u in management_data[circle]:
-
+        for u in users:
             body += f"""
             <tr>
             <td>{u['user']}</td>
-            <td style="text-align:center">{u['distance']} KM</td>
+            <td>{u['attendance']}</td>
+            <td>{u['distance']} KM</td>
             <td>{u['form_names']}</td>
             </tr>
             """
 
         body += "</table>"
 
+        sites = site_down_data.get(circle, [])
+
+        body += f"""
+        <h3 style="margin-top:30px;">
+        Sites Down Yesterday ({len(sites)})
+        </h3>
+
+        <table border="1" cellpadding="8" cellspacing="0"
+        style="border-collapse:collapse;font-family:Arial;width:60%;">
+
+        <tr style="background:#f2f2f2;">
+        <th>Site ID</th>
+        <th>Site Name</th>
+        </tr>
+        """
+
+        for s in sites:
+            body += f"""
+            <tr>
+            <td>{s['site_id']}</td>
+            <td>{s['site_name']}</td>
+            </tr>
+            """
+
+        body += "</table>"
+
+        recipients = [
+            "pranjalg.work@gmail.com",
+        ]
+
+        send_email(
+            recipients,
+            f"Daily Report - Circle {circle}",
+            body
+        )
+
+    print("Circle reports sent.")
+
+    # =====================================================
+    # MANAGEMENT REPORT
+    # =====================================================
+
+    print("Preparing management report...")
+
+    body = "<h2>All Circles Daily Field Activity Report</h2>"
+
+    for circle in sorted(management_data.keys()):
+
+        body += f"<h3>{circle}</h3>"
+
+        body += """
+        <table border="1" cellpadding="8" cellspacing="0"
+        style="border-collapse:collapse;font-family:Arial;width:100%;">
+
+        <tr style="background:#f2f2f2;">
+        <th>User</th>
+        <th>Attendance</th>
+        <th>Distance</th>
+        <th>Forms</th>
+        </tr>
+        """
+
+        for u in management_data[circle]:
+            body += f"""
+            <tr>
+            <td>{u['user']}</td>
+            <td>{u['attendance']}</td>
+            <td>{u['distance']} KM</td>
+            <td>{u['form_names']}</td>
+            </tr>
+            """
+
+        body += "</table>"
+
+    body += "<h2 style='margin-top:40px;'>Site Down Summary</h2>"
+
+    for circle, sites in site_down_data.items():
+
+        body += f"""
+        <h3>{circle} - {len(sites)} Sites Down</h3>
+
+        <table border="1" cellpadding="6" cellspacing="0"
+        style="border-collapse:collapse;width:50%;">
+
+        <tr style="background:#f2f2f2;">
+        <th>Site ID</th>
+        <th>Site Name</th>
+        </tr>
+        """
+
+        for s in sites:
+            body += f"""
+            <tr>
+            <td>{s['site_id']}</td>
+            <td>{s['site_name']}</td>
+            </tr>
+            """
+
+        body += "</table>"
+
     management_recipients = [
-        "pranjalg.work@gmail.com"
+        "pranjalg.work@gmail.com",
     ]
 
     send_email(
