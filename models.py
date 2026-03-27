@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, DateTime
+from sqlalchemy import Column, Integer, String, Date, DateTime, Float
 from database import Base
 from datetime import datetime
 
@@ -35,3 +35,20 @@ class UploadHistory(Base):
     junk_file = Column(String(500))
 
     upload_time = Column(DateTime, default=datetime.utcnow)
+
+class SiteMonitoring(Base):
+    __tablename__ = "site_monitoring"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    site_name = Column(String(255))
+    global_id = Column(String(100))
+    circle = Column(String(150)) 
+
+    status = Column(String(50))   # Active / Outage
+    alarm = Column(String(255))
+
+    since = Column(String(100))
+    end_time = Column(String(100))
+
+    last_updated = Column(DateTime, default=datetime.utcnow)

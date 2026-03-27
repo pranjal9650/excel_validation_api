@@ -3,6 +3,7 @@
 # =====================================================
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, Form, Depends
+from routes import site_monitoring
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
@@ -52,6 +53,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+app.include_router(site_monitoring.router)
+
+from scheduler import start_scheduler
+
+@app.on_event("startup")
+def startup_event():
+    start_scheduler()
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -306,6 +315,7 @@ async def validate_form(
         raise HTTPException(500, str(e))
 
 
+
 # ================================
 # 🔗 PUT YOUR API LINKS HERE
 # ================================
@@ -407,14 +417,58 @@ def build_site_monitoring(start_date=None, end_date=None, site_id=None):
 
     return sites, up_sites, down_sites
 
+def save_site_monitoring_to_db(db: Session, up_sites, down_sites):
+
+    try:
+        # 🔥 Purana data delete (fresh snapshot ke liye)
+        db.query(models.SiteMonitoring).delete()
+
+        # 🔥 Insert UP sites
+        for site in up_sites:
+            db.add(models.SiteMonitoring(
+                site_name=site.get("site_name"),
+                global_id=site.get("global_id"),
+                circle="UNKNOWN",  # agar API me mile toh map kar lena
+                status="Active",
+                alarm=None,
+                since=site.get("since"),
+                end_time=None
+            ))
+
+        # 🔥 Insert DOWN sites
+        for site in down_sites:
+            db.add(models.SiteMonitoring(
+                site_name=site.get("site_name"),
+                global_id=site.get("global_id"),
+                circle="UNKNOWN",
+                status="Outage",
+                alarm=site.get("alarm"),
+                since=site.get("since"),
+                end_time=site.get("end_time")
+            ))
+
+        db.commit()
+        print("✅ Site monitoring data saved to DB")
+
+    except Exception as e:
+        db.rollback()
+        print("❌ DB Save Error:", str(e))
+
 
 # ================================
 # MAIN API (FILTER SUPPORT)
 # ================================
 @app.get("/SITE-MONITORING")
-def site_monitoring(start_date: str = None, end_date: str = None):
+def site_monitoring(
+    start_date: str = None,
+    end_date: str = None,
+    db: Session = Depends(get_db)
+):
 
     total, up, down = build_site_monitoring(start_date, end_date)
+
+    # 🔥 SAVE TO DB
+    save_site_monitoring_to_db(db, up, down)
 
     return {
         "total_sites": len(total),

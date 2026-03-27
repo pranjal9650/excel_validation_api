@@ -2,10 +2,12 @@ import pandas as pd
 from sqlalchemy import func
 from collections import defaultdict
 from datetime import date
+from datetime import date, datetime 
 
 from services.email_service import send_email
 from database import SessionLocal
 from models import FormEntry
+from models import SiteMonitoring
 
 
 def send_daily_report():
@@ -148,6 +150,8 @@ def send_daily_report():
     # SITE DOWN PROCESSING
     # =====================================================
 
+    db = SessionLocal()
+
     print("Processing site alarm report...")
 
     site_down_data = defaultdict(list)
@@ -160,10 +164,29 @@ def send_daily_report():
         site_id = str(row.get("Global ID", "Unknown")).strip()
         site_name = str(row.get("Site Name", "Unknown")).strip()
 
+        # 🔍 Check if already exists
+        existing = db.query(SiteMonitoring).filter(
+            SiteMonitoring.site_id == site_id
+        ).first()
+
+        if not existing:
+            record = SiteMonitoring(
+                site_id=site_id,
+                status="Inactive",
+                outage="Yes",
+                distance=0,
+                manager="NA",
+                circle=circle
+            )
+            db.add(record)
+
         site_down_data[circle].append({
             "site_id": site_id,
             "site_name": site_name
         })
+
+    db.commit()
+    db.close()
 
     # =====================================================
     # REPORTING MANAGER REPORTS
