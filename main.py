@@ -65,6 +65,9 @@ def startup_event():
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+GENERATED_FOLDER = "generated_files"
+os.makedirs(GENERATED_FOLDER, exist_ok=True)
+
 SITE_API_URL = "https://cm.shrotitele.com/user_management/api/tpms-tracker/?api_key=MySecretKey@2025"
 
 # =====================================================
@@ -417,6 +420,10 @@ def build_site_monitoring(start_date=None, end_date=None, site_id=None):
 
     return sites, up_sites, down_sites
 
+
+# ================================
+# SAVE SITE MONITORING
+# ================================
 def save_site_monitoring_to_db(db: Session, up_sites, down_sites):
 
     try:
@@ -669,3 +676,41 @@ def get_upload_history(db: Session = Depends(get_db)):
         }
         for h in history
     ]
+
+# =====================================================
+# CREATE DYNAMIC FILE (TEMPLATE GENERATOR)
+# =====================================================
+
+from fastapi import Body
+
+@app.post("/CREATE-FILE")
+def create_dynamic_file(columns: list[str] = Body(...)):
+    try:
+        # Clean column names (reuse your logic style 🔥)
+        clean_columns = [
+            str(col)
+            .strip()
+            .replace("_", " ")
+            .title()
+            for col in columns
+        ]
+
+        # Create empty dataframe
+        df = pd.DataFrame(columns=clean_columns)
+
+        # Unique file name
+        file_id = str(uuid.uuid4())
+        file_path = os.path.join(GENERATED_FOLDER, f"{file_id}.xlsx")
+
+        # Save file
+        df.to_excel(file_path, index=False)
+
+        return {
+            "status": "success",
+            "message": "Template file created",
+            "columns": clean_columns,
+            "download_url": f"/DOWNLOAD?path={file_path}"
+        }
+
+    except Exception as e:
+        raise HTTPException(500, str(e))
