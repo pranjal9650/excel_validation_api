@@ -8,16 +8,19 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import extract
+from pydantic import BaseModel
 
 import scheduler
 import pandas as pd
 import os
 import uuid
+import re
 from datetime import datetime
 from io import BytesIO
 import sys
 import glob
 import requests
+import json
 
 # =====================================================
 # DATABASE
@@ -108,6 +111,46 @@ def safe_clean_df(df):
         df[col] = df[col].map(lambda x: str(x).strip() if pd.notna(x) else "")
 
     return df
+
+
+# =====================================================
+# DYNAMIC VALIDATION ENGINE
+# =====================================================
+
+def apply_dynamic_validation(df, rules):
+    valid_rows = []
+    invalid_rows = []
+
+    for _, row in df.iterrows():
+        is_valid = True
+
+        for col, rule in rules.items():
+            value = str(row.get(col, "")).strip()
+
+            # REQUIRED CHECK
+            if rule.get("required") and not value:
+                is_valid = False
+
+            # TYPE CHECK
+            if rule.get("type") == "number":
+                if value and not value.isdigit():
+                    is_valid = False
+
+            if rule.get("type") == "email":
+                if value and "@" not in value:
+                    is_valid = False
+
+            # LENGTH CHECK
+            if "length" in rule:
+                if value and len(value) != rule["length"]:
+                    is_valid = False
+
+        if is_valid:
+            valid_rows.append(row)
+        else:
+            invalid_rows.append(row)
+
+    return pd.DataFrame(valid_rows), pd.DataFrame(invalid_rows)
 
 # =====================================================
 # USERNAME EXTRACTION
@@ -435,7 +478,7 @@ def save_site_monitoring_to_db(db: Session, up_sites, down_sites):
             db.add(models.SiteMonitoring(
                 site_name=site.get("site_name"),
                 global_id=site.get("global_id"),
-                circle="UNKNOWN",  # agar API me mile toh map kar lena
+                circle="UNKNOWN",
                 status="Active",
                 alarm=None,
                 since=site.get("since"),
@@ -631,7 +674,7 @@ def get_dashboard_data(db: Session = Depends(get_db)):
     data = db.query(models.UploadHistory).all()
 
     return {
-        "total_forms": len(data),   # ⭐ FIXED (Use total rows, not distinct count)
+        "total_forms": len(data),
         "total_rows": sum(e.total_rows or 0 for e in data),
         "valid_rows": sum(e.valid_rows or 0 for e in data),
         "junk_rows": sum(e.junk_rows or 0 for e in data)
@@ -643,15 +686,26 @@ def get_dashboard_data(db: Session = Depends(get_db)):
 # =====================================================
 
 @app.get("/DOWNLOAD")
-async def download_file(path: str):
-
+async def download_file(path: str, filename: str = None):
+    """
+    Downloads a file.
+    - path     : actual file path on disk
+    - filename : (optional) the display name the browser should save it as
+    """
     if not os.path.exists(path):
         raise HTTPException(404, "File not found")
 
+    # Use the provided display filename if given, else fall back to basename
+    display_name = filename if filename else os.path.basename(path)
+
+    # Ensure it ends with .xlsx
+    if not display_name.lower().endswith(".xlsx"):
+        display_name += ".xlsx"
+
     return FileResponse(
         path,
-        filename=os.path.basename(path),
-        media_type="application/octet-stream"
+        filename=display_name,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
 
@@ -677,39 +731,74 @@ def get_upload_history(db: Session = Depends(get_db)):
         for h in history
     ]
 
+
+# ============================
+# CREATE FILE MODEL
+# ============================
+
+from typing import List, Dict, Optional
+from pydantic import BaseModel
+
+class CreateFileRequest(BaseModel):
+    form_name: str
+    columns: List[str]
+    rules: Optional[Dict] = {}
+
 # =====================================================
 # CREATE DYNAMIC FILE (TEMPLATE GENERATOR)
 # =====================================================
 
-from fastapi import Body
+from openpyxl import Workbook
+from openpyxl.worksheet.datavalidation import DataValidation
 
 @app.post("/CREATE-FILE")
-def create_dynamic_file(columns: list[str] = Body(...)):
+def create_dynamic_file(data: CreateFileRequest):
     try:
-        # Clean column names (reuse your logic style 🔥)
-        clean_columns = [
-            str(col)
-            .strip()
-            .replace("_", " ")
-            .title()
-            for col in columns
-        ]
+        wb = Workbook()
+        ws = wb.active
 
-        # Create empty dataframe
-        df = pd.DataFrame(columns=clean_columns)
+        # ✅ FIX: Name the sheet after the form
+        ws.title = data.form_name
 
-        # Unique file name
-        file_id = str(uuid.uuid4())
-        file_path = os.path.join(GENERATED_FOLDER, f"{file_id}.xlsx")
+        columns = data.columns
+        rules = data.rules
 
-        # Save file
-        df.to_excel(file_path, index=False)
+        # Add headers
+        for col_idx, col in enumerate(columns, 1):
+            ws.cell(row=1, column=col_idx).value = col
 
+        # 🔥 APPLY VALIDATIONS
+        for col_idx, col in enumerate(columns, 1):
+            rule = rules.get(col, {})
+
+            if rule.get("type") == "dropdown":
+                options = rule.get("options", "")
+                dv = DataValidation(
+                    type="list",
+                    formula1=f'"{options}"',
+                    allow_blank=not rule.get("required", False),
+                )
+                ws.add_data_validation(dv)
+                dv.add(f"{chr(64+col_idx)}2:{chr(64+col_idx)}100")
+
+        # ✅ FIX: Save file using sanitized form_name instead of UUID
+        # Strip any characters that are unsafe for filenames
+        safe_name = re.sub(r'[\\/*?:"<>|]', "", data.form_name).strip()
+        if not safe_name:
+            safe_name = str(uuid.uuid4())  # fallback if name is empty after sanitizing
+
+        file_path = os.path.join(GENERATED_FOLDER, f"{safe_name}.xlsx")
+
+        # If a file with the same name already exists, add a short unique suffix
+        if os.path.exists(file_path):
+            suffix = str(uuid.uuid4())[:8]
+            file_path = os.path.join(GENERATED_FOLDER, f"{safe_name}_{suffix}.xlsx")
+
+        wb.save(file_path)
+
+        # ✅ FIX: Pass the form_name as the display filename in the download URL
         return {
-            "status": "success",
-            "message": "Template file created",
-            "columns": clean_columns,
-            "download_url": f"/DOWNLOAD?path={file_path}"
+            "download_url": f"/DOWNLOAD?path={file_path}&filename={safe_name}.xlsx"
         }
 
     except Exception as e:

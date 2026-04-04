@@ -52,3 +52,19 @@ class SiteMonitoring(Base):
     end_time = Column(String(100))
 
     last_updated = Column(DateTime, default=datetime.utcnow)
+
+
+# =====================================================
+# FORM TEMPLATE (DYNAMIC VALIDATION)
+# =====================================================
+
+from sqlalchemy import Column, Integer, String, Text
+from database import Base
+
+class FormTemplate(Base):
+    __tablename__ = "form_templates"
+
+    id = Column(Integer, primary_key=True, index=True)
+    form_name = Column(String, index=True)
+    columns = Column(Text)   # JSON string
+    rules = Column(Text)     # JSON string
