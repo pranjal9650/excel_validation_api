@@ -26,8 +26,14 @@ import json
 # DATABASE
 # =====================================================
 
-from database import SessionLocal
+from database import SessionLocal, engine
 import models
+
+# =====================================================
+# AUTO CREATE TABLES (runs on startup)
+# =====================================================
+
+models.Base.metadata.create_all(bind=engine)
 
 # =====================================================
 # VALIDATORS
@@ -85,6 +91,20 @@ def get_db():
         db.close()
 
 # =====================================================
+# HARDCODED FORM LIST
+# =====================================================
+
+HARDCODED_FORMS = [
+    "Meeting Form",
+    "EB Meter Form",
+    "Leave Form",
+    "OD Survey Form",
+    "Site Survey Checklist",
+    "OD Operation Form",
+    "FTTH Acquisition Form",
+]
+
+# =====================================================
 # DATA CLEANER
 # =====================================================
 
@@ -125,7 +145,16 @@ def apply_dynamic_validation(df, rules):
         is_valid = True
 
         for col, rule in rules.items():
-            value = str(row.get(col, "")).strip()
+
+            # Normalize column name to match safe_clean_df output
+            normalized_col = (
+                col.strip().lower()
+                .replace("\n", " ").replace("\r", "")
+                .replace("_", " ").replace("-", " ")
+            )
+            normalized_col = re.sub(r"\s+", " ", normalized_col)
+
+            value = str(row.get(normalized_col, "")).strip()
 
             # REQUIRED CHECK
             if rule.get("required") and not value:
@@ -139,6 +168,14 @@ def apply_dynamic_validation(df, rules):
             if rule.get("type") == "email":
                 if value and "@" not in value:
                     is_valid = False
+
+            # DROPDOWN CHECK
+            if rule.get("type") == "dropdown":
+                options_raw = rule.get("options", "")
+                if options_raw and value:
+                    options = [o.strip().lower() for o in options_raw.split(",")]
+                    if value.lower() not in options:
+                        is_valid = False
 
             # LENGTH CHECK
             if "length" in rule:
@@ -168,17 +205,15 @@ def extract_username(row, form_type):
         "OD Survey Form": ["user name", "username", "createduser"]
     }
 
-    possible_cols = USERNAME_COLUMN_MAP.get(form_type, [])
+    possible_cols = USERNAME_COLUMN_MAP.get(form_type, [
+        "createduser", "created user", "user name", "username"
+    ])
 
     for col in possible_cols:
-
         if col in row:
-
             value = row[col]
-
             if isinstance(value, str):
                 value = value.strip()
-
             if value:
                 return value
 
@@ -253,7 +288,7 @@ async def validate_form(
 
         elif form_type == "FTTH Acquisition Form":
             valid_df, junk_df = validate_ftth_acquisition(df)
-        
+
         elif form_type == "OD Operation Form":
             valid_df, junk_df = validate_od_operation(df)
 
@@ -262,18 +297,39 @@ async def validate_form(
 
         elif form_type == "EB Meter Form":
             valid_df, junk_df = validate_eb_meter(df)
-        
+
         elif form_type == "OD Survey Form":
             valid_df, junk_df = validate_od_survey(df)
 
         else:
-            raise HTTPException(400, f"Unsupported form type: {form_type}")
+            # =====================================================
+            # DYNAMIC VALIDATION — fetch rules from DB
+            # =====================================================
+            config = db.query(models.FormTemplate).filter(
+                models.FormTemplate.form_name == form_type
+            ).first()
+
+            if not config:
+                raise HTTPException(
+                    400,
+                    f"No validation rules found for form type: '{form_type}'. "
+                    f"Please create this form first using Create Form page."
+                )
+
+            rules_dict = json.loads(config.rules or "{}")
+            valid_df, junk_df = apply_dynamic_validation(df, rules_dict)
+
+    except HTTPException:
+        raise
 
     except Exception as e:
         raise HTTPException(400, f"Validation pipeline failed: {str(e)}")
 
+    valid_df = valid_df.copy()
+    junk_df  = junk_df.copy()
+
     valid_df["status"] = "valid"
-    junk_df["status"] = "invalid"
+    junk_df["status"]  = "invalid"
 
     combined_df = pd.concat([valid_df, junk_df], ignore_index=True)
 
@@ -311,7 +367,7 @@ async def validate_form(
     file_id = str(uuid.uuid4())
 
     valid_file = os.path.join(UPLOAD_FOLDER, f"{file_id}_valid.csv")
-    junk_file = os.path.join(UPLOAD_FOLDER, f"{file_id}_junk.csv")
+    junk_file  = os.path.join(UPLOAD_FOLDER, f"{file_id}_junk.csv")
 
     valid_df.to_csv(valid_file, index=False)
     junk_df.to_csv(junk_file, index=False)
@@ -361,20 +417,70 @@ async def validate_form(
         raise HTTPException(500, str(e))
 
 
+# =====================================================
+# SAVE FORM RULES (called from CreateForm.js)
+# =====================================================
+
+from typing import List, Dict, Optional
+from pydantic import BaseModel as PydanticBaseModel
+
+class CreateFileRequest(PydanticBaseModel):
+    form_name: str
+    columns:   List[str]
+    rules:     Optional[Dict] = {}
+
+
+@app.post("/SAVE-FORM-RULES")
+def save_form_rules(data: CreateFileRequest, db: Session = Depends(get_db)):
+    try:
+        existing = db.query(models.FormTemplate).filter(
+            models.FormTemplate.form_name == data.form_name
+        ).first()
+
+        if existing:
+            existing.columns = json.dumps(data.columns)
+            existing.rules   = json.dumps(data.rules)
+        else:
+            db.add(models.FormTemplate(
+                form_name = data.form_name,
+                columns   = json.dumps(data.columns),
+                rules     = json.dumps(data.rules),
+            ))
+
+        db.commit()
+        return {"status": "saved", "form_name": data.form_name}
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(500, str(e))
+
+
+# =====================================================
+# GET ALL FORM NAMES (for UploadPage dropdown)
+# =====================================================
+
+@app.get("/GET-FORM-NAMES")
+def get_form_names(db: Session = Depends(get_db)):
+    dynamic = [r.form_name for r in db.query(models.FormTemplate).all()]
+    all_forms = list(dict.fromkeys(HARDCODED_FORMS + dynamic))
+    return all_forms
+
 
 # ================================
-# 🔗 PUT YOUR API LINKS HERE
+# API LINKS
 # ================================
-SITE_API_URL = "https://cm.shrotitele.com/user_management/api/tpms-tracker/?api_key=MySecretKey@2025"
+
+SITE_API_URL  = "https://cm.shrotitele.com/user_management/api/tpms-tracker/?api_key=MySecretKey@2025"
 ALARM_API_URL = "https://cm.shrotitele.com/user_management/alarm-data/"
 
 
 # ================================
 # FETCH ALL SITES
 # ================================
+
 def fetch_all_sites():
     try:
-        res = requests.get(SITE_API_URL)
+        res  = requests.get(SITE_API_URL)
         data = res.json().get("data", [])
         return data
     except Exception as e:
@@ -385,13 +491,14 @@ def fetch_all_sites():
 # ================================
 # FETCH ALARM DATA (DYNAMIC)
 # ================================
+
 def fetch_alarm_data(start_date=None, end_date=None, imei=None):
 
     params = {}
 
     if start_date and end_date:
         params["start_date"] = start_date
-        params["end_date"] = end_date
+        params["end_date"]   = end_date
 
     if imei:
         params["imei"] = imei
@@ -407,34 +514,31 @@ def fetch_alarm_data(start_date=None, end_date=None, imei=None):
 # ================================
 # BUILD SITE MONITORING
 # ================================
+
 def build_site_monitoring(start_date=None, end_date=None, site_id=None):
 
-    sites = fetch_all_sites()
+    sites  = fetch_all_sites()
     alarms = fetch_alarm_data(start_date, end_date)
 
-    # 🔥 Create IMEI → alarm mapping
     alarm_map = {}
 
     for alarm in alarms:
         imei = str(alarm.get("imei")).strip()
-
         if imei not in alarm_map:
             alarm_map[imei] = []
-
         alarm_map[imei].append(alarm)
 
-    up_sites = []
+    up_sites   = []
     down_sites = []
 
     for site in sites:
 
-        imei = str(site.get("gsm_imei_no")).strip()
+        imei      = str(site.get("gsm_imei_no")).strip()
         site_name = site.get("site_name")
         global_id = site.get("globel_id")
 
         site_alarms = alarm_map.get(imei, [])
 
-        # 🔥 Decide status
         if site_alarms:
             latest_alarm = sorted(
                 site_alarms,
@@ -445,20 +549,20 @@ def build_site_monitoring(start_date=None, end_date=None, site_id=None):
             down_sites.append({
                 "site_name": site_name,
                 "global_id": global_id,
-                "imei": imei,
-                "status": "DOWN",
-                "alarm": latest_alarm.get("alarm_name"),
-                "since": latest_alarm.get("start_time"),
-                "end_time": latest_alarm.get("end_time")
+                "imei":      imei,
+                "status":    "DOWN",
+                "alarm":     latest_alarm.get("alarm_name"),
+                "since":     latest_alarm.get("start_time"),
+                "end_time":  latest_alarm.get("end_time")
             })
 
         else:
             up_sites.append({
                 "site_name": site_name,
                 "global_id": global_id,
-                "imei": imei,
-                "status": "UP",
-                "since": "Running"
+                "imei":      imei,
+                "status":    "UP",
+                "since":     "Running"
             })
 
     return sites, up_sites, down_sites
@@ -467,34 +571,32 @@ def build_site_monitoring(start_date=None, end_date=None, site_id=None):
 # ================================
 # SAVE SITE MONITORING
 # ================================
+
 def save_site_monitoring_to_db(db: Session, up_sites, down_sites):
 
     try:
-        # 🔥 Purana data delete (fresh snapshot ke liye)
         db.query(models.SiteMonitoring).delete()
 
-        # 🔥 Insert UP sites
         for site in up_sites:
             db.add(models.SiteMonitoring(
-                site_name=site.get("site_name"),
-                global_id=site.get("global_id"),
-                circle="UNKNOWN",
-                status="Active",
-                alarm=None,
-                since=site.get("since"),
-                end_time=None
+                site_name = site.get("site_name"),
+                global_id = site.get("global_id"),
+                circle    = "UNKNOWN",
+                status    = "Active",
+                alarm     = None,
+                since     = site.get("since"),
+                end_time  = None
             ))
 
-        # 🔥 Insert DOWN sites
         for site in down_sites:
             db.add(models.SiteMonitoring(
-                site_name=site.get("site_name"),
-                global_id=site.get("global_id"),
-                circle="UNKNOWN",
-                status="Outage",
-                alarm=site.get("alarm"),
-                since=site.get("since"),
-                end_time=site.get("end_time")
+                site_name = site.get("site_name"),
+                global_id = site.get("global_id"),
+                circle    = "UNKNOWN",
+                status    = "Outage",
+                alarm     = site.get("alarm"),
+                since     = site.get("since"),
+                end_time  = site.get("end_time")
             ))
 
         db.commit()
@@ -506,43 +608,33 @@ def save_site_monitoring_to_db(db: Session, up_sites, down_sites):
 
 
 # ================================
-# MAIN API (FILTER SUPPORT)
+# SITE MONITORING API
 # ================================
+
 @app.get("/SITE-MONITORING")
-def site_monitoring(
+def site_monitoring_api(
     start_date: str = None,
-    end_date: str = None,
+    end_date:   str = None,
     db: Session = Depends(get_db)
 ):
-
     total, up, down = build_site_monitoring(start_date, end_date)
-
-    # 🔥 SAVE TO DB
     save_site_monitoring_to_db(db, up, down)
 
     return {
         "total_sites": len(total),
-        "up_sites": len(up),
-        "down_sites": len(down)
+        "up_sites":    len(up),
+        "down_sites":  len(down)
     }
 
 
-# ================================
-# GET DOWN SITES
-# ================================
 @app.get("/SITE-DOWN")
 def site_down(start_date: str = None, end_date: str = None):
-
     _, _, down = build_site_monitoring(start_date, end_date)
     return down
 
 
-# ================================
-# GET UP SITES
-# ================================
 @app.get("/SITE-UP")
 def site_up(start_date: str = None, end_date: str = None):
-
     _, up, _ = build_site_monitoring(start_date, end_date)
     return up
 
@@ -552,7 +644,6 @@ def site_up(start_date: str = None, end_date: str = None):
 # =====================================================
 
 from fastapi import Query
-from typing import Optional
 
 @app.get("/ANALYTICS")
 def get_analytics(
@@ -565,9 +656,8 @@ def get_analytics(
     if month:
         try:
             year, month_num = month.split("-")
-
             query = query.filter(
-                extract("year", models.FormEntry.selected_date) == int(year),
+                extract("year",  models.FormEntry.selected_date) == int(year),
                 extract("month", models.FormEntry.selected_date) == int(month_num)
             )
         except:
@@ -579,105 +669,81 @@ def get_analytics(
 
     for r in results:
 
-        if not r.username or r.username == "UNKNOWN_USER":
-            continue
-
-        username = str(r.username).strip()
+        # ── Include UNKNOWN_USER rows — they still count towards form totals ──
+        username  = str(r.username or "UNKNOWN_USER").strip()
         form_type = str(r.form_type)
-        circle = str(r.circle or "UNKNOWN").strip()
+        circle    = str(r.circle or "UNKNOWN").strip()
 
         if username not in analytics:
-            analytics[username] = {
-                "username": username,
-                "forms": {}
-            }
+            analytics[username] = {"username": username, "forms": {}}
 
         if form_type not in analytics[username]["forms"]:
             analytics[username]["forms"][form_type] = {
-                "valid": 0,
-                "invalid": 0,
-                "total": 0,
-                "circleWise": {}
+                "valid": 0, "invalid": 0, "total": 0, "circleWise": {}
             }
 
         form_data = analytics[username]["forms"][form_type]
 
-        # VALID / INVALID
         if str(r.row_status).lower() == "valid":
             form_data["valid"] += 1
         else:
             form_data["invalid"] += 1
 
-        # ⭐ CIRCLE WISE COUNT
         if circle not in form_data["circleWise"]:
             form_data["circleWise"][circle] = 0
-
         form_data["circleWise"][circle] += 1
 
-    # Calculate totals
     for username in analytics:
         for form in analytics[username]["forms"]:
-
             v = analytics[username]["forms"][form]["valid"]
             i = analytics[username]["forms"][form]["invalid"]
-
             analytics[username]["forms"][form]["total"] = v + i
 
     return list(analytics.values())
 
+
 # =====================================================
-# FORM DATA FETCH
+# FORM DATA FETCH — supports ALL and dynamic forms
 # =====================================================
 
 @app.get("/FORM-DATA-MULTI")
-def get_form_data_multi(
-    forms: str,
-    db: Session = Depends(get_db)
-):
-
+def get_form_data_multi(forms: str, db: Session = Depends(get_db)):
     try:
-
-        # ⭐ Handle ALL forms request
         if forms == "ALL":
             results = db.query(models.FormEntry)\
-                .order_by(models.FormEntry.id.desc())\
-                .all()
-
+                .order_by(models.FormEntry.id.desc()).all()
         else:
-            form_list = forms.split(",")
-
+            # Split and strip whitespace from each form name
+            form_list = [f.strip() for f in forms.split(",") if f.strip()]
             results = db.query(models.FormEntry)\
                 .filter(models.FormEntry.form_type.in_(form_list))\
-                .order_by(models.FormEntry.id.desc())\
-                .all()
+                .order_by(models.FormEntry.id.desc()).all()
 
         return [
             {
                 "form_type": r.form_type,
-                "username": r.username,
-                "status": r.row_status,
-                "date": str(r.selected_date)
+                "username":  r.username,
+                "status":    r.row_status,
+                "date":      str(r.selected_date)
             }
             for r in results
         ]
-
     except Exception as e:
         return {"error": str(e)}
 
+
 # =====================================================
-# DASHBOARD DATA
+# DASHBOARD DATA — pulls from UploadHistory for accuracy
 # =====================================================
 
 @app.get("/DASHBOARD-DATA")
 def get_dashboard_data(db: Session = Depends(get_db)):
-
     data = db.query(models.UploadHistory).all()
-
     return {
         "total_forms": len(data),
-        "total_rows": sum(e.total_rows or 0 for e in data),
-        "valid_rows": sum(e.valid_rows or 0 for e in data),
-        "junk_rows": sum(e.junk_rows or 0 for e in data)
+        "total_rows":  sum(e.total_rows or 0 for e in data),
+        "valid_rows":  sum(e.valid_rows  or 0 for e in data),
+        "junk_rows":   sum(e.junk_rows   or 0 for e in data)
     }
 
 
@@ -687,18 +753,11 @@ def get_dashboard_data(db: Session = Depends(get_db)):
 
 @app.get("/DOWNLOAD")
 async def download_file(path: str, filename: str = None):
-    """
-    Downloads a file.
-    - path     : actual file path on disk
-    - filename : (optional) the display name the browser should save it as
-    """
     if not os.path.exists(path):
         raise HTTPException(404, "File not found")
 
-    # Use the provided display filename if given, else fall back to basename
     display_name = filename if filename else os.path.basename(path)
 
-    # Ensure it ends with .xlsx
     if not display_name.lower().endswith(".xlsx"):
         display_name += ".xlsx"
 
@@ -715,34 +774,21 @@ async def download_file(path: str, filename: str = None):
 
 @app.get("/UPLOAD-HISTORY")
 def get_upload_history(db: Session = Depends(get_db)):
-
     history = db.query(models.UploadHistory)\
-        .order_by(models.UploadHistory.id.desc())\
-        .all()
+        .order_by(models.UploadHistory.id.desc()).all()
 
     return [
         {
-            "file_name": h.file_name,
+            "file_name":   h.file_name,
+            "form_type":   h.form_type,
             "upload_time": str(h.upload_time),
-            "total_rows": h.total_rows or 0,
-            "valid_rows": h.valid_rows or 0,
-            "junk_rows": h.junk_rows or 0
+            "total_rows":  h.total_rows or 0,
+            "valid_rows":  h.valid_rows  or 0,
+            "junk_rows":   h.junk_rows   or 0
         }
         for h in history
     ]
 
-
-# ============================
-# CREATE FILE MODEL
-# ============================
-
-from typing import List, Dict, Optional
-from pydantic import BaseModel
-
-class CreateFileRequest(BaseModel):
-    form_name: str
-    columns: List[str]
-    rules: Optional[Dict] = {}
 
 # =====================================================
 # CREATE DYNAMIC FILE (TEMPLATE GENERATOR)
@@ -751,23 +797,22 @@ class CreateFileRequest(BaseModel):
 from openpyxl import Workbook
 from openpyxl.worksheet.datavalidation import DataValidation
 
+
 @app.post("/CREATE-FILE")
 def create_dynamic_file(data: CreateFileRequest):
     try:
         wb = Workbook()
         ws = wb.active
-
-        # ✅ FIX: Name the sheet after the form
         ws.title = data.form_name
 
         columns = data.columns
-        rules = data.rules
+        rules   = data.rules
 
         # Add headers
         for col_idx, col in enumerate(columns, 1):
             ws.cell(row=1, column=col_idx).value = col
 
-        # 🔥 APPLY VALIDATIONS
+        # Apply validations
         for col_idx, col in enumerate(columns, 1):
             rule = rules.get(col, {})
 
@@ -779,24 +824,20 @@ def create_dynamic_file(data: CreateFileRequest):
                     allow_blank=not rule.get("required", False),
                 )
                 ws.add_data_validation(dv)
-                dv.add(f"{chr(64+col_idx)}2:{chr(64+col_idx)}100")
+                dv.add(f"{chr(64 + col_idx)}2:{chr(64 + col_idx)}100")
 
-        # ✅ FIX: Save file using sanitized form_name instead of UUID
-        # Strip any characters that are unsafe for filenames
         safe_name = re.sub(r'[\\/*?:"<>|]', "", data.form_name).strip()
         if not safe_name:
-            safe_name = str(uuid.uuid4())  # fallback if name is empty after sanitizing
+            safe_name = str(uuid.uuid4())
 
         file_path = os.path.join(GENERATED_FOLDER, f"{safe_name}.xlsx")
 
-        # If a file with the same name already exists, add a short unique suffix
         if os.path.exists(file_path):
-            suffix = str(uuid.uuid4())[:8]
+            suffix    = str(uuid.uuid4())[:8]
             file_path = os.path.join(GENERATED_FOLDER, f"{safe_name}_{suffix}.xlsx")
 
         wb.save(file_path)
 
-        # ✅ FIX: Pass the form_name as the display filename in the download URL
         return {
             "download_url": f"/DOWNLOAD?path={file_path}&filename={safe_name}.xlsx"
         }
