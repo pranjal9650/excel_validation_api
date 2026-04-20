@@ -123,7 +123,68 @@ def apply_dynamic_validation(df, rules):
             if rule.get("required") and not value:
                 is_valid = False
 
-            # ── TEXT / UUID / SYSTEM_ID / USERNAME ──────────
+            # ── UUID ────────────────────────────────────────
+            if rule.get("type") == "uuid":
+                if value:
+                    try:
+                        import uuid as _uuid
+                        _uuid.UUID(value)
+                    except (ValueError, AttributeError):
+                        is_valid = False
+
+            # ── SYSTEM ID ────────────────────────────────────
+            if rule.get("type") == "system_id":
+                if value:
+                    prefixes = [p.strip() for p in rule.get("allowed_prefixes", "").split(",") if p.strip()]
+                    if prefixes:
+                        if not any(value.upper().startswith(p.upper()) for p in prefixes):
+                            is_valid = False
+                    else:
+                        # Generic system ID: must have at least one hyphen and end with alphanumeric
+                        if not re.match(r'^[A-Za-z0-9]{1,10}(-[A-Za-z0-9]{1,10}){1,}$', value):
+                            is_valid = False
+
+            # ── USERNAME ─────────────────────────────────────
+            # username: alphanumeric, dots, underscores, hyphens; no spaces; 3-50 chars
+            if rule.get("type") == "username":
+                if value:
+                    if not re.match(r'^[A-Za-z0-9._\-]{3,50}$', value):
+                        is_valid = False
+
+            # ── PHONE ────────────────────────────────────────
+            if rule.get("type") == "phone":
+                if value:
+                    digits = re.sub(r'\D', '', value)
+                    fmt = rule.get("phone_format", "any")
+                    if fmt == "india_10":
+                        if len(digits) != 10 or digits[0] not in "6789":
+                            is_valid = False
+                    elif fmt == "india_with_code":
+                        if not (len(digits) == 12 and digits.startswith("91") and digits[2] in "6789"):
+                            is_valid = False
+                    elif fmt == "international":
+                        if not (7 <= len(digits) <= 15):
+                            is_valid = False
+                    else:  # "any"
+                        if len(digits) < 7:
+                            is_valid = False
+
+            # ── PINCODE ──────────────────────────────────────
+            if rule.get("type") == "pincode":
+                if value:
+                    digits = re.sub(r'\D', '', value)
+                    fmt = rule.get("pincode_format", "any_numeric")
+                    if fmt == "india_6":
+                        if len(digits) != 6:
+                            is_valid = False
+                    elif fmt == "us_zip":
+                        if len(digits) not in (5, 9):
+                            is_valid = False
+                    else:  # any_numeric
+                        if not value.replace("-", "").isdigit() or len(digits) < 3:
+                            is_valid = False
+
+            # ── TEXT / (other non-validated types) ──────────
             # No special validation — just required check applies
 
             # ── NUMBER ──────────────────────────────────────
@@ -221,8 +282,16 @@ def apply_dynamic_validation(df, rules):
 
             # ── EMAIL ────────────────────────────────────────
             if rule.get("type") == "email":
-                if value and "@" not in value:
-                    is_valid = False
+                if value:
+                    # Check basic email format: local@domain.tld
+                    if not re.match(r'^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$', value):
+                        is_valid = False
+                    else:
+                        domains = [d.strip().lower() for d in rule.get("allowed_domains", "").split(",") if d.strip()]
+                        if domains:
+                            domain_part = value.split("@", 1)[1].lower()
+                            if domain_part not in domains:
+                                is_valid = False
 
             # ── LAT/LONG JSON ────────────────────────────────
             if rule.get("type") == "latlong_json":
@@ -486,6 +555,26 @@ def save_form_rules(data: CreateFileRequest, db: Session = Depends(get_db)):
 @app.get("/GET-FORM-NAMES")
 def get_form_names(db: Session = Depends(get_db)):
     return [r.form_name for r in db.query(models.FormTemplate).all()]
+
+
+# =====================================================
+# GET FORM RULES
+# =====================================================
+
+@app.get("/GET-FORM-RULES")
+def get_form_rules(form_name: str, db: Session = Depends(get_db)):
+    config = db.query(models.FormTemplate).filter(
+        models.FormTemplate.form_name == form_name
+    ).first()
+
+    if not config:
+        raise HTTPException(404, f"No rules found for form '{form_name}'")
+
+    return {
+        "form_name": config.form_name,
+        "columns":   json.loads(config.columns or "[]"),
+        "rules":     json.loads(config.rules    or "{}")
+    }
 
 
 # =====================================================
@@ -1094,3 +1183,162 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
 
     except Exception as e:
         raise HTTPException(500, f"Failed to fetch user invalid records: {str(e)}")
+
+
+# =====================================================
+# REVALIDATE FORM — re-runs validation on stored records
+# using the current rules (called after a rule change)
+# =====================================================
+
+@app.post("/REVALIDATE-FORM")
+def revalidate_form(body: dict, db: Session = Depends(get_db)):
+    form_name = (body.get("form_name") or "").strip()
+
+    if not form_name:
+        raise HTTPException(400, "form_name is required")
+
+    # 1. Load current rules
+    config = db.query(models.FormTemplate).filter(
+        models.FormTemplate.form_name == form_name
+    ).first()
+
+    if not config:
+        raise HTTPException(404, f"No form template found for '{form_name}'")
+
+    rules_dict = json.loads(config.rules or "{}")
+
+    # 2. Find all upload history records for this form
+    uploads = db.query(models.UploadHistory).filter(
+        models.UploadHistory.form_type == form_name
+    ).all()
+
+    if not uploads:
+        return {"status": "ok", "message": "No uploaded records to revalidate", "updated": 0}
+
+    total_revalidated = 0
+
+    for upload in uploads:
+        valid_path = upload.valid_file
+        junk_path  = upload.junk_file
+
+        # Skip if CSV files are missing
+        if not valid_path or not junk_path:
+            continue
+        if not os.path.exists(valid_path) or not os.path.exists(junk_path):
+            continue
+
+        # 3. Reconstruct the original data by combining valid + junk CSVs
+        valid_df = pd.read_csv(valid_path, dtype=str).fillna("")
+        junk_df  = pd.read_csv(junk_path,  dtype=str).fillna("")
+
+        # Drop the status column added during validation
+        for df in (valid_df, junk_df):
+            if "status" in df.columns:
+                df.drop(columns=["status"], inplace=True)
+
+        combined_df = pd.concat([valid_df, junk_df], ignore_index=True)
+
+        if len(combined_df) == 0:
+            continue
+
+        # 4. Re-run validation with current rules
+        new_valid_df, new_junk_df = apply_dynamic_validation(combined_df, rules_dict)
+
+        new_valid_df = new_valid_df.copy()
+        new_junk_df  = new_junk_df.copy()
+
+        new_valid_df["status"] = "valid"
+        new_junk_df["status"]  = "invalid"
+
+        # 5. Overwrite the CSV files
+        new_valid_df.to_csv(valid_path, index=False)
+        new_junk_df.to_csv(junk_path,   index=False)
+
+        # 6. Update UploadHistory counts
+        upload.valid_rows = len(new_valid_df)
+        upload.junk_rows  = len(new_junk_df)
+
+        # 7. Re-build FormEntry rows for this upload's date
+        selected_date = upload.selected_date
+        db.query(models.FormEntry).filter(
+            models.FormEntry.form_type     == form_name,
+            models.FormEntry.selected_date == selected_date
+        ).delete()
+
+        new_combined = pd.concat([new_valid_df, new_junk_df], ignore_index=True)
+        for _, row in new_combined.iterrows():
+            db.add(models.FormEntry(
+                form_type     = form_name,
+                username      = extract_username(row),
+                selected_date = selected_date,
+                row_status    = row.get("status", "invalid"),
+                circle        = str(row.get("circle", "UNKNOWN"))
+            ))
+
+        total_revalidated += len(new_combined)
+
+    try:
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(500, f"DB commit failed: {str(e)}")
+
+    return {
+        "status":      "ok",
+        "form_name":   form_name,
+        "uploads":     len(uploads),
+        "revalidated": total_revalidated
+    }
+
+
+# =====================================================
+# VALID RECORDS BY USER
+# =====================================================
+
+@app.get("/VALID-RECORDS-BY-USER")
+def get_valid_records_by_user(form_name: str, db: Session = Depends(get_db)):
+    try:
+        history = db.query(models.UploadHistory).filter(
+            models.UploadHistory.form_type == form_name
+        ).order_by(models.UploadHistory.id.desc()).first()
+
+        if not history or not history.valid_file:
+            return []
+
+        if not os.path.exists(history.valid_file):
+            return []
+
+        valid_df = pd.read_csv(history.valid_file, dtype=str).fillna("")
+
+        if len(valid_df) == 0:
+            return []
+
+        possible_user_cols = [
+            "createduser", "created user", "username",
+            "user name", "operator", "created by"
+        ]
+        user_col = None
+        for col in possible_user_cols:
+            if col in valid_df.columns:
+                user_col = col
+                break
+
+        user_counts = {}
+
+        for _, row in valid_df.iterrows():
+            if user_col:
+                username = str(row.get(user_col, "")).strip() or "Unknown User"
+            else:
+                username = "Unknown User"
+
+            user_counts[username] = user_counts.get(username, 0) + 1
+
+        result = [
+            {"username": username, "total_valid": count}
+            for username, count in user_counts.items()
+        ]
+        result.sort(key=lambda x: x["total_valid"], reverse=True)
+        return result
+
+    except Exception as e:
+        raise HTTPException(500, f"Failed to fetch user valid records: {str(e)}")
