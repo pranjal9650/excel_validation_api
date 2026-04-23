@@ -1,65 +1,51 @@
-# scheduler.py
-from apscheduler.schedulers.background import BackgroundScheduler
-from services.notification_service import send_daily_report
-
-scheduler = BackgroundScheduler()
-
-
-def start_scheduler():
-    scheduler.add_job(
-        send_daily_report,
-        trigger="cron",
-        hour=18,
-        minute=0,
-        id="daily_field_report",
-        replace_existing=True
-    )
-    scheduler.start()
-    print("[Scheduler] Daily report job started — runs at 18:00")
-
-
-def stop_scheduler():
-    if scheduler.running:
-        scheduler.shutdown()
-        print("[Scheduler] Stopped")# =====================================================
-# SCHEDULER - FIXED (NO CIRCULAR IMPORT)
+# =====================================================
+# SCHEDULER — SINGLE INSTANCE, TWO JOBS
 # =====================================================
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from database import SessionLocal
 
-scheduler = BackgroundScheduler()
+_scheduler = BackgroundScheduler()
 
 
 # =====================================================
-# JOB FUNCTION (IMPORT INSIDE FUNCTION ✅)
+# JOB 1 — SITE MONITORING (every 10 min)
 # =====================================================
+
 def update_site_monitoring_job():
-    print("🔄 Running Site Monitoring Job...")
-
+    print("[Scheduler] Running Site Monitoring Job...")
     db = SessionLocal()
-
     try:
-        # 🔥 IMPORT HERE (not at top)
+        # Import inside function to avoid circular import
         from main import build_site_monitoring, save_site_monitoring_to_db
-
         _, up_sites, down_sites = build_site_monitoring()
         save_site_monitoring_to_db(db, up_sites, down_sites)
-
-        print("✅ Site Monitoring Updated Successfully")
-
+        print("[Scheduler] Site Monitoring Updated Successfully")
     except Exception as e:
-        print("❌ Scheduler Error:", str(e))
-
+        print("[Scheduler] Site Monitoring Error:", str(e))
     finally:
         db.close()
 
 
 # =====================================================
-# START
+# JOB 2 — DAILY EMAIL REPORT (every day at 18:00)
 # =====================================================
+
+def run_daily_report_job():
+    print("[Scheduler] Running Daily Email Report Job...")
+    try:
+        from services.notification_service import send_daily_report
+        send_daily_report()
+    except Exception as e:
+        print("[Scheduler] Daily Report Error:", str(e))
+
+
+# =====================================================
+# START / STOP
+# =====================================================
+
 def start_scheduler():
-    scheduler.add_job(
+    _scheduler.add_job(
         update_site_monitoring_job,
         trigger="interval",
         minutes=10,
@@ -67,14 +53,20 @@ def start_scheduler():
         replace_existing=True
     )
 
-    scheduler.start()
-    print("🚀 Scheduler started (every 10 min)")
+    _scheduler.add_job(
+        run_daily_report_job,
+        trigger="cron",
+        hour=18,
+        minute=0,
+        id="daily_field_report",
+        replace_existing=True
+    )
+
+    _scheduler.start()
+    print("[Scheduler] Started — site monitoring every 10 min, email report daily at 18:00")
 
 
-# =====================================================
-# STOP
-# =====================================================
 def stop_scheduler():
-    if scheduler.running:
-        scheduler.shutdown()
-        print("🛑 Scheduler stopped")
+    if _scheduler.running:
+        _scheduler.shutdown()
+        print("[Scheduler] Stopped")

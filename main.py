@@ -59,6 +59,23 @@ UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # =====================================================
+# REPORT UPLOAD FOLDER — daily files for email reports
+# =====================================================
+
+REPORT_DAILY_DIR = "data/daily"
+os.makedirs(REPORT_DAILY_DIR, exist_ok=True)
+
+REPORT_FILE_MAP = {
+    "employee":    "employee.xlsx",
+    "attendance":  "attendance.xlsx",
+    "distance":    "distance.xlsx",
+    "forms":       "forms.xlsx",
+    "managers":    "managers.xlsx",
+    "forms_filled":"forms_filled.xlsx",
+    "alarm":       "alarm.csv",
+}
+
+# =====================================================
 # DB SESSION
 # =====================================================
 
@@ -1342,3 +1359,463 @@ def get_valid_records_by_user(form_name: str, db: Session = Depends(get_db)):
 
     except Exception as e:
         raise HTTPException(500, f"Failed to fetch user valid records: {str(e)}")
+
+
+# =====================================================
+# SITE DASHBOARD — CSV-based endpoints
+# =====================================================
+
+SITE_STATUS_CSV = os.path.join("data", "Site_Status.csv")
+
+def find_alarm_csv():
+    """Find the latest Alarm_Report CSV in the data/ folder."""
+    matches = sorted(f for f in os.listdir("data") if f.startswith("Alarm_Report") and f.endswith(".csv"))
+    if not matches:
+        raise HTTPException(404, "Alarm_Report CSV not found in data/ folder")
+    return os.path.join("data", matches[-1])
+
+
+def load_site_status():
+    df = pd.read_csv(SITE_STATUS_CSV, dtype=str).fillna("")
+    df.columns = df.columns.str.strip()
+    return df
+
+
+def load_alarm_report():
+    path = find_alarm_csv()
+    df = pd.read_csv(path, dtype=str).fillna("")
+    df.columns = df.columns.str.strip()
+    return df
+
+
+def parse_duration_to_minutes(duration_str: str) -> float:
+    """Convert HH:MM:SS string to total minutes. Returns 0 on parse failure."""
+    try:
+        parts = str(duration_str).strip().split(":")
+        if len(parts) == 3:
+            h, m, s = int(parts[0]), int(parts[1]), float(parts[2])
+            return h * 60 + m + s / 60
+    except Exception:
+        pass
+    return 0.0
+
+
+@app.get("/SITE-DASHBOARD-STATS")
+def site_dashboard_stats():
+    try:
+        site_df  = load_site_status()
+        alarm_df = load_alarm_report()
+
+        total_active_sites  = len(site_df)
+        total_alarm_events  = len(alarm_df)
+        unique_alarm_sites  = alarm_df["Global ID"].replace("", pd.NA).dropna().nunique()
+        circles_affected    = alarm_df["State/Circle"].replace("", pd.NA).dropna().nunique()
+
+        durations = alarm_df["Duration (HH:MM:SS)"].apply(parse_duration_to_minutes)
+        avg_alarm_duration_minutes = round(durations.mean(), 2) if len(durations) > 0 else 0
+
+        return {
+            "total_active_sites":        total_active_sites,
+            "total_alarm_events":        total_alarm_events,
+            "unique_alarm_sites":        int(unique_alarm_sites),
+            "circles_affected":          int(circles_affected),
+            "avg_alarm_duration_minutes": avg_alarm_duration_minutes,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
+@app.get("/SITE-ACTIVE-LIST")
+def site_active_list():
+    try:
+        df = load_site_status()
+        df = df.rename(columns={
+            "S.No.":             "s_no",
+            "Site ID":           "site_id",
+            "Site Name":         "site_name",
+            "State/Circle":      "circle",
+            "H1":                "h1",
+            "H2":                "h2",
+            "ID":                "id",
+            "IMEI No":           "imei_no",
+            "Mobile No":         "mobile_no",
+            "I&C Date":          "ic_date",
+            "Battery":           "battery",
+            "Battery (V)":       "battery_v",
+            "Temp":              "temp",
+            "Signal (dBm)":      "signal_dbm",
+            "Last Communication":"last_communication",
+            "Aging":             "aging",
+        })
+        return df.to_dict(orient="records")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
+@app.get("/SITE-ALARM-LIST")
+def site_alarm_list():
+    try:
+        df = load_alarm_report()
+        df = df.rename(columns={
+            "S.No.":                "s_no",
+            "Global ID":            "global_id",
+            "Site Name":            "site_name",
+            "State/Circle":         "circle",
+            "District":             "district",
+            "Cluster":              "cluster",
+            "Alarm On-Site":        "alarm_type",
+            "Alarm Start Time":     "alarm_start_time",
+            "Alarm End Time":       "alarm_end_time",
+            "Duration (HH:MM:SS)":  "duration",
+            "Battery Start Volt":   "battery_start_v",
+            "Battery End Volt":     "battery_end_v",
+            "Temp.":                "temp",
+            "IMEI":                 "imei",
+            "Site Running ON":      "site_running_on",
+            "Energy Start Time":    "energy_start_time",
+            "Energy End Time":      "energy_end_time",
+            "Acknowledge":          "acknowledge",
+        })
+        return df.to_dict(orient="records")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
+@app.get("/SITE-ALARM-TREND")
+def site_alarm_trend():
+    try:
+        df = load_alarm_report()
+        df["_date"] = pd.to_datetime(
+            df["Alarm Start Time"], errors="coerce"
+        ).dt.date.astype(str)
+        df = df[df["_date"].notna() & (df["_date"] != "NaT") & (df["_date"] != "")]
+        trend = (
+            df.groupby("_date")
+            .size()
+            .reset_index(name="count")
+            .sort_values("_date")
+        )
+        return [
+            {"date": row["_date"], "count": int(row["count"])}
+            for _, row in trend.iterrows()
+        ]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
+@app.get("/SITE-ALARM-BY-TYPE")
+def site_alarm_by_type():
+    try:
+        df = load_alarm_report()
+        df = df[df["Alarm On-Site"].replace("", pd.NA).notna()]
+        result = (
+            df.groupby("Alarm On-Site")
+            .size()
+            .reset_index(name="count")
+            .sort_values("count", ascending=False)
+        )
+        return [
+            {"alarm_type": row["Alarm On-Site"], "count": int(row["count"])}
+            for _, row in result.iterrows()
+        ]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
+@app.get("/SITE-ALARM-BY-CIRCLE")
+def site_alarm_by_circle():
+    try:
+        df = load_alarm_report()
+        df = df[df["State/Circle"].replace("", pd.NA).notna()]
+        result = (
+            df.groupby("State/Circle")
+            .size()
+            .reset_index(name="count")
+            .sort_values("count", ascending=False)
+        )
+        return [
+            {"circle": row["State/Circle"], "count": int(row["count"])}
+            for _, row in result.iterrows()
+        ]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
+@app.get("/SITE-ACTIVE-BY-CIRCLE")
+def site_active_by_circle():
+    try:
+        df = load_site_status()
+        df = df[df["State/Circle"].replace("", pd.NA).notna()]
+        result = (
+            df.groupby("State/Circle")
+            .size()
+            .reset_index(name="count")
+            .sort_values("count", ascending=False)
+        )
+        return [
+            {"circle": row["State/Circle"], "count": int(row["count"])}
+            for _, row in result.iterrows()
+        ]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+# =====================================================
+# EMAIL REPORT — FILE UPLOAD
+# =====================================================
+
+@app.post("/UPLOAD-REPORT-FILE")
+async def upload_report_file(
+    file_type: str = Form(...),
+    file: UploadFile = File(...),
+):
+    """
+    Accepts one of: attendance | distance | employee | alarm
+    Saves to data/daily/ with a standardised name so the scheduler
+    and the manual-send endpoint both find it.
+    """
+    if file_type not in REPORT_FILE_MAP:
+        raise HTTPException(
+            400,
+            f"Unknown file_type '{file_type}'. Must be one of: {list(REPORT_FILE_MAP.keys())}"
+        )
+
+    save_name = REPORT_FILE_MAP[file_type]
+    save_path = os.path.join(REPORT_DAILY_DIR, save_name)
+
+    contents = await file.read()
+    with open(save_path, "wb") as f:
+        f.write(contents)
+
+    # Persist upload metadata
+    meta_path = os.path.join(REPORT_DAILY_DIR, "meta.json")
+    try:
+        import json as _json
+        meta = _json.loads(open(meta_path).read()) if os.path.exists(meta_path) else {}
+    except Exception:
+        meta = {}
+
+    meta[file_type] = {
+        "original_name": file.filename,
+        "uploaded_at":   datetime.now().isoformat(),
+        "size_bytes":    len(contents),
+    }
+
+    with open(meta_path, "w") as f:
+        import json as _json
+        _json.dump(meta, f)
+
+    return {
+        "status":    "success",
+        "file_type": file_type,
+        "saved_as":  save_name,
+        "size":      len(contents),
+    }
+
+
+# =====================================================
+# EMAIL REPORT — FILE STATUS
+# =====================================================
+
+@app.get("/REPORT-FILES-STATUS")
+def report_files_status():
+    """Returns upload status for each of the 4 daily report files."""
+    meta_path = os.path.join(REPORT_DAILY_DIR, "meta.json")
+    try:
+        import json as _json
+        meta = _json.loads(open(meta_path).read()) if os.path.exists(meta_path) else {}
+    except Exception:
+        meta = {}
+
+    result = {}
+    for key, filename in REPORT_FILE_MAP.items():
+        path = os.path.join(REPORT_DAILY_DIR, filename)
+        result[key] = {
+            "uploaded": os.path.exists(path),
+            "meta":     meta.get(key),
+        }
+    return result
+
+
+# =====================================================
+# EMAIL REPORT — MANUAL SEND TRIGGER
+# =====================================================
+
+@app.post("/SEND-DAILY-REPORT")
+def trigger_send_daily_report():
+    """
+    Manually triggers the daily report send using whatever files
+    are currently in data/daily/.  Requires attendance, distance
+    and employee files to be present.
+    """
+    from services.notification_service import send_report_now
+    result = send_report_now()
+    if not result.get("success"):
+        raise HTTPException(400, result.get("error", "Failed to send report"))
+    return {"status": "success", "message": "Daily reports sent successfully"}
+
+
+# =====================================================
+# EMAIL REPORT — CLEAR DAILY FILES
+# =====================================================
+
+@app.post("/CLEAR-REPORT-FILES")
+def clear_report_files():
+    """Deletes all files in data/daily/ so the operator can start fresh for today."""
+    import json as _json
+
+    deleted = []
+    for key, filename in REPORT_FILE_MAP.items():
+        path = os.path.join(REPORT_DAILY_DIR, filename)
+        if os.path.exists(path):
+            os.remove(path)
+            deleted.append(filename)
+
+    meta_path = os.path.join(REPORT_DAILY_DIR, "meta.json")
+    if os.path.exists(meta_path):
+        os.remove(meta_path)
+
+    return {"status": "success", "cleared": deleted}
+
+
+# =====================================================
+# EMAIL REPORT — DATA PREVIEWS
+# =====================================================
+
+@app.get("/REPORT-PREVIEW/FORMS")
+def preview_forms(db: Session = Depends(get_db)):
+    """
+    Returns form submission counts per user for the most recent upload date.
+    Used by the Email Reports page to preview what will appear in the emails.
+    """
+    from sqlalchemy import func as _func
+    from models import FormEntry
+
+    latest_date = db.query(_func.max(FormEntry.selected_date)).scalar()
+    if not latest_date:
+        return {"date": None, "rows": []}
+
+    results = (
+        db.query(
+            FormEntry.username,
+            FormEntry.form_type,
+            _func.count(FormEntry.id).label("count"),
+        )
+        .filter(
+            FormEntry.selected_date == latest_date,
+            FormEntry.row_status == "valid",
+        )
+        .group_by(FormEntry.username, FormEntry.form_type)
+        .order_by(FormEntry.username)
+        .all()
+    )
+
+    # Group by username → list of {form_type, count}
+    from collections import defaultdict as _dd
+    grouped = _dd(list)
+    for r in results:
+        grouped[r.username].append({"form_type": r.form_type, "count": r.count})
+
+    rows = [
+        {"username": u, "forms": f, "total": sum(x["count"] for x in f)}
+        for u, f in grouped.items()
+    ]
+    rows.sort(key=lambda x: -x["total"])
+
+    return {"date": str(latest_date), "rows": rows}
+
+
+@app.get("/REPORT-PREVIEW/MANAGERS")
+def preview_managers():
+    """
+    Reads the uploaded manager/employee file and returns:
+    - all column names found
+    - grouped manager → team list
+    Tries managers.xlsx first, falls back to employee.xlsx.
+    """
+    # Prefer the dedicated managers file, fall back to employee file
+    for fname in ["managers.xlsx", "employee.xlsx"]:
+        path = os.path.join(REPORT_DAILY_DIR, fname)
+        if os.path.exists(path):
+            break
+    else:
+        return {"uploaded": False, "columns": [], "managers": {}}
+
+    try:
+        df = pd.read_excel(path)
+        df.columns = df.columns.astype(str).str.strip()
+        actual_columns = list(df.columns)
+
+        def find_col(candidates):
+            for c in candidates:
+                for col in df.columns:
+                    if c.lower() in col.lower():
+                        return col
+            return None
+
+        # Try every likely variation of manager / name / username / city column
+        manager_col = find_col([
+            "Reporting Manager", "Manager Name", "Manager", "Mgr",
+            "Team Lead", "Supervisor", "Head",
+        ])
+        name_col = find_col([
+            "Full Name", "Employee Name", "Emp Name", "Name",
+        ])
+        user_col = find_col([
+            "Field Executive Username", "Username", "User Name",
+            "User ID", "Emp ID", "Employee ID", "ID",
+        ])
+        city_col = find_col([
+            "City", "Circle", "Region", "Location", "Zone", "State",
+        ])
+
+        if not manager_col:
+            return {
+                "uploaded": True,
+                "columns":  actual_columns,
+                "managers": {},
+                "error": (
+                    f"Could not find a Manager column. "
+                    f"Columns in your file: {actual_columns}"
+                ),
+            }
+
+        managers = {}
+        for _, row in df.iterrows():
+            mgr = str(row.get(manager_col, "")).strip()
+            if not mgr or mgr.lower() in ["nan", "none", ""]:
+                mgr = "Unassigned"
+
+            emp = {
+                "name":     str(row.get(name_col, "")).strip() if name_col else "",
+                "username": str(row.get(user_col, "")).strip() if user_col else "",
+                "city":     str(row.get(city_col, "")).strip() if city_col else "",
+            }
+            managers.setdefault(mgr, []).append(emp)
+
+        return {
+            "uploaded":      True,
+            "columns":       actual_columns,
+            "manager_col":   manager_col,
+            "name_col":      name_col,
+            "user_col":      user_col,
+            "city_col":      city_col,
+            "managers":      managers,
+            "source_file":   fname,
+        }
+
+    except Exception as e:
+        return {"uploaded": True, "columns": [], "managers": {}, "error": str(e)}
