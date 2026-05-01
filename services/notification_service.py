@@ -1,13 +1,13 @@
 import os
+import re
 import glob
 import pandas as pd
-from sqlalchemy import func
 from collections import defaultdict
 from datetime import date, datetime
 
 from services.email_service import send_email
 from database import SessionLocal
-from models import FormEntry, SiteMonitoring
+from models import SiteMonitoring
 
 
 # =====================================================
@@ -32,6 +32,26 @@ LEGACY_FILES = {
     "distance":   "data/Distance Report -1st feb 25 to 30 Nov'25.xlsx",
     "employee":   "data/EMPLOYEE details'26.xlsx",
     "attendance": "data/Report-1773314624370.xlsx",
+}
+
+# =====================================================
+# CIRCLE HEAD CONFIGURATION
+# Phone numbers are used to identify circle heads
+# dynamically from whatever employee file is uploaded —
+# no usernames are hard-coded here.
+# Update only when circle heads change.
+# =====================================================
+
+CIRCLE_HEADS = {
+    "Delhi":        {"head": "Saurabh Gupta",      "phone": "9990009220", "email": "saurabhgupta@shaurryatele.com"},
+    "GJ":           {"head": "Rajnish Nimbark",     "phone": "7226080870", "email": "rajnish@shaurryatele.com"},
+    "KA":           {"head": "Satish Megaraj",      "phone": "9538886655", "email": "satish.megaraj@shaurryatele.com"},
+    "Maharashtra":  {"head": "Dattatray Ranmalkar", "phone": "8888806810", "email": "dattatray@shaurryatele.com"},
+    "Mumbai":       {"head": "Sunil Bhagwat",       "phone": "8108779091", "email": "sunilbhagwat@shaurryatele.com"},
+    "UPE":          {"head": "Deepanshu Pandey",    "phone": "9140864299", "email": "deepanshupandey@shaurryatele.com"},
+    "UPW":          {"head": "Rajesh Shukla",       "phone": "8826162006", "email": "rajesh.shukla@shaurryatele.com"},
+    "WB & Kolkata": {"head": "Abhiman Ganguly",     "phone": "9903451369", "email": "abhiman.ganguly@shaurryatele.com"},
+    "MP & CG":      {"head": "Piyush Khobragade",   "phone": "9773459073", "email": "piyush.khobragade@shaurryatele.com"},
 }
 
 
@@ -203,7 +223,7 @@ def build_manager_email(manager, users, report_date):
 </body></html>"""
 
 
-def build_circle_email(circle, users, sites, report_date):
+def build_circle_email(circle, head_name, users, sites, report_date):
     total    = len(users)
     present  = present_count(users)
     total_km = round(sum(u["distance"] for u in users), 2)
@@ -211,9 +231,9 @@ def build_circle_email(circle, users, sites, report_date):
     return f"""<!DOCTYPE html><html><head>{EMAIL_CSS}</head><body>
 <div class="wrapper">
   <div class="header">
-    <h1>Circle Daily Report</h1>
+    <h1>Circle Daily Report — {circle}</h1>
     <div class="meta">
-      Circle: <strong style="color:#fff">{circle}</strong>
+      Circle Head: <strong style="color:#fff">{head_name}</strong>
       &nbsp;|&nbsp; Date: {report_date}
     </div>
   </div>
@@ -506,23 +526,121 @@ def _run_report(attendance_file, distance_file, employee_file, alarm_file=None):
     else:
         print("[Report] managers.xlsx not found — using employee file for manager info")
 
-    # ---- Fetch latest form date from DB ----
-    db = SessionLocal()
-    latest_date = db.query(func.max(FormEntry.selected_date)).scalar()
-    print(f"[Report] Form date: {latest_date}")
+    # ---- Build forms lookup from forms_filled.xlsx ----
+    # Key: normalized employee full name → list of (form_name, count)
+    forms_lookup = {}
+    forms_filled_path = DAILY_FILES.get("forms_filled")
+    if forms_filled_path and os.path.exists(forms_filled_path):
+        try:
+            ff_df = pd.read_excel(forms_filled_path, dtype=str).fillna("")
+            ff_df.columns = ff_df.columns.str.strip()
+            # Use the latest date in the file
+            if "Action Date" in ff_df.columns:
+                latest_ff_date = ff_df["Action Date"].replace("", pd.NA).dropna().max()
+                ff_df = ff_df[ff_df["Action Date"] == latest_ff_date]
+            for _, frow in ff_df.iterrows():
+                emp_name  = str(frow.get("Employee Full Name", "")).strip()
+                form_name = str(frow.get("Form Name", "")).strip().strip("\t")
+                try:
+                    cnt = int(str(frow.get("Records COUNT", "1")).strip())
+                except (ValueError, TypeError):
+                    cnt = 1
+                if emp_name and form_name:
+                    key = emp_name.lower()
+                    forms_lookup.setdefault(key, {})
+                    forms_lookup[key][form_name] = forms_lookup[key].get(form_name, 0) + cnt
+            print(f"[Report] forms_filled lookup built: {len(forms_lookup)} employees")
+        except Exception as e:
+            print(f"[Report] forms_filled.xlsx read error: {e}")
+    else:
+        print("[Report] forms_filled.xlsx not found — forms column will be empty")
 
     manager_data    = defaultdict(list)
     circle_data     = defaultdict(list)
     management_data = defaultdict(list)
 
-    # Manager email lookup (if employee file has Email column)
-    manager_emails = {}
-    if email_col and manager_col:
+    # Build username → {name, email} for all employees (managers are also employees in the same file)
+    username_to_info = {}
+    for _, erow in employee_df.iterrows():
+        uname = str(erow.get(emp_username_col, "")).strip().lower()
+        fname = ""
+        if full_name_col:
+            n = erow.get(full_name_col)
+            fname = str(n).strip() if n and str(n).lower() not in ["nan", "none", ""] else ""
+        email = ""
+        if email_col:
+            e = erow.get(email_col)
+            email = str(e).strip() if e and str(e).lower() not in ["nan", "none", ""] else ""
+        if uname and uname not in ["nan", "none"]:
+            username_to_info[uname] = {"name": fname or uname, "email": email}
+    print(f"[Report] username_to_info built: {len(username_to_info)} entries")
+
+    # Dynamically identify circle head usernames by matching phone numbers from
+    # CIRCLE_HEADS against the uploaded employee file — no usernames hard-coded.
+    def _norm_phone(p):
+        return re.sub(r"\D", "", str(p))
+
+    phone_col = _find_col(emp_cols, ["Phone", "Mobile", "Contact", "Phone Number"])
+    phone_to_circle = {_norm_phone(v["phone"]): k for k, v in CIRCLE_HEADS.items() if v.get("phone")}
+
+    def _scan_for_circle_heads(df, uname_col, ph_col):
+        result = {}
+        for _, erow in df.iterrows():
+            uname = str(erow.get(uname_col, "")).strip().lower()
+            phone = _norm_phone(erow.get(ph_col, ""))
+            if phone and phone in phone_to_circle:
+                result[uname] = phone_to_circle[phone]
+        return result
+
+    circle_head_unames = {}  # username → circle name (built from uploaded file)
+    if phone_col:
+        circle_head_unames = _scan_for_circle_heads(employee_df, emp_username_col, phone_col)
+        print(f"[Report] Matched {len(circle_head_unames)} circle heads from employee.xlsx phones")
+
+    # Fallback: scan managers.xlsx if employee.xlsx had no phone column or no matches
+    if not circle_head_unames:
+        mgr_file = DAILY_FILES.get("managers")
+        if mgr_file and os.path.exists(mgr_file):
+            try:
+                fb_df = pd.read_excel(mgr_file, dtype=str).fillna("")
+                fb_df.columns = fb_df.columns.astype(str).str.strip()
+                fb_uname_col = _find_col(list(fb_df.columns), ["Field Executive Username", "Username"])
+                fb_phone_col = _find_col(list(fb_df.columns), ["Phone", "Mobile", "Contact", "Phone Number"])
+                if fb_uname_col and fb_phone_col:
+                    circle_head_unames = _scan_for_circle_heads(fb_df, fb_uname_col, fb_phone_col)
+                    print(f"[Report] Matched {len(circle_head_unames)} circle heads from managers.xlsx phones (fallback)")
+            except Exception as e:
+                print(f"[Report] managers.xlsx fallback scan error: {e}")
+
+    if not circle_head_unames:
+        print("[Report] WARNING: No circle heads matched — circle reports will not be sent")
+
+    # Build parent map: employee username → reporting manager username (for circle lookup)
+    parent_map = {}
+    if manager_col:
         for _, erow in employee_df.iterrows():
-            mgr_name  = str(erow.get(manager_col, "")).strip()
-            emp_email = str(erow.get(email_col, "")).strip()
-            if mgr_name and emp_email and mgr_name.lower() not in ["nan", "none", ""]:
-                manager_emails.setdefault(mgr_name, emp_email)
+            uname = str(erow.get(emp_username_col, "")).strip().lower()
+            mgr   = str(erow.get(manager_col, "")).strip().lower()
+            if uname and mgr and mgr not in ["nan", "none", ""]:
+                parent_map[uname] = mgr
+    if not parent_map and username_to_manager:
+        # employee.xlsx has no Reporting Manager col — use the managers.xlsx mapping
+        for uname, mgr_val in username_to_manager.items():
+            parent_map[uname.lower()] = str(mgr_val).strip().lower()
+
+    def find_circle(username, max_depth=8):
+        """Walk up the reporting chain to find this employee's circle."""
+        current = username
+        for _ in range(max_depth):
+            if current in circle_head_unames:
+                return circle_head_unames[current]
+            parent = parent_map.get(current)
+            if not parent or parent == current:
+                break
+            current = parent
+        return "Other"
+
+    manager_email_map = {}  # manager display name → manager's actual email
 
     # Iterate over employee file — one row per employee
     for _, row in employee_df_clean.iterrows():
@@ -532,17 +650,20 @@ def _run_report(attendance_file, distance_file, employee_file, alarm_file=None):
         raw_name  = row.get(full_name_col) if full_name_col else None
         user_name = str(raw_name).strip() if raw_name and str(raw_name).lower() not in ["nan", "none", ""] else username
 
-        # Circle
-        raw_circle = row.get(circle_col) if circle_col else None
-        circle = str(raw_circle).strip() if raw_circle and str(raw_circle).lower() not in ["nan", "none", ""] else "Unknown"
+        # Circle — derived from reporting hierarchy (not city)
+        circle = find_circle(username)
 
-        # Manager — lookup dict first, then employee file column, then circle
-        manager = username_to_manager.get(username)
-        if not manager:
-            raw_manager = row.get(manager_col) if manager_col else None
-            manager = str(raw_manager).strip() if raw_manager and str(raw_manager).lower() not in ["nan", "none", ""] else None
-        if not manager:
-            manager = circle
+        # Manager — lookup dict first, then employee file's Reporting Manager column (contains username)
+        manager_uname = username_to_manager.get(username)
+        if not manager_uname and manager_col:
+            raw_manager = row.get(manager_col)
+            if raw_manager and str(raw_manager).lower() not in ["nan", "none", ""]:
+                manager_uname = str(raw_manager).strip().lower()
+        # Resolve manager username → display name and email via username_to_info
+        mgr_info = username_to_info.get(manager_uname, {}) if manager_uname else {}
+        manager = mgr_info.get("name") or manager_uname or circle
+        if manager and manager not in manager_email_map and mgr_info.get("email"):
+            manager_email_map[manager] = mgr_info["email"]
 
         # Attendance — direct lookup from attendance file (no merge ambiguity)
         attendance = attendance_lookup.get(username, "N/A")
@@ -550,24 +671,14 @@ def _run_report(attendance_file, distance_file, employee_file, alarm_file=None):
         # Distance — direct lookup from distance file
         distance = distance_lookup.get(username, 0.0)
 
-        # Forms from DB
-        forms_query = (
-            db.query(FormEntry.form_type, func.count(FormEntry.id))
-            .filter(
-                FormEntry.username == username,
-                FormEntry.row_status == "valid",
-                FormEntry.selected_date == latest_date,
-            )
-            .group_by(FormEntry.form_type)
-            .all()
-        )
-
-        if not forms_query:
+        # Forms — from forms_filled.xlsx, matched by employee full name
+        emp_forms = forms_lookup.get(user_name.lower(), {})
+        if not emp_forms:
             form_display = '<span style="color:#9e9e9e;font-size:12px">No forms</span>'
         else:
             form_display = "<br>".join(
-                f'<span class="badge badge-ok">{name}</span> ×{cnt}'
-                for name, cnt in forms_query
+                f'<span class="badge badge-ok">{fname}</span> ×{cnt}'
+                for fname, cnt in sorted(emp_forms.items())
             )
 
         user_record = {
@@ -580,8 +691,6 @@ def _run_report(attendance_file, distance_file, employee_file, alarm_file=None):
         manager_data[manager].append(user_record)
         circle_data[circle].append(user_record)
         management_data[circle].append(user_record)
-
-    db.close()
 
     # =====================================================
     # ALARM / SITE DOWN PROCESSING
@@ -635,13 +744,13 @@ def _run_report(attendance_file, distance_file, employee_file, alarm_file=None):
     for manager, users in manager_data.items():
         body = build_manager_email(manager, users, report_date)
         # Use the manager's actual email if we found it; fall back to admin
-        recipient = manager_emails.get(manager, "pranjalg.work@gmail.com")
+        recipient = manager_email_map.get(manager, "pranjalg.work@gmail.com")
         send_email(
             [recipient],
             f"[Daily Report] Manager — {manager} | {report_date}",
             body,
         )
-        print(f"[Report] Manager report → {manager} ({recipient})")
+        print(f"[Report] Manager report -> {manager} ({recipient})")
 
     print("[Report] All manager reports sent.")
 
@@ -650,13 +759,17 @@ def _run_report(attendance_file, distance_file, employee_file, alarm_file=None):
     # =====================================================
 
     for circle, users in circle_data.items():
-        sites = site_down_data.get(circle, [])
-        body  = build_circle_email(circle, users, sites, report_date)
+        sites     = site_down_data.get(circle, [])
+        ch        = CIRCLE_HEADS.get(circle, {})
+        head_name = ch.get("head", circle)
+        recipient = ch.get("email", "pranjalg.work@gmail.com")
+        body      = build_circle_email(circle, head_name, users, sites, report_date)
         send_email(
-            ["pranjalg.work@gmail.com"],
-            f"[Daily Report] Circle — {circle} | {report_date}",
+            [recipient],
+            f"[Daily Report] Circle {circle} — {head_name} | {report_date}",
             body,
         )
+        print(f"[Report] Circle report -> {circle} ({head_name}) -> {recipient}")
 
     print("[Report] Circle reports sent.")
 
@@ -713,7 +826,7 @@ def send_report_now():
     Returns dict with success/error info.
     """
     missing = []
-    for key in ["employee", "attendance", "distance", "forms", "managers", "forms_filled"]:
+    for key in ["employee", "attendance", "distance", "forms_filled"]:
         if not os.path.exists(DAILY_FILES[key]):
             missing.append(key)
 

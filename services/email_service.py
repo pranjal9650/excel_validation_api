@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -7,6 +8,13 @@ APP_PASSWORD  = "ajgprixzqbqduhmw"
 
 
 def send_email(recipients, subject, body):
+    # TEST_MODE: set TEST_EMAIL env var to redirect all mail to one address
+    test_address = os.environ.get("TEST_EMAIL")
+    if test_address:
+        print(f"[Email] TEST MODE — redirecting to {test_address} (original: {recipients})")
+        recipients = [test_address]
+        subject    = f"[TEST] {subject}"
+
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"]    = SENDER_EMAIL

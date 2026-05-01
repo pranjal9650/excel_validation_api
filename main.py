@@ -916,11 +916,29 @@ def get_invalid_records(form_name: str, db: Session = Depends(get_db)):
 
                 reason = None
 
-                # Required check
                 if rule.get("required") and not value:
                     reason = f"'{col}' is required but empty"
 
-                # Number check
+                elif rule.get("type") == "uuid" and value:
+                    try:
+                        import uuid as _uuid
+                        _uuid.UUID(value)
+                    except (ValueError, AttributeError):
+                        reason = f"'{value}' is not a valid UUID"
+
+                elif rule.get("type") == "username" and value:
+                    if not re.match(r"^[A-Za-z0-9._\-]{3,50}$", value):
+                        reason = f"'{value}' is not a valid username"
+
+                elif rule.get("type") == "system_id" and value:
+                    prefixes = [p.strip() for p in rule.get("allowed_prefixes", "").split(",") if p.strip()]
+                    if prefixes:
+                        if not any(value.upper().startswith(p.upper()) for p in prefixes):
+                            reason = f"'{value}' does not start with allowed prefix: {', '.join(prefixes)}"
+                    else:
+                        if not re.match(r"^[A-Za-z0-9]{1,10}(-[A-Za-z0-9]{1,10}){1,}$", value):
+                            reason = f"'{value}' is not a valid system ID (expected format: ABC-123)"
+
                 elif rule.get("type") == "number" and value:
                     if not value.replace(".", "", 1).lstrip("-").isdigit():
                         reason = f"'{value}' is not a valid number"
@@ -936,23 +954,72 @@ def get_invalid_records(form_name: str, db: Session = Depends(get_db)):
                         except ValueError:
                             reason = f"'{value}' could not be parsed as a number"
 
-                # Meter reading check
                 elif rule.get("type") == "meter_reading" and value:
                     if not value.isdigit():
                         reason = f"'{value}' is not a valid meter reading — expected a whole number"
 
-                # Datetime check
                 elif rule.get("type") in ("datetime", "date") and value:
                     parsed = pd.to_datetime(value, errors="coerce", dayfirst=True)
                     if pd.isna(parsed):
                         reason = f"'{value}' is not a valid date/time format"
 
-                # Email check
                 elif rule.get("type") == "email" and value:
-                    if "@" not in value:
+                    if not re.match(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$", value):
                         reason = f"'{value}' is not a valid email address"
+                    else:
+                        domains = [d.strip().lower() for d in rule.get("allowed_domains", "").split(",") if d.strip()]
+                        if domains and value.split("@", 1)[1].lower() not in domains:
+                            reason = f"'{value}' domain not in allowed: {', '.join(domains)}"
 
-                # Dropdown check
+                elif rule.get("type") == "phone" and value:
+                    digits = re.sub(r"\D", "", value)
+                    fmt = rule.get("phone_format", "any")
+                    if fmt == "india_10":
+                        if len(digits) != 10 or digits[0] not in "6789":
+                            reason = f"'{value}' is not a valid 10-digit Indian mobile number"
+                    elif fmt == "india_with_code":
+                        if not (len(digits) == 12 and digits.startswith("91") and digits[2] in "6789"):
+                            reason = f"'{value}' is not a valid Indian number with country code"
+                    elif fmt == "international":
+                        if not (7 <= len(digits) <= 15):
+                            reason = f"'{value}' is not a valid international phone number"
+                    else:
+                        if len(digits) < 7:
+                            reason = f"'{value}' is not a valid phone number"
+
+                elif rule.get("type") == "pincode" and value:
+                    digits = re.sub(r"\D", "", value)
+                    fmt = rule.get("pincode_format", "any_numeric")
+                    if fmt == "india_6":
+                        if len(digits) != 6:
+                            reason = f"'{value}' is not a valid 6-digit Indian pincode"
+                    elif fmt == "us_zip":
+                        if len(digits) not in (5, 9):
+                            reason = f"'{value}' is not a valid US ZIP code"
+                    else:
+                        if not value.replace("-", "").isdigit() or len(digits) < 3:
+                            reason = f"'{value}' is not a valid pincode"
+
+                elif rule.get("type") in ("consumption", "inr_rate") and value:
+                    cleaned = value.replace("₹", "").replace(",", "").strip()
+                    try:
+                        float(cleaned)
+                    except ValueError:
+                        reason = f"'{value}' is not a valid numeric value"
+
+                elif rule.get("type") == "inr_amount" and value:
+                    cleaned = value.replace("₹", "").replace(",", "").strip()
+                    try:
+                        amt = float(cleaned)
+                        mn = rule.get("min")
+                        mx = rule.get("max")
+                        if mn not in ("", None) and amt < float(mn):
+                            reason = f"Amount {value} below minimum (₹{mn})"
+                        if mx not in ("", None) and amt > float(mx):
+                            reason = f"Amount {value} exceeds maximum (₹{mx})"
+                    except ValueError:
+                        reason = f"'{value}' is not a valid amount"
+
                 elif rule.get("type") == "dropdown" and value:
                     options_raw = rule.get("options", "")
                     if options_raw:
@@ -960,7 +1027,6 @@ def get_invalid_records(form_name: str, db: Session = Depends(get_db)):
                         if value.lower() not in options:
                             reason = f"'{value}' is not in allowed options: {options_raw}"
 
-                # Approval flag check
                 elif rule.get("type") == "approval_flag" and value:
                     true_vals  = [v.strip().lower() for v in rule.get("true_values",  "").split(",") if v.strip()]
                     false_vals = [v.strip().lower() for v in rule.get("false_values", "").split(",") if v.strip()]
@@ -968,7 +1034,6 @@ def get_invalid_records(form_name: str, db: Session = Depends(get_db)):
                     if all_vals and value.lower() not in all_vals:
                         reason = f"'{value}' is not a valid approval value — expected one of: {', '.join(all_vals)}"
 
-                # Latitude check
                 elif rule.get("type") == "latitude" and value:
                     try:
                         v_float = float(value)
@@ -977,7 +1042,6 @@ def get_invalid_records(form_name: str, db: Session = Depends(get_db)):
                     except ValueError:
                         reason = f"'{value}' is not a valid latitude"
 
-                # Longitude check
                 elif rule.get("type") == "longitude" and value:
                     try:
                         v_float = float(value)
@@ -985,6 +1049,31 @@ def get_invalid_records(form_name: str, db: Session = Depends(get_db)):
                             reason = f"'{value}' is out of longitude range (-180 to 180)"
                     except ValueError:
                         reason = f"'{value}' is not a valid longitude"
+
+                elif rule.get("type") == "latlong_json" and value:
+                    try:
+                        geo = json.loads(value)
+                        coords = geo.get("coordinates")
+                        if not isinstance(coords, list) or len(coords) != 2:
+                            reason = f"Invalid lat/long JSON structure"
+                        else:
+                            float(coords[0]); float(coords[1])
+                    except Exception:
+                        reason = f"'{value}' is not valid lat/long JSON"
+
+                elif rule.get("type") == "latlong_text" and value:
+                    parts = re.split(r"[,\s]+", value.strip())
+                    try:
+                        if len(parts) != 2:
+                            reason = f"'{value}' must be two coordinates separated by comma/space"
+                        else:
+                            float(parts[0]); float(parts[1])
+                    except Exception:
+                        reason = f"'{value}' is not valid lat/long text"
+
+                if not reason and "length" in rule and value:
+                    if len(value) != rule["length"]:
+                        reason = f"'{value}' must be exactly {rule['length']} characters"
 
                 if reason:
                     errors.append({"field": col, "reason": reason})
@@ -1065,7 +1154,27 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                 reason = None
 
                 if rule.get("required") and not value:
-                    reason = f"Required field is empty"
+                    reason = "Required field is empty"
+
+                elif rule.get("type") == "uuid" and value:
+                    try:
+                        import uuid as _uuid
+                        _uuid.UUID(value)
+                    except (ValueError, AttributeError):
+                        reason = f"'{value}' is not a valid UUID"
+
+                elif rule.get("type") == "username" and value:
+                    if not re.match(r"^[A-Za-z0-9._\-]{3,50}$", value):
+                        reason = f"'{value}' is not a valid username (3–50 alphanumeric/._- chars)"
+
+                elif rule.get("type") == "system_id" and value:
+                    prefixes = [p.strip() for p in rule.get("allowed_prefixes", "").split(",") if p.strip()]
+                    if prefixes:
+                        if not any(value.upper().startswith(p.upper()) for p in prefixes):
+                            reason = f"'{value}' does not start with allowed prefix: {', '.join(prefixes)}"
+                    else:
+                        if not re.match(r"^[A-Za-z0-9]{1,10}(-[A-Za-z0-9]{1,10}){1,}$", value):
+                            reason = f"'{value}' is not a valid system ID (expected format: ABC-123)"
 
                 elif rule.get("type") == "number" and value:
                     if not value.replace(".", "", 1).lstrip("-").isdigit():
@@ -1084,6 +1193,16 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                 elif rule.get("type") == "meter_reading" and value:
                     if not value.isdigit():
                         reason = f"'{value}' is not a valid meter reading"
+                    else:
+                        try:
+                            n = int(value)
+                            mn, mx = rule.get("min"), rule.get("max")
+                            if mn not in ("", None) and n < int(mn):
+                                reason = f"Value {value} is below minimum ({mn})"
+                            if mx not in ("", None) and n > int(mx):
+                                reason = f"Value {value} exceeds maximum ({mx})"
+                        except ValueError:
+                            pass
 
                 elif rule.get("type") in ("datetime", "date") and value:
                     parsed = pd.to_datetime(value, errors="coerce", dayfirst=True)
@@ -1091,8 +1210,60 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                         reason = f"'{value}' is not a valid date format"
 
                 elif rule.get("type") == "email" and value:
-                    if "@" not in value:
+                    if not re.match(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$", value):
                         reason = f"'{value}' is not a valid email"
+                    else:
+                        domains = [d.strip().lower() for d in rule.get("allowed_domains", "").split(",") if d.strip()]
+                        if domains and value.split("@", 1)[1].lower() not in domains:
+                            reason = f"'{value}' domain not in allowed: {', '.join(domains)}"
+
+                elif rule.get("type") == "phone" and value:
+                    digits = re.sub(r"\D", "", value)
+                    fmt = rule.get("phone_format", "any")
+                    if fmt == "india_10":
+                        if len(digits) != 10 or digits[0] not in "6789":
+                            reason = f"'{value}' is not a valid 10-digit Indian mobile number"
+                    elif fmt == "india_with_code":
+                        if not (len(digits) == 12 and digits.startswith("91") and digits[2] in "6789"):
+                            reason = f"'{value}' is not a valid Indian number with country code"
+                    elif fmt == "international":
+                        if not (7 <= len(digits) <= 15):
+                            reason = f"'{value}' is not a valid international phone number"
+                    else:
+                        if len(digits) < 7:
+                            reason = f"'{value}' is not a valid phone number"
+
+                elif rule.get("type") == "pincode" and value:
+                    digits = re.sub(r"\D", "", value)
+                    fmt = rule.get("pincode_format", "any_numeric")
+                    if fmt == "india_6":
+                        if len(digits) != 6:
+                            reason = f"'{value}' is not a valid 6-digit Indian pincode"
+                    elif fmt == "us_zip":
+                        if len(digits) not in (5, 9):
+                            reason = f"'{value}' is not a valid US ZIP code"
+                    else:
+                        if not value.replace("-", "").isdigit() or len(digits) < 3:
+                            reason = f"'{value}' is not a valid pincode"
+
+                elif rule.get("type") in ("consumption", "inr_rate") and value:
+                    cleaned = value.replace("₹", "").replace(",", "").strip()
+                    try:
+                        float(cleaned)
+                    except ValueError:
+                        reason = f"'{value}' is not a valid numeric value"
+
+                elif rule.get("type") == "inr_amount" and value:
+                    cleaned = value.replace("₹", "").replace(",", "").strip()
+                    try:
+                        amt = float(cleaned)
+                        mn, mx = rule.get("min"), rule.get("max")
+                        if mn not in ("", None) and amt < float(mn):
+                            reason = f"Amount {value} below minimum (₹{mn})"
+                        if mx not in ("", None) and amt > float(mx):
+                            reason = f"Amount {value} exceeds maximum (₹{mx})"
+                    except ValueError:
+                        reason = f"'{value}' is not a valid amount"
 
                 elif rule.get("type") == "dropdown" and value:
                     options_raw = rule.get("options", "")
@@ -1124,17 +1295,30 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                     except ValueError:
                         reason = f"'{value}' is not a valid longitude"
 
-                elif rule.get("type") == "inr_amount" and value:
-                    cleaned = value.replace("₹", "").replace(",", "").strip()
+                elif rule.get("type") == "latlong_json" and value:
                     try:
-                        amt = float(cleaned)
-                        mn, mx = rule.get("min"), rule.get("max")
-                        if mn not in ("", None) and amt < float(mn):
-                            reason = f"Amount {value} below minimum (₹{mn})"
-                        if mx not in ("", None) and amt > float(mx):
-                            reason = f"Amount {value} exceeds maximum (₹{mx})"
-                    except ValueError:
-                        reason = f"'{value}' is not a valid amount"
+                        geo = json.loads(value)
+                        coords = geo.get("coordinates")
+                        if not isinstance(coords, list) or len(coords) != 2:
+                            reason = f"Invalid lat/long JSON structure"
+                        else:
+                            float(coords[0]); float(coords[1])
+                    except Exception:
+                        reason = f"'{value}' is not valid lat/long JSON"
+
+                elif rule.get("type") == "latlong_text" and value:
+                    parts = re.split(r"[,\s]+", value.strip())
+                    try:
+                        if len(parts) != 2:
+                            reason = f"'{value}' must be two coordinates separated by comma/space"
+                        else:
+                            float(parts[0]); float(parts[1])
+                    except Exception:
+                        reason = f"'{value}' is not valid lat/long text"
+
+                if not reason and "length" in rule and value:
+                    if len(value) != rule["length"]:
+                        reason = f"'{value}' must be exactly {rule['length']} characters"
 
                 if reason:
                     errors.append({
@@ -1388,6 +1572,16 @@ def load_alarm_report():
     return df
 
 
+def filter_alarm_by_days(df: pd.DataFrame, days: int) -> pd.DataFrame:
+    """Filter alarm rows to the last `days` days relative to the newest record in the data."""
+    dt = pd.to_datetime(df["Alarm Start Time"], errors="coerce")
+    max_dt = dt.max()
+    if pd.isna(max_dt):
+        return df
+    cutoff = max_dt - pd.Timedelta(days=days)
+    return df[dt >= cutoff].reset_index(drop=True)
+
+
 def parse_duration_to_minutes(duration_str: str) -> float:
     """Convert HH:MM:SS string to total minutes. Returns 0 on parse failure."""
     try:
@@ -1401,10 +1595,10 @@ def parse_duration_to_minutes(duration_str: str) -> float:
 
 
 @app.get("/SITE-DASHBOARD-STATS")
-def site_dashboard_stats():
+def site_dashboard_stats(days: int = Query(7)):
     try:
         site_df  = load_site_status()
-        alarm_df = load_alarm_report()
+        alarm_df = filter_alarm_by_days(load_alarm_report(), days)
 
         total_active_sites  = len(site_df)
         total_alarm_events  = len(alarm_df)
@@ -1457,9 +1651,9 @@ def site_active_list():
 
 
 @app.get("/SITE-ALARM-LIST")
-def site_alarm_list():
+def site_alarm_list(days: int = Query(7)):
     try:
-        df = load_alarm_report()
+        df = filter_alarm_by_days(load_alarm_report(), days)
         df = df.rename(columns={
             "S.No.":                "s_no",
             "Global ID":            "global_id",
@@ -1488,9 +1682,9 @@ def site_alarm_list():
 
 
 @app.get("/SITE-ALARM-TREND")
-def site_alarm_trend():
+def site_alarm_trend(days: int = Query(7)):
     try:
-        df = load_alarm_report()
+        df = filter_alarm_by_days(load_alarm_report(), days)
         df["_date"] = pd.to_datetime(
             df["Alarm Start Time"], errors="coerce"
         ).dt.date.astype(str)
@@ -1512,9 +1706,9 @@ def site_alarm_trend():
 
 
 @app.get("/SITE-ALARM-BY-TYPE")
-def site_alarm_by_type():
+def site_alarm_by_type(days: int = Query(7)):
     try:
-        df = load_alarm_report()
+        df = filter_alarm_by_days(load_alarm_report(), days)
         df = df[df["Alarm On-Site"].replace("", pd.NA).notna()]
         result = (
             df.groupby("Alarm On-Site")
@@ -1533,9 +1727,9 @@ def site_alarm_by_type():
 
 
 @app.get("/SITE-ALARM-BY-CIRCLE")
-def site_alarm_by_circle():
+def site_alarm_by_circle(days: int = Query(7)):
     try:
-        df = load_alarm_report()
+        df = filter_alarm_by_days(load_alarm_report(), days)
         df = df[df["State/Circle"].replace("", pd.NA).notna()]
         result = (
             df.groupby("State/Circle")
