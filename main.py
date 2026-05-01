@@ -857,7 +857,7 @@ def get_upload_history(db: Session = Depends(get_db)):
             "upload_time": str(h.upload_time),
             "total_rows":  h.total_rows or 0,
             "valid_rows":  h.valid_rows  or 0,
-            "junk_rows":   h.junk_rows   or 0
+            "junk_rows":   h.junk_rows   or 0,
         }
         for h in history
     ]
@@ -1094,6 +1094,23 @@ def get_invalid_records(form_name: str, db: Session = Depends(get_db)):
 # INVALID RECORDS BY USER
 # =====================================================
 
+def _resolve_junk_path(stored_path):
+    """Try multiple strategies to find the junk CSV on disk."""
+    if not stored_path:
+        return None
+    if os.path.exists(stored_path):
+        return stored_path
+    api_dir = os.path.dirname(os.path.abspath(__file__))
+    candidate = os.path.join(api_dir, stored_path)
+    if os.path.exists(candidate):
+        return candidate
+    filename = os.path.basename(stored_path)
+    candidate = os.path.join(api_dir, "uploads", filename)
+    if os.path.exists(candidate):
+        return candidate
+    return None
+
+
 @app.get("/INVALID-RECORDS-BY-USER")
 def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
     try:
@@ -1105,10 +1122,37 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
         if not history or not history.junk_file:
             return []
 
-        if not os.path.exists(history.junk_file):
-            return []
+        junk_path = _resolve_junk_path(history.junk_file)
 
-        junk_df = pd.read_csv(history.junk_file, dtype=str).fillna("")
+        if not junk_path:
+            # Junk file deleted — fall back to FormEntry for per-user counts
+            entries = db.query(models.FormEntry).filter(
+                models.FormEntry.form_type  == form_name,
+                models.FormEntry.row_status == "invalid"
+            ).all()
+            if not entries:
+                return []
+            user_counts = {}
+            for e in entries:
+                uname = (e.username or "Unknown User").strip() or "Unknown User"
+                user_counts[uname] = user_counts.get(uname, 0) + 1
+            return [
+                {
+                    "username":      uname,
+                    "total_invalid": cnt,
+                    "field_summary": [{
+                        "field":         "Details unavailable",
+                        "fail_count":    cnt,
+                        "sample_values": [],
+                        "reason":        "Raw data file was removed. Re-upload this form to restore field-level details.",
+                    }],
+                    "sample_errors": [],
+                    "raw_samples":   [],
+                }
+                for uname, cnt in sorted(user_counts.items(), key=lambda x: -x[1])
+            ]
+
+        junk_df = pd.read_csv(junk_path, dtype=str).fillna("")
 
         if len(junk_df) == 0:
             return []
@@ -1130,6 +1174,9 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                 user_col = col
                 break
 
+        # Build a slug→actual_col map for fuzzy column matching
+        col_slug_map = {re.sub(r"[\s._\-]+", "", c.lower()): c for c in junk_df.columns}
+
         # Group invalid rows by user
         user_map = {}
 
@@ -1139,6 +1186,24 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                 username = str(row.get(user_col, "")).strip() or "Unknown User"
             else:
                 username = "Unknown User"
+
+            # Always register this row as invalid — it's in the junk file
+            user_map.setdefault(username, {
+                "username":      username,
+                "total_invalid": 0,
+                "field_summary": {},
+                "sample_errors": [],
+                "raw_samples":   [],
+            })
+            user_map[username]["total_invalid"] += 1
+
+            # Capture a raw sample row (up to 3 per user) as fallback display
+            if len(user_map[username]["raw_samples"]) < 3:
+                raw = {k: v for k, v in row.items() if k != "status" and v.strip()}
+                user_map[username]["raw_samples"].append({
+                    "row_number": int(idx) + 2,
+                    "data":       dict(list(raw.items())[:12]),
+                })
 
             errors = []
 
@@ -1150,7 +1215,14 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                 )
                 normalized_col = re.sub(r"\s+", " ", normalized_col)
 
+                # Primary lookup; fall back to slug match when column names differ
                 value = str(row.get(normalized_col, "")).strip()
+                if not value:
+                    slug = re.sub(r"[\s._\-]+", "", normalized_col)
+                    actual_col = col_slug_map.get(slug, "")
+                    if actual_col:
+                        value = str(row.get(actual_col, "")).strip()
+
                 reason = None
 
                 if rule.get("required") and not value:
@@ -1328,15 +1400,6 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                     })
 
             if errors:
-                user_map.setdefault(username, {
-                    "username":      username,
-                    "total_invalid": 0,
-                    "field_summary": {},
-                    "sample_errors": []
-                })
-
-                user_map[username]["total_invalid"] += 1
-
                 # Field-level summary — count how many times each field failed
                 for err in errors:
                     field = err["field"]
@@ -1371,11 +1434,22 @@ def get_invalid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                 key=lambda x: x["fail_count"],
                 reverse=True
             )
+
+            # Fallback: if no specific field errors found, show raw row data summary
+            if not field_summary_list:
+                field_summary_list = [{
+                    "field":         "Validation failed",
+                    "fail_count":    data["total_invalid"],
+                    "sample_values": [],
+                    "reason":        "Records did not pass validation — specific field details below",
+                }]
+
             result.append({
                 "username":      username,
                 "total_invalid": data["total_invalid"],
                 "field_summary": field_summary_list,
-                "sample_errors": data["sample_errors"]
+                "sample_errors": data["sample_errors"],
+                "raw_samples":   data.get("raw_samples", []),
             })
 
         # Sort by most invalid entries first
@@ -1506,10 +1580,35 @@ def get_valid_records_by_user(form_name: str, db: Session = Depends(get_db)):
         if not history or not history.valid_file:
             return []
 
-        if not os.path.exists(history.valid_file):
-            return []
+        # Robust path resolution
+        valid_path = None
+        for candidate in [
+            history.valid_file,
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), history.valid_file),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads", os.path.basename(history.valid_file)),
+        ]:
+            if candidate and os.path.exists(candidate):
+                valid_path = candidate
+                break
 
-        valid_df = pd.read_csv(history.valid_file, dtype=str).fillna("")
+        if not valid_path:
+            # Fall back to FormEntry counts only
+            entries = db.query(models.FormEntry).filter(
+                models.FormEntry.form_type  == form_name,
+                models.FormEntry.row_status == "valid"
+            ).all()
+            if not entries:
+                return []
+            user_counts = {}
+            for e in entries:
+                uname = (e.username or "Unknown User").strip() or "Unknown User"
+                user_counts[uname] = user_counts.get(uname, 0) + 1
+            return [
+                {"username": uname, "total_valid": cnt, "sample_rows": []}
+                for uname, cnt in sorted(user_counts.items(), key=lambda x: -x[1])
+            ]
+
+        valid_df = pd.read_csv(valid_path, dtype=str).fillna("")
 
         if len(valid_df) == 0:
             return []
@@ -1524,19 +1623,24 @@ def get_valid_records_by_user(form_name: str, db: Session = Depends(get_db)):
                 user_col = col
                 break
 
-        user_counts = {}
+        user_map = {}
 
-        for _, row in valid_df.iterrows():
-            if user_col:
-                username = str(row.get(user_col, "")).strip() or "Unknown User"
-            else:
-                username = "Unknown User"
+        for idx, row in valid_df.iterrows():
+            username = str(row.get(user_col, "")).strip() or "Unknown User" if user_col else "Unknown User"
 
-            user_counts[username] = user_counts.get(username, 0) + 1
+            user_map.setdefault(username, {"total_valid": 0, "sample_rows": []})
+            user_map[username]["total_valid"] += 1
+
+            if len(user_map[username]["sample_rows"]) < 3:
+                row_data = {k: v for k, v in row.items() if k != "status" and str(v).strip()}
+                user_map[username]["sample_rows"].append({
+                    "row_number": int(idx) + 2,
+                    "data":       dict(list(row_data.items())[:12]),
+                })
 
         result = [
-            {"username": username, "total_valid": count}
-            for username, count in user_counts.items()
+            {"username": uname, "total_valid": data["total_valid"], "sample_rows": data["sample_rows"]}
+            for uname, data in user_map.items()
         ]
         result.sort(key=lambda x: x["total_valid"], reverse=True)
         return result
@@ -1848,18 +1952,240 @@ def report_files_status():
 # EMAIL REPORT — MANUAL SEND TRIGGER
 # =====================================================
 
+class SendReportBody(PydanticBaseModel):
+    extra_recipients: List[str] = []
+
 @app.post("/SEND-DAILY-REPORT")
-def trigger_send_daily_report():
+def trigger_send_daily_report(
+    test_mode:   bool = False,
+    report_date: str  = None,
+    body: SendReportBody = SendReportBody(),
+):
     """
-    Manually triggers the daily report send using whatever files
-    are currently in data/daily/.  Requires attendance, distance
-    and employee files to be present.
+    Manually triggers the daily report send.
+    ?test_mode=true       → sends only to TEST_RECIPIENTS.
+    ?report_date=YYYY-MM-DD → overrides the date shown in the report (default: today).
+    body.extra_recipients → ad-hoc CCs added only for this send.
     """
     from services.notification_service import send_report_now
-    result = send_report_now()
+    result = send_report_now(
+        test_mode=test_mode,
+        extra_recipients=body.extra_recipients or None,
+        report_date=report_date,
+    )
     if not result.get("success"):
         raise HTTPException(400, result.get("error", "Failed to send report"))
-    return {"status": "success", "message": "Daily reports sent successfully"}
+    msg = "Test reports sent to test recipients only." if test_mode else "Daily reports sent successfully."
+    return {"status": "success", "message": msg}
+
+
+# =====================================================
+# RECIPIENTS CONFIGURATION — circle heads + extra CCs
+# =====================================================
+
+class CircleHeadBody(PydanticBaseModel):
+    circle: str
+    head:   str
+    email:  str
+    phone:  str = ""
+
+class ManagerBody(PydanticBaseModel):
+    name:   str
+    email:  str
+    circle: str = ""
+
+class ManagementRecipientBody(PydanticBaseModel):
+    name:  str
+    email: str
+
+class ExtraRecipientsBody(PydanticBaseModel):
+    emails: List[str]
+
+@app.get("/REPORTING-CONFIG")
+def get_reporting_config():
+    from services.notification_service import _read_config, CIRCLE_HEADS, get_extra_recipients
+    cfg = _read_config()
+    # Seed from hardcoded if config file has no circle_heads yet
+    if not cfg.get("circle_heads"):
+        cfg["circle_heads"] = [
+            {"circle": k, "head": v["head"], "email": v["email"], "phone": v.get("phone", "")}
+            for k, v in CIRCLE_HEADS.items()
+        ]
+    cfg.setdefault("extra_recipients", [])
+    cfg.setdefault("managers", [])
+    cfg.setdefault("management_recipients", [])
+    return cfg
+
+@app.post("/REPORTING-CONFIG/CIRCLE-HEADS")
+def add_circle_head(body: CircleHeadBody):
+    from services.notification_service import _read_config, _write_config, CIRCLE_HEADS
+    cfg = _read_config()
+    if not cfg.get("circle_heads"):
+        cfg["circle_heads"] = [
+            {"circle": k, "head": v["head"], "email": v["email"], "phone": v.get("phone", "")}
+            for k, v in CIRCLE_HEADS.items()
+        ]
+    if any(ch["circle"] == body.circle for ch in cfg["circle_heads"]):
+        raise HTTPException(400, f"Circle '{body.circle}' already exists. Use PUT to update.")
+    cfg["circle_heads"].append(body.dict())
+    _write_config(cfg)
+    return {"status": "ok", "circle_heads": cfg["circle_heads"]}
+
+@app.put("/REPORTING-CONFIG/CIRCLE-HEADS/{circle}")
+def update_circle_head(circle: str, body: CircleHeadBody):
+    from services.notification_service import _read_config, _write_config, CIRCLE_HEADS
+    cfg = _read_config()
+    if not cfg.get("circle_heads"):
+        cfg["circle_heads"] = [
+            {"circle": k, "head": v["head"], "email": v["email"], "phone": v.get("phone", "")}
+            for k, v in CIRCLE_HEADS.items()
+        ]
+    cfg["circle_heads"] = [
+        body.dict() if ch["circle"] == circle else ch
+        for ch in cfg["circle_heads"]
+    ]
+    _write_config(cfg)
+    return {"status": "ok", "circle_heads": cfg["circle_heads"]}
+
+@app.delete("/REPORTING-CONFIG/CIRCLE-HEADS/{circle}")
+def delete_circle_head(circle: str):
+    from services.notification_service import _read_config, _write_config, CIRCLE_HEADS
+    cfg = _read_config()
+    if not cfg.get("circle_heads"):
+        cfg["circle_heads"] = [
+            {"circle": k, "head": v["head"], "email": v["email"], "phone": v.get("phone", "")}
+            for k, v in CIRCLE_HEADS.items()
+        ]
+    cfg["circle_heads"] = [ch for ch in cfg["circle_heads"] if ch["circle"] != circle]
+    _write_config(cfg)
+    return {"status": "ok", "circle_heads": cfg["circle_heads"]}
+
+@app.post("/REPORTING-CONFIG/MANAGERS")
+def add_manager(body: ManagerBody):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg.setdefault("managers", [])
+    if any(m["name"] == body.name for m in cfg["managers"]):
+        raise HTTPException(400, f"Manager '{body.name}' already exists. Use PUT to update.")
+    cfg["managers"].append(body.dict())
+    _write_config(cfg)
+    return {"status": "ok", "managers": cfg["managers"]}
+
+@app.put("/REPORTING-CONFIG/MANAGERS/{name}")
+def update_manager(name: str, body: ManagerBody):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg.setdefault("managers", [])
+    cfg["managers"] = [body.dict() if m["name"] == name else m for m in cfg["managers"]]
+    _write_config(cfg)
+    return {"status": "ok", "managers": cfg["managers"]}
+
+@app.delete("/REPORTING-CONFIG/MANAGERS/{name}")
+def delete_manager(name: str):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg.setdefault("managers", [])
+    cfg["managers"] = [m for m in cfg["managers"] if m["name"] != name]
+    _write_config(cfg)
+    return {"status": "ok", "managers": cfg["managers"]}
+
+@app.put("/REPORTING-CONFIG/EXTRA-RECIPIENTS")
+def update_extra_recipients(body: ExtraRecipientsBody):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg["extra_recipients"] = [e.strip() for e in body.emails if e.strip()]
+    _write_config(cfg)
+    return {"status": "ok", "extra_recipients": cfg["extra_recipients"]}
+
+@app.get("/REPORTING-CONFIG/MANAGEMENT")
+def get_management_recipients_config():
+    from services.notification_service import _read_config
+    return {"management_recipients": _read_config().get("management_recipients", [])}
+
+@app.post("/REPORTING-CONFIG/MANAGEMENT")
+def add_management_recipient(body: ManagementRecipientBody):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg.setdefault("management_recipients", [])
+    if any(r["email"] == body.email for r in cfg["management_recipients"]):
+        raise HTTPException(400, f"'{body.email}' already in management recipients.")
+    cfg["management_recipients"].append(body.dict())
+    _write_config(cfg)
+    return {"status": "ok", "management_recipients": cfg["management_recipients"]}
+
+@app.delete("/REPORTING-CONFIG/MANAGEMENT/{email:path}")
+def delete_management_recipient(email: str):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg["management_recipients"] = [
+        r for r in cfg.get("management_recipients", []) if r["email"] != email
+    ]
+    _write_config(cfg)
+    return {"status": "ok", "management_recipients": cfg["management_recipients"]}
+
+@app.get("/REPORTING-CONFIG/TEST-MODE")
+def get_test_mode_status():
+    from services.notification_service import _read_config
+    cfg = _read_config()
+    return {
+        "test_mode":  cfg.get("test_mode",  True),
+        "test_email": cfg.get("test_email", "pranjalg.work@gmail.com"),
+    }
+
+@app.put("/REPORTING-CONFIG/TEST-MODE")
+def set_test_mode(body: dict):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg["test_mode"]  = bool(body.get("test_mode", True))
+    if "test_email" in body:
+        cfg["test_email"] = str(body["test_email"]).strip()
+    _write_config(cfg)
+    state = "ON" if cfg["test_mode"] else "OFF"
+    print(f"[Mail] Test mode {state} — all emails → {cfg.get('test_email', 'pranjalg.work@gmail.com')}")
+    return {"test_mode": cfg["test_mode"], "test_email": cfg.get("test_email", "pranjalg.work@gmail.com")}
+
+@app.get("/REPORTING-CONFIG/MAIL-STATUS")
+def get_mail_status():
+    from services.notification_service import _read_config
+    cfg = _read_config()
+    return {"mail_enabled": cfg.get("mail_enabled", True)}
+
+@app.put("/REPORTING-CONFIG/MAIL-STATUS")
+def set_mail_status(body: dict):
+    from services.notification_service import _read_config, _write_config
+    cfg = _read_config()
+    cfg["mail_enabled"] = bool(body.get("mail_enabled", True))
+    _write_config(cfg)
+    status = "enabled" if cfg["mail_enabled"] else "disabled"
+    print(f"[Mail] Mail sending {status} via portal.")
+    return {"mail_enabled": cfg["mail_enabled"]}
+
+
+@app.get("/PREVIEW-RECIPIENTS")
+def preview_recipients():
+    """Returns who would receive each email type based on uploaded files."""
+    from services.notification_service import get_recipients_preview
+    result = get_recipients_preview()
+    if not result.get("success"):
+        raise HTTPException(400, result.get("error", "Could not build recipient list"))
+    return result
+
+
+@app.post("/SEND-TEST-REPORT/{report_type}")
+def trigger_send_test_report(report_type: str, report_date: str = None):
+    """
+    Sends a single report type as a test to TEST_RECIPIENTS only.
+    report_type: "management" | "circles" | "managers"
+    ?report_date=YYYY-MM-DD → overrides the date shown in the report (default: today).
+    """
+    valid = {"management", "circles", "managers"}
+    if report_type not in valid:
+        raise HTTPException(400, f"Invalid report_type. Must be one of: {sorted(valid)}")
+    from services.notification_service import send_report_now
+    result = send_report_now(test_mode=True, send_types={report_type}, report_date=report_date)
+    if not result.get("success"):
+        raise HTTPException(400, result.get("error", "Failed to send test report"))
+    return {"status": "success", "message": f"Test {report_type} report sent to test recipients"}
 
 
 # =====================================================

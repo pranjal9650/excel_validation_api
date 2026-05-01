@@ -53,17 +53,8 @@ def start_scheduler():
         replace_existing=True
     )
 
-    _scheduler.add_job(
-        run_daily_report_job,
-        trigger="cron",
-        hour=18,
-        minute=0,
-        id="daily_field_report",
-        replace_existing=True
-    )
-
     _scheduler.start()
-    print("[Scheduler] Started — site monitoring every 10 min, email report daily at 18:00")
+    print("[Scheduler] Started — site monitoring every 10 min (email report disabled)")
 
 
 def stop_scheduler():
